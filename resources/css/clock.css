@@ -1,0 +1,32 @@
+/* 全体を囲うコンテナー */
+.clock_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+  
+/* 時計の共通スタイル */
+.clock {
+    color: rgb(59 130 246);
+}
+  
+/* 日付のスタイル */
+.clock-date {
+    font-size: 40px;
+}
+
+/* 時間のスタイル */
+.clock-time {
+    font-size: 100px;
+}
+
+/* 文字サイズ調整 */
+@media screen and (max-width: 500px) {
+    .clock-date {
+        font-size: 5vw;
+    }
+    .clock-time {
+        font-size: 20vw;
+    }
+}

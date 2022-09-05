@@ -1,0 +1,15 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/clock.js": "/js/clock.js",
+    "/js/loading.js": "/js/loading.js",
+    "/js/punch_begin.js": "/js/punch_begin.js",
+    "/js/punch_finish_tab.js": "/js/punch_finish_tab.js",
+    "/js/punch_menu.js": "/js/punch_menu.js",
+    "/js/punch_finish.js": "/js/punch_finish.js",
+    "/js/punch_finish_input.js": "/js/punch_finish_input.js",
+    "/css/app.css": "/css/app.css",
+    "/css/punch_finish_tab.css": "/css/punch_finish_tab.css",
+    "/css/loading.css": "/css/loading.css",
+    "/css/clock.css": "/css/clock.css",
+    "/css/navigation.css": "/css/navigation.css"
+}
