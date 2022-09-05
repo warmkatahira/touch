@@ -10948,6 +10948,10 @@ $("[class^=working_time_input_modal_close]").on("click", function () {
 
 $("[class^=input_time]").on("click", function () {
   input_working_time.innerHTML = (Number(this.innerHTML) + Number(input_working_time.innerHTML)).toFixed(2);
+}); // 稼働時間のクリアボタンが押下されたら数値を初期化
+
+$("[id=input_working_time_clear]").on("click", function () {
+  input_working_time.innerHTML = '0.00';
 });
 })();
 

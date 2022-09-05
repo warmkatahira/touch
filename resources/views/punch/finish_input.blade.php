@@ -77,10 +77,10 @@
                     <!-- 分入力ボタン -->
                     <div class="col-start-5 col-span-4 grid grid-cols-12" style="font-family:'Share Tech Mono'">
                         <p class="col-start-2 col-span-4 bg-blue-500 text-2xl text-center py-5 rounded-lg text-white" style="font-family:Zen Maru Gothic">分</p>
-                        <button id="num_0.00" class="input_time col-start-2 col-span-4 bg-blue-100 text-2xl text-center py-5 rounded-lg mt-3">0.00<button>
                         <button id="num_0.25" class="input_time col-start-2 col-span-4 bg-blue-100 text-2xl text-center py-5 rounded-lg mt-3">0.25<button>
                         <button id="num_0.50" class="input_time col-start-2 col-span-4 bg-blue-100 text-2xl text-center py-5 rounded-lg mt-3">0.50<button>
                         <button id="num_0.75" class="input_time col-start-2 col-span-4 bg-blue-100 text-2xl text-center py-5 rounded-lg mt-3">0.75<button>
+                        <button id="input_working_time_clear" class="col-start-2 col-span-4 bg-red-500 text-white text-2xl text-center py-5 rounded-lg mt-3">クリア<button>
                     </div>
                 </div>
             </div>
