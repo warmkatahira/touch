@@ -6,8 +6,8 @@
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12">
             <a href="{{ route('punch.menu') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-sky-200 mb-5 hover:bg-sky-500 hover:text-white">戻る</a>
+            <!-- 概要情報を表示 -->
             <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500 rounded-t-lg">勤務情報入力画面</p>
-            <!-- 情報を表示 -->
             <div class="col-start-1 col-span-12 border-2 border-blue-500 rounded-b-lg">
                 <div class="py-5 grid grid-cols-12">
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-grin-alt la-lg"></i>従業員名</p>
@@ -16,6 +16,13 @@
                     <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $finish_time }}</p>
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-business-time la-lg"></i>勤務時間</p>
                     <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $working_time / 60 }}</p>
+                </div>
+            </div>
+            <!-- 入力した荷主稼働時間情報を表示 -->
+            <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500 rounded-t-lg">荷主稼働時間</p>
+            <div class="col-start-1 col-span-12 border-2 border-blue-500 rounded-b-lg">
+                <div id="input_working_time_info" class="p-5 grid grid-cols-12 gap-4">
+                    
                 </div>
             </div>
         </div>
@@ -65,7 +72,7 @@
                         </div>
                         <div class="col-start-7 col-span-5 text-center">
                             <p class="text-2xl bg-blue-500 text-white py-3 rounded-t-lg">入力稼働時間</p>
-                            <p id="input_working_time" class="text-5xl py-3 border-blue-500 border-x-2 border-b-2 rounded-b-lg" style="font-family:'Share Tech Mono'">0.00</p>
+                            <p id="input_working_time" class="text-5xl py-3 border-blue-500 border-x-2 border-b-2 rounded-b-lg" style="font-family:'Share Tech Mono'"></p>
                         </div>
                         
                         <input type="hidden" id="input_customer_id" name="input_customer_id" class="">
@@ -95,8 +102,11 @@
                 </div>
             </div>
             <!-- モーダルフッター -->
-            <div class="px-4 py-2 border-t border-t-gray-500 grid grid-cols-1">
-                <a class="working_time_input_modal_close cursor-pointer rounded-lg text-white bg-red-400 hover:bg-sky-500 text-center p-4 col-span-1">
+            <div class="px-4 py-2 border-t border-t-gray-500 grid grid-cols-12">
+                <a id="working_time_input_enter" class="cursor-pointer rounded-lg text-white bg-blue-500 hover:bg-sky-500 text-center p-4 col-span-5">
+                    入力
+                </a>
+                <a class="working_time_input_modal_close cursor-pointer rounded-lg text-white bg-red-400 hover:bg-sky-500 text-center p-4 col-start-8 col-span-5">
                     キャンセル
                 </a>
             </div>
