@@ -42,7 +42,7 @@
 </nav>
  --}}
 
-<header class="nav-header py-2">
+{{-- <header class="nav-header py-2">
     <div class="navtext-container">
         <p class="text-6xl text-blue-500" style="font-family:DynaPuff">T<i class="las la-clock la-xs la-spin"></i>uch</p>
     </div>
@@ -55,4 +55,23 @@
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">ログアウト</a></li>
         </form>
     </ul>
+</header> --}}
+
+<header class="nav-header py-2">
+    <div class="grid grid-cols-12">
+        <div class="col-span-2">
+            <input type="checkbox" class="menu-btn" id="menu-btn">
+            <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
+            <ul class="menu">
+                <li><a href="{{ route('punch.menu') }}">打刻</a></li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">ログアウト</a></li>
+                </form>
+            </ul>
+        </div>
+        <p class="col-start-5 col-span-4 text-6xl text-blue-500 text-center" style="font-family:DynaPuff">T<i class="las la-clock la-xs la-spin"></i>uch</p>
+        <p class="col-start-11 col-span-2 text-right text-4xl mr-3">{{ Auth::user()->name }}</p>
+
+    </div>
 </header>

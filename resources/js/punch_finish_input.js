@@ -8,7 +8,7 @@ $("[class^=working_time_input_modal_open]").on("click",function(){
     modal.classList.remove('hidden');
     // 入力対象の荷主情報を出力
     input_customer_id.value = this.value;
-    input_customer_name.innerHTML = this.innerHTML;
+    input_customer_name.innerHTML = '荷主名 : ' + this.innerHTML;
 });
 
 // 荷主稼働時間入力モーダルを閉じる
