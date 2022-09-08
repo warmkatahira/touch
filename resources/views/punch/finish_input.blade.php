@@ -68,7 +68,7 @@
                 <h4>荷主稼働時間入力画面</h4>
                 <button class="working_time_input_modal_close"><i class="las la-window-close"></i></button>
             </div>
-            <!-- モーダルボディ -->
+            <!-- モーダルボディー -->
             <div class="p-10">
                 <div class="grid grid-cols-12">
                     <!-- 入力情報 -->
