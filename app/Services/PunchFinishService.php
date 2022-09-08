@@ -37,4 +37,9 @@ class PunchFinishService
         $working_time = $finish_time_adj_minute - $begin_time_adj_minute;
         return $working_time;
     }
+
+    public function getRestTime()
+    {
+        return;
+    }
 }

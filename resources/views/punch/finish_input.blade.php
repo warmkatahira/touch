@@ -7,21 +7,29 @@
         <div class="grid grid-cols-12">
             <a href="{{ route('punch.menu') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-sky-200 mb-5 hover:bg-sky-500 hover:text-white">戻る</a>
             <!-- 概要情報を表示 -->
-            <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500 rounded-t-lg">勤務情報入力画面</p>
-            <div class="col-start-1 col-span-12 border-2 border-blue-500 rounded-b-lg">
+            <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500 rounded-t-lg">勤務情報</p>
+            <div class="col-start-1 col-span-12 border-2 border-blue-500">
                 <div class="py-5 grid grid-cols-12">
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-grin-alt la-lg"></i>従業員名</p>
                     <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $employee->employee_name }}</p>
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-clock la-lg"></i>退勤時間</p>
                     <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $finish_time }}</p>
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-business-time la-lg"></i>勤務時間</p>
-                    <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $working_time / 60 }}</p>
+                    <p class="col-span-3 text-blue-500 text-2xl text-left">{{ number_format($working_time / 60, 2) }}</p>
+                </div>
+            </div>
+            <!-- 休憩未取得時間を表示 -->
+            <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500">休憩未取得時間</p>
+            <div class="col-start-1 col-span-12 border-2 border-blue-500">
+                <div class="p-5 grid grid-cols-12 gap-4">
+                    <button type="button" class="col-span-2 bg-gray-200 rounded-lg py-3 text-center text-2xl">15分<i class="las la-times"></i>1回</button>
                 </div>
             </div>
             <!-- 入力した荷主稼働時間情報を表示 -->
-            <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500 rounded-t-lg">荷主稼働時間</p>
-            <div class="col-start-1 col-span-12 border-2 border-blue-500 rounded-b-lg">
-                <div id="input_working_time_info" class="p-5 grid grid-cols-12 gap-4">
+            <p class="col-span-12 text-4xl py-3 text-center text-white bg-blue-500">荷主稼働時間</p>
+            <div class="col-start-1 col-span-12 border-2 border-blue-500 rounded-b-lg grid grid-cols-12">
+                <p class="col-start-2 col-span-10 text-right text-2xl mt-3">残り入力時間：<span id="input_time_left" class="text-2xl">{{ number_format($working_time / 60, 2) }}</span></p>
+                <div id="input_working_time_info" class="p-5 col-span-12 grid grid-cols-12 gap-4">
                     
                 </div>
             </div>
@@ -67,14 +75,13 @@
                     <div class="col-start-1 col-span-6 grid grid-cols-12">
                         <p id="input_customer_name" class="col-span-12 text-4xl row-start-8"></p>
                         <div class="col-span-5 text-center">
-                            <p class="text-2xl bg-black text-white py-3 rounded-t-lg">残り稼働時間</p>
-                            <p id="input_working_time_left" class="text-5xl py-3 border-black border-x-2 border-b-2 rounded-b-lg" style="font-family:'Share Tech Mono'">0.00</p>
+                            <p class="text-2xl bg-black text-white py-3 rounded-t-lg">残り入力時間</p>
+                            <p id="input_time_left_modal" class="text-5xl py-3 border-black border-x-2 border-b-2 rounded-b-lg" style="font-family:'Share Tech Mono'"></p>
                         </div>
                         <div class="col-start-7 col-span-5 text-center">
                             <p class="text-2xl bg-blue-500 text-white py-3 rounded-t-lg">入力稼働時間</p>
                             <p id="input_working_time" class="text-5xl py-3 border-blue-500 border-x-2 border-b-2 rounded-b-lg" style="font-family:'Share Tech Mono'"></p>
                         </div>
-                        
                         <input type="hidden" id="input_customer_id" name="input_customer_id" class="">
                     </div>
                     <!-- 時間入力ボタン -->
@@ -89,7 +96,7 @@
                         <button id="num_1" class="input_time col-span-3 bg-blue-100 text-2xl text-center py-5 rounded-lg mt-3">1<button>
                         <button id="num_2" class="input_time col-span-3 bg-blue-100 text-2xl text-center py-5 rounded-lg mt-3">2<button>
                         <button id="num_3" class="input_time col-span-3 bg-blue-100 text-2xl text-center py-5 rounded-lg mt-3">3<button>
-                        <button id="num_0" class="col-span-11 bg-blue-100 text-2xl text-center py-5 rounded-lg mt-3">0<button>
+                        <button id="all_input" class="col-span-11 bg-pink-200 text-2xl text-center py-5 rounded-lg mt-3">残り時間を全て入力<button>
                     </div>
                     <!-- 分入力ボタン -->
                     <div class="col-start-11 col-span-2 grid grid-cols-12" style="font-family:'Share Tech Mono'">

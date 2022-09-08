@@ -34,12 +34,12 @@ class PunchFinishController extends Controller
         $nowDate = new Carbon('now');
         // サービスクラスを定義
         $PunchFinishService = new PunchFinishService;
-        // 退勤時間調整を算出・取得
+        // 退勤時間調整を算出
         $finish_time_adj = $PunchFinishService->getFinishTimeAdj($nowDate);
         // 労働時間を算出
         $working_time = $PunchFinishService->getWorkingTime($request->employee_no, $nowDate, $finish_time_adj);
-        
-        
+        // 出退勤・外出戻り時間から、休憩を全て取得した場合の時間を算出
+        $rest_time = $PunchFinishService->getRestTime();
 
         
 
