@@ -5,13 +5,14 @@
 <x-app-layout>
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12">
-            <a href="{{ route('punch.menu') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-sky-200 mb-5 hover:bg-sky-500 hover:text-white">戻る</a>
+            <a href="{{ route('punch_finish.index') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-sky-200 mb-5 hover:bg-sky-500 hover:text-white">戻る</a>
+            <p class="col-start-4 col-span-6 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">勤務情報入力画面</p>
             <!-- 概要情報を表示 -->
-            <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500 rounded-t-lg">勤務情報</p>
+            <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500 rounded-t-lg">{{ $employee->employee_name }}<span class="text-xl ml-3">さん</span></p>
             <div class="col-start-1 col-span-12 border-2 border-blue-500">
                 <div class="py-5 grid grid-cols-12">
-                    <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-grin-alt la-lg"></i>従業員名</p>
-                    <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $employee->employee_name }}</p>
+                    <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-clock la-lg"></i>出勤時間</p>
+                    <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $kintai->begin_time_adj }}</p>
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-clock la-lg"></i>退勤時間</p>
                     <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $finish_time }}</p>
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-business-time la-lg"></i>勤務時間</p>

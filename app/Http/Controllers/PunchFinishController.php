@@ -34,6 +34,8 @@ class PunchFinishController extends Controller
         $nowDate = new Carbon('now');
         // サービスクラスを定義
         $PunchFinishService = new PunchFinishService;
+        // 現在の勤怠情報を取得
+        $kintai = $PunchFinishService->getKintai($request->employee_no, $nowDate);
         // 退勤時間調整を算出
         $finish_time_adj = $PunchFinishService->getFinishTimeAdj($nowDate);
         // 労働時間を算出
@@ -54,6 +56,7 @@ class PunchFinishController extends Controller
         $customers = Customer::where('control_base_id', Auth::user()->base_id)->get();
         $customer_groups = CustomerGroup::all();
         return view('punch.finish_input')->with([
+            'kintai' => $kintai,
             'finish_time' => $finish_time_adj,
             'working_time' => $working_time,
             'employee' => $employee,

@@ -9,6 +9,14 @@ use App\Models\Kintai;
 
 class PunchFinishService
 {
+    public function getKintai($employee_no, $nowDate)
+    {
+        $kintai = Kintai::where('employee_no', $employee_no)
+                    ->where('work_day', $nowDate->format('Y-m-d'))
+                    ->first();
+        return $kintai;
+    }
+
     // 退勤時間調整を算出・取得する
     public function getFinishTimeAdj($nowDate)
     {
