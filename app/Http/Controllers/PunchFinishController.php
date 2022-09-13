@@ -39,10 +39,11 @@ class PunchFinishController extends Controller
         // 退勤時間調整を算出
         $finish_time_adj = $PunchFinishService->getFinishTimeAdj($nowDate);
         // 労働時間を算出
-        $working_time = $PunchFinishService->getWorkingTime($request->employee_no, $nowDate, $finish_time_adj);
-        // 出退勤・外出戻り時間から、休憩を全て取得した場合の時間を算出
-        $rest_time = $PunchFinishService->getRestTime();
-
+        $working_time = $PunchFinishService->getWorkingTime($kintai, $finish_time_adj);
+        // 出退勤・外出戻り時間から、取得可能な休憩時間を算出
+        $rest_time = $PunchFinishService->getRestTime($kintai, $finish_time_adj);
+        // 
+        $no_rest_times = $PunchFinishService->getNoRestTime($rest_time);
         
 
         
@@ -59,6 +60,8 @@ class PunchFinishController extends Controller
             'kintai' => $kintai,
             'finish_time' => $finish_time_adj,
             'working_time' => $working_time,
+            'rest_time' => $rest_time,
+            'no_rest_times' => $no_rest_times,
             'employee' => $employee,
             'customers' => $customers,
             'customer_groups' => $customer_groups,

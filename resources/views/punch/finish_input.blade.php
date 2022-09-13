@@ -1,7 +1,6 @@
 <script src="{{ asset('js/punch_finish_input.js') }}" defer></script>
 <link rel="stylesheet" href="{{ asset('css/punch_finish_tab.css') }}">
 <script src="{{ asset('js/punch_finish_tab.js') }}" defer></script>
-
 <x-app-layout>
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12">
@@ -12,18 +11,25 @@
             <div class="col-start-1 col-span-12 border-2 border-blue-500">
                 <div class="py-5 grid grid-cols-12">
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-clock la-lg"></i>出勤時間</p>
-                    <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $kintai->begin_time_adj }}</p>
+                    <p class="col-span-2 text-blue-500 text-2xl text-left">{{ $kintai->begin_time_adj }}</p>
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-clock la-lg"></i>退勤時間</p>
-                    <p class="col-span-3 text-blue-500 text-2xl text-left">{{ $finish_time }}</p>
+                    <p class="col-span-2 text-blue-500 text-2xl text-left">{{ $finish_time }}</p>
                     <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-business-time la-lg"></i>勤務時間</p>
-                    <p class="col-span-3 text-blue-500 text-2xl text-left">{{ number_format($working_time / 60, 2) }}</p>
+                    <p class="col-span-2 text-blue-500 text-2xl text-left">{{ number_format($working_time / 60, 2) }}</p>
+                    <p class="col-span-1 text-blue-500 text-xl text-center pt-1"><i class="las la-utensils la-lg"></i></i>休憩時間</p>
+                    <p class="col-span-2 text-blue-500 text-2xl text-left">{{ $rest_time }}</p>
                 </div>
             </div>
             <!-- 休憩未取得時間を表示 -->
             <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500">休憩未取得時間</p>
             <div class="col-start-1 col-span-12 border-2 border-blue-500">
                 <div class="p-5 grid grid-cols-12 gap-4">
-                    <button type="button" class="col-span-2 bg-gray-200 rounded-lg py-3 text-center text-2xl">15分<i class="las la-times"></i>1回</button>
+                    @foreach($no_rest_times as $no_rest_time)
+                        <div class="col-span-2">
+                            <input type="radio" name="no_rest_time" id="{{ $no_rest_time['minute'] }}" value="{{ $no_rest_time['minute'] }}" class="no_rest_time_select hidden" {{ $no_rest_time['minute'] == '0' ? 'checked' : '' }}>
+                            <label id="{{ $no_rest_time['minute'].'_label' }}" for="{{ $no_rest_time['minute'] }}" class="cursor-pointer flex flex-col w-full max-w-lg mx-auto text-center border-2 rounded-lg border-gray-900 p-2 text-2xl hover:bg-gray-200">{{ $no_rest_time['text1'] }}</label>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <!-- 入力した荷主稼働時間情報を表示 -->

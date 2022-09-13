@@ -11009,6 +11009,23 @@ $(document).on("click", ".working_time_info_delete", function () {
 
   delete_target_1.remove();
   delete_target_2.remove();
+}); // 休憩未取得時間が変更されたら
+
+$("[class^=no_rest_time_select]").on("click", function () {
+  var no_rest_times = document.getElementsByName("no_rest_time");
+
+  for (var i = 0; i < no_rest_times.length; i++) {
+    if (no_rest_times[i].checked) {
+      var element = document.getElementById(no_rest_times[i].id + '_label');
+      element.classList.add('bg-blue-200');
+    }
+
+    if (!no_rest_times[i].checked) {
+      var _element = document.getElementById(no_rest_times[i].id + '_label');
+
+      _element.classList.remove('bg-blue-200');
+    }
+  }
 });
 })();
 

@@ -7,6 +7,7 @@
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12">
             <a href="{{ route('punch.menu') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-sky-200 mb-5 hover:bg-sky-500 hover:text-white">戻る</a>
+            <p class="col-start-4 col-span-6 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">出勤画面</p>
             <p class="col-start-1 col-span-12 text-4xl py-3 text-center text-white bg-blue-500 rounded-t-lg">出勤画面</p>
             <!-- 時計を表示 -->
             <div class="col-start-1 col-span-12 clock_container border-2 border-blue-500 rounded-b-lg">
