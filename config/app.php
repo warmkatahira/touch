@@ -210,6 +210,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'GetTodayKintaiStatusFunc' => App\Lib\GetTodayKintaiStatusFunc::class,
+        'GetEmployeeFunc' => App\Lib\GetEmployeeFunc::class,
     ])->toArray(),
 
 ];

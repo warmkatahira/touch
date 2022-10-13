@@ -7,9 +7,13 @@
     "/js/punch_menu.js": "/js/punch_menu.js",
     "/js/punch_finish.js": "/js/punch_finish.js",
     "/js/punch_finish_input.js": "/js/punch_finish_input.js",
-    "/css/app.css": "/css/app.css",
+    "/js/punch_out.js": "/js/punch_out.js",
+    "/js/punch_return.js": "/js/punch_return.js",
+    "/js/punch_complete_popup.js": "/js/punch_complete_popup.js",
+    "/css/punch_complete_popup.css": "/css/punch_complete_popup.css",
     "/css/punch_finish_tab.css": "/css/punch_finish_tab.css",
     "/css/loading.css": "/css/loading.css",
     "/css/clock.css": "/css/clock.css",
-    "/css/navigation.css": "/css/navigation.css"
+    "/css/navigation.css": "/css/navigation.css",
+    "/css/app.css": "/css/app.css"
 }

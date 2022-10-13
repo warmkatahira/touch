@@ -24770,6 +24770,19 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./resources/css/app.css":
+/*!*******************************!*\
+  !*** ./resources/css/app.css ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/css/navigation.css":
 /*!**************************************!*\
   !*** ./resources/css/navigation.css ***!
@@ -24822,10 +24835,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/css/app.css":
-/*!*******************************!*\
-  !*** ./resources/css/app.css ***!
-  \*******************************/
+/***/ "./resources/css/punch_complete_popup.css":
+/*!************************************************!*\
+  !*** ./resources/css/punch_complete_popup.css ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -25152,11 +25165,12 @@ process.umask = function() { return 0; };
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0,
-/******/ 			"css/app": 0,
+/******/ 			"css/punch_complete_popup": 0,
 /******/ 			"css/punch_finish_tab": 0,
 /******/ 			"css/loading": 0,
 /******/ 			"css/clock": 0,
-/******/ 			"css/navigation": 0
+/******/ 			"css/navigation": 0,
+/******/ 			"css/app": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -25206,12 +25220,13 @@ process.umask = function() { return 0; };
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/punch_finish_tab","css/loading","css/clock","css/navigation"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/punch_finish_tab","css/loading","css/clock","css/navigation"], () => (__webpack_require__("./resources/css/navigation.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/punch_finish_tab","css/loading","css/clock","css/navigation"], () => (__webpack_require__("./resources/css/clock.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/punch_finish_tab","css/loading","css/clock","css/navigation"], () => (__webpack_require__("./resources/css/loading.css")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/punch_finish_tab","css/loading","css/clock","css/navigation"], () => (__webpack_require__("./resources/css/punch_finish_tab.css")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/punch_finish_tab","css/loading","css/clock","css/navigation"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/punch_complete_popup","css/punch_finish_tab","css/loading","css/clock","css/navigation","css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/punch_complete_popup","css/punch_finish_tab","css/loading","css/clock","css/navigation","css/app"], () => (__webpack_require__("./resources/css/navigation.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/punch_complete_popup","css/punch_finish_tab","css/loading","css/clock","css/navigation","css/app"], () => (__webpack_require__("./resources/css/clock.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/punch_complete_popup","css/punch_finish_tab","css/loading","css/clock","css/navigation","css/app"], () => (__webpack_require__("./resources/css/loading.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/punch_complete_popup","css/punch_finish_tab","css/loading","css/clock","css/navigation","css/app"], () => (__webpack_require__("./resources/css/punch_finish_tab.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/punch_complete_popup","css/punch_finish_tab","css/loading","css/clock","css/navigation","css/app"], () => (__webpack_require__("./resources/css/punch_complete_popup.css")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/punch_complete_popup","css/punch_finish_tab","css/loading","css/clock","css/navigation","css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

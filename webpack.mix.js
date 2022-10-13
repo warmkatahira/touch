@@ -23,6 +23,10 @@ mix.js('resources/js/app.js', 'public/js')
 .js('resources/js/punch_menu.js', 'public/js')
 .js('resources/js/punch_finish.js', 'public/js')
 .js('resources/js/punch_finish_input.js', 'public/js')
+.js('resources/js/punch_out.js', 'public/js')
+.js('resources/js/punch_return.js', 'public/js')
+.js('resources/js/punch_complete_popup.js', 'public/js')
+.css('resources/css/punch_complete_popup.css', 'public/css')
 .autoload({
     jquery: ['$', 'window.jQuery']
 })

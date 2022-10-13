@@ -14,14 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kintai_details', function (Blueprint $table) {
-            $table->bigIncrements('kintai_detail_id');
-            $table->unsignedBigInteger('kintai_id');
+            $table->string('kintai_detail_id')->primary();
+            $table->string('kintai_id');
             $table->unsignedBigInteger('customer_id');
-            $table->time('start_time');
-            $table->time('end_time')->nullable();
-            $table->time('start_time_adj')->nullable();
-            $table->time('end_time_adj')->nullable();
-            $table->unsignedInteger('operating_time')->nullable();
+            $table->unsignedInteger('customer_working_time');
             $table->timestamps();
             // 外部キー制約
             $table->foreign('kintai_id')->references('kintai_id')->on('kintais')->onDelete('cascade');

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kintais', function (Blueprint $table) {
-            $table->bigIncrements('kintai_id');
+            $table->string('kintai_id')->primary();
             $table->string('employee_no');
             $table->date('work_day');
             $table->time('begin_time');
@@ -25,12 +25,13 @@ return new class extends Migration
             $table->time('return_time')->nullable();
             $table->time('out_time_adj')->nullable();
             $table->time('return_time_adj')->nullable();
+            $table->boolean('out_enabled')->nullable();
             $table->unsignedInteger('rest_time')->nullable();
             $table->string('comment')->nullable();
+            $table->unsignedInteger('out_return_time');
             $table->unsignedInteger('working_time')->nullable();
             $table->unsignedInteger('over_time')->nullable();
-            $table->unsignedInteger('not_working_time')->nullable();
-            $table->boolean('early_work_begin_flg')->nullable();
+            $table->boolean('early_work_enabled');
             $table->timestamps();
         });
     }

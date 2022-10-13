@@ -10,7 +10,9 @@ class KintaiDetail extends Model
     use HasFactory;
     // 主キーカラムを変更
     protected $primaryKey = 'kintai_detail_id';
+    // オートインクリメント無効化
+    public $incrementing = false;
 
     // 操作するカラムを許可
-    protected $fillable = ['kintai_id', 'customer_id', 'start_time', 'created_at', 'updated_at'];
+    protected $fillable = ['kintai_detail_id', 'kintai_id', 'customer_id', 'customer_working_time',];
 }

@@ -1,10 +1,10 @@
 /* 全体を囲うコンテナー */
-.clock_container {
+/* .clock_container {
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-}
+} */
   
 /* 時計の共通スタイル */
 .clock {
@@ -12,21 +12,21 @@
 }
   
 /* 日付のスタイル */
-.clock-date {
+/* .clock-date {
     font-size: 40px;
-}
+} */
 
 /* 時間のスタイル */
-.clock-time {
+/* .clock-time {
     font-size: 100px;
-}
+} */
 
 /* 文字サイズ調整 */
-@media screen and (max-width: 500px) {
+/* @media screen and (max-width: 500px) {
     .clock-date {
         font-size: 5vw;
     }
     .clock-time {
         font-size: 20vw;
     }
-}
+} */

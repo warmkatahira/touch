@@ -9,6 +9,6 @@
         <div class="shadow"></div>
         <div class="shadow"></div>
         <div class="shadow"></div>
-        <span>Loading</span>
+        <span>読み込み中</span>
     </div>
 </div>

@@ -5,34 +5,27 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 use App\Models\Employee;
-use App\Models\Customer;
-use App\Models\Kintai;
-
 use App\Services\PunchBeginService;
 
 class PunchBeginController extends Controller
 {
 
-    public function menu()
-    {
-        return view('punch.menu');
-    }
-
     public function index()
     {
+        // 現在の日時を取得
+        $nowDate = new Carbon('now');
+        // 現在の時刻が8時台より前であればon、9時台以降であればoff
+        $punch_begin_type_enabled = $nowDate->hour <= 8 ? 'on' : 'off';
         // 自拠点の従業員情報を取得
         $employees = Employee::where('base_id', Auth::user()->base_id)->doesntHave('punch_begin_targets')->get();
-        // 自拠点の荷主情報を取得
-        $customers = Customer::where('control_base_id', Auth::user()->base_id)->get();
-        return view('punch.begin')->with([
+        return view('punch_begin.index')->with([
             'employees' => $employees,
-            'customers' => $customers,
+            'punch_begin_type_enabled' => $punch_begin_type_enabled,
         ]);
     }
 
-    public function confirm(Request $request)
+    public function enter(Request $request)
     {
         // 現在の日時を取得
         $nowDate = new Carbon('now');
@@ -41,10 +34,9 @@ class PunchBeginController extends Controller
         // リクエストパラメータを取得
         $req_param = $PunchBeginService->getRequestParameter($request);
         // 勤怠テーブルにレコードを追加
-        $kintai_id = $PunchBeginService->addKintai($req_param, $nowDate);
-        // 打刻者の情報を取得
-        $employee = $PunchBeginService->getEmployeeInfo($req_param);
-        session()->flash('alert_punch', "出勤打刻が完了しました\n\n" . $employee['employee_name'] . ' さん');
-        return redirect()->route('punch.menu');
+        $kintai = $PunchBeginService->addKintai($req_param, $nowDate);
+        session()->flash('punch_type', '出勤');
+        session()->flash('employee_name', $kintai->employee->employee_name);
+        return redirect()->route('punch.index');
     }
 }
