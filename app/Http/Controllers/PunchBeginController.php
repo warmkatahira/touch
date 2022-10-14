@@ -18,7 +18,9 @@ class PunchBeginController extends Controller
         // 現在の時刻が8時台より前であればon、9時台以降であればoff
         $punch_begin_type_enabled = $nowDate->hour <= 8 ? 'on' : 'off';
         // 自拠点の従業員情報を取得
-        $employees = Employee::where('base_id', Auth::user()->base_id)->doesntHave('punch_begin_targets')->get();
+        $employees = Employee::where('base_id', Auth::user()->base_id)->doesntHave('punch_begin_targets')
+                        ->orderBy('employee_no')
+                        ->get();
         return view('punch_begin.index')->with([
             'employees' => $employees,
             'punch_begin_type_enabled' => $punch_begin_type_enabled,

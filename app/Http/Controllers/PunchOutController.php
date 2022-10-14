@@ -13,7 +13,9 @@ class PunchOutController extends Controller
     public function index()
     {
         // 自拠点の従業員情報を取得
-        $employees = Employee::where('base_id', Auth::user()->base_id)->has('punch_out_targets')->get();
+        $employees = Employee::where('base_id', Auth::user()->base_id)->has('punch_out_targets')
+                        ->orderBy('employee_no')
+                        ->get();
         return view('punch_out.index')->with([
             'employees' => $employees,
         ]);
