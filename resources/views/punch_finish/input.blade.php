@@ -76,7 +76,7 @@
                     </ul>
                 @endforeach
             </div>
-            <button type="button" id="punch_finish_enter" class="punch_enter w-full text-center bg-pink-200 py-8 text-4xl rounded-lg mt-3">入力完了</button>
+            <button type="button" id="punch_finish_enter" class="punch_enter w-full text-center bg-orange-300 py-8 text-4xl rounded-lg mt-3">入力完了</button>
         </div>
     </form>
     <!-- モーダル -->
