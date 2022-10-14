@@ -37,6 +37,7 @@ class PunchBeginController extends Controller
         $kintai = $PunchBeginService->addKintai($req_param, $nowDate);
         session()->flash('punch_type', '出勤');
         session()->flash('employee_name', $kintai->employee->employee_name);
+        session()->flash('message', '本日も宜しくお願いします');
         return redirect()->route('punch.index');
     }
 }

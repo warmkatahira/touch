@@ -5,9 +5,9 @@
         <div class="punch_finish grid grid-cols-12 p-5">
             <div class="col-span-12 grid grid-cols-12 bg-gray-200 border-8 border-dotted border-blue-500">
                 <lord-icon src="https://cdn.lordicon.com/uutnmngi.json" trigger="loop" style="width:150px;height:150px" class="col-span-12 mx-auto block"></lord-icon>
-                <p class="text-8xl text-center col-start-4 col-span-6 rounded-lg mt-5"></lord-icon>{{ session('punch_type') }}</p>
+                <p class="text-8xl text-center col-start-4 col-span-6 rounded-lg mt-5 text-orange-600"></lord-icon>{{ session('punch_type') }}</p>
                 <p class="text-5xl text-center col-start-1 col-span-12">{{ session('employee_name') }}さん</p>
-                <img src="{{ asset('image/finish.svg') }}" class="col-start-1 col-span-12 mx-auto block">
+                <p class="col-start-1 col-span-12 text-center text-7xl tracking-in-expand" style="font-family:Kaisei Decol">{{ session('message') }}</p>
             </div>
         </div>
     @endif

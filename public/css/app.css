@@ -992,6 +992,9 @@ video {
 }.text-8xl {
   font-size: 6rem;
   line-height: 1;
+}.text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
 }.font-medium {
   font-weight: 500;
 }.font-semibold {
@@ -1058,6 +1061,9 @@ video {
 }.text-teal-700 {
   --tw-text-opacity: 1;
   color: rgb(15 118 110 / var(--tw-text-opacity));
+}.text-orange-600 {
+  --tw-text-opacity: 1;
+  color: rgb(234 88 12 / var(--tw-text-opacity));
 }.underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;

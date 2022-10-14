@@ -33,6 +33,7 @@ class PunchReturnController extends Controller
         $PunchReturnService->updatePunchReturnForKintai($kintai['kintai_id'], $nowDate, $kintai['out_time_adj']);
         session()->flash('punch_type', '戻り');
         session()->flash('employee_name', $kintai->employee->employee_name);
+        session()->flash('message', '');
         return redirect()->route('punch.index');
     }
 }

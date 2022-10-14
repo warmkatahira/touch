@@ -23,7 +23,7 @@ class PunchFinishInputService
     public function getFinishTimeAdj($nowDate)
     {
         // 現在の日時をインスタンス化
-        $finish_time_adj = new Carbon('2022-10-12 17:00:00');
+        $finish_time_adj = new Carbon('2022-10-12 18:00:00');
         //$finish_time_adj = new Carbon($nowDate);
         // 15分単位で切り捨て
         $finish_time_adj = $finish_time_adj->subMinutes($finish_time_adj->minute % 15);

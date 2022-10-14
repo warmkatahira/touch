@@ -78,6 +78,7 @@ class PunchFinishController extends Controller
         $PunchFinishEnterService->addPunchFinishForKintaiDetail($request->kintai_id, $request->working_time_input);
         session()->flash('punch_type', '退勤');
         session()->flash('employee_name', $kintai->employee->employee_name);
+        session()->flash('message', '1日お疲れ様でした');
         return redirect()->route('punch.index');
     }
 }

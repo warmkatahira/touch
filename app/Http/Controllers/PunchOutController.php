@@ -33,6 +33,7 @@ class PunchOutController extends Controller
         $PunchOutService->updatePunchOutForKintai($kintai['kintai_id'], $nowDate);
         session()->flash('punch_type', '外出');
         session()->flash('employee_name', $kintai->employee->employee_name);
+        session()->flash('message', '');
         return redirect()->route('punch.index');
     }
 }
