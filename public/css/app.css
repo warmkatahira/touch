@@ -558,8 +558,6 @@ video {
   grid-column-start: 7;
 }.col-start-9 {
   grid-column-start: 9;
-}.col-start-6 {
-  grid-column-start: 6;
 }.m-0 {
   margin: 0px;
 }.mx-5 {
