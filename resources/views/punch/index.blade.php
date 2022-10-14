@@ -11,7 +11,7 @@
             <a href="{{ route('punch_out.index') }}" class="col-span-3 h-40 bg-black text-white text-6xl text-center font-semibold rounded-lg shadow-lg py-12">外出</a>
             <a href="{{ route('punch_return.index') }}" class="col-span-3 h-40 bg-black text-white text-6xl text-center font-semibold rounded-lg shadow-lg py-12">戻り</a>
             <a href="{{ route('today_kintai.index') }}" class="col-span-3 h-40 bg-black text-white text-5xl 2xl:text-6xl text-center font-semibold rounded-lg shadow-lg py-14 2xl:py-12">今日の勤怠</a>
-            <a href="{{ route('this_month_kintai.index') }}" class="col-span-3 h-40 bg-black text-white text-6xl text-center font-semibold rounded-lg shadow-lg py-12">今月の勤怠</a>
+            <a href="{{ route('this_month_kintai.index') }}" class="col-span-3 h-40 bg-black text-white text-5xl 2xl:text-6xl text-center font-semibold rounded-lg shadow-lg py-14 2xl:py-12">今月の勤怠</a>
         </div>
     </div>
 </x-app-layout>
