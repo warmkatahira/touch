@@ -13,7 +13,10 @@
         <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
         <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@700&family=Kosugi+Maru&family=Merriweather&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+        <!-- Lordicon -->
+        <script src="https://cdn.lordicon.com/pzdvqjsp.js"></script>
 
         <!-- Styles -->
         <style>
@@ -27,7 +30,7 @@
     <body style="font-family:Kosugi Maru" class="bg-gray-100">
         <div class="min-h-screen">
             <div class="">
-                <p class="ml-5 text-6xl text-blue-500" style="font-family:DynaPuff">T<i class="las la-clock la-xs"></i>uch</p>
+                <p class="ml-5 text-6xl text-blue-500" style="font-family:Merriweather">T<lord-icon src="https://cdn.lordicon.com/mgmiqlge.json" trigger="loop" delay="2000" style="width:50px;height:50px"></lord-icon>uch</p>
 
 
             </div>

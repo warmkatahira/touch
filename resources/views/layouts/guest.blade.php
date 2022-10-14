@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
         <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@700&family=Kosugi+Maru&family=Merriweather&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
         <!-- favicon -->
         <link rel="shortcut icon" href="{{ asset('image/favicon.svg') }}">
