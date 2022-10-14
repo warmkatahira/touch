@@ -3,12 +3,12 @@
 <script src="{{ asset('js/punch_finish_tab.js') }}" defer></script>
 
 <x-app-layout>
-    <form method="post" action="{{ route('punch_finish.enter') }}" class="m=0">
+    <form method="post" id="punch_enter_form" action="{{ route('punch_finish.enter') }}" class="m=0">
         @csrf
         <div class="py-5 mx-5">
             <div class="grid grid-cols-12">
                 <a href="{{ route('punch_finish.index') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white hover:bg-sky-500 mb-5">戻る</a>
-                <p class="col-start-4 col-span-6 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">勤務情報入力画面</p>
+                <p class="col-start-4 col-span-6 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">勤務情報入力</p>
                 <!-- 概要情報を表示 -->
                 <div class="col-span-12 grid grid-cols-12 text-4xl py-3 text-white bg-blue-500 rounded-t-lg">
                     <p class="col-start-1 col-span-4 pl-3">{{ $employee->employee_name }}<span class="text-xl ml-3">さん</span></p>
@@ -17,12 +17,12 @@
                 </div>
                 <div class="col-start-1 col-span-12 border-2 border-blue-500">
                     <div class="py-5 grid grid-cols-12">
-                        <p class="col-span-1 text-blue-500 text-xl text-center pt-1">外出(時)</p>
-                        <p class="col-span-2 text-blue-500 text-2xl text-left">{{ number_format($kintai->out_return_time / 60, 2) }}</p>
-                        <p class="col-span-1 text-blue-500 text-xl text-center pt-1">休憩(分)</p>
-                        <input id="rest_time" name="rest_time" class="col-span-2 text-blue-500 text-2xl text-left" readonly>
-                        <p class="col-span-1 text-blue-500 text-xl text-center pt-1">稼働(時)</p>
-                        <input id="working_time" name="working_time" class="col-span-2 text-blue-500 text-2xl text-left" readonly>
+                        <p class="col-span-1 text-xl text-center pt-1">外出(時)</p>
+                        <p class="col-span-2 text-2xl text-left">{{ number_format($kintai->out_return_time / 60, 2) }}</p>
+                        <p class="col-span-1 text-xl text-center pt-1">休憩(分)</p>
+                        <input id="rest_time" name="rest_time" class="col-span-2 text-2xl text-left" readonly>
+                        <p class="col-span-1 text-xl text-center pt-1">稼働(時)</p>
+                        <input id="working_time" name="working_time" class="col-span-2 text-2xl text-left" readonly>
                         <input type="hidden" id="org_rest_time" value="{{ $rest_time }}">
                         <input type="hidden" id="org_working_time" value="{{ $working_time }}">
                         <input type="hidden" name="finish_time_adj" value="{{ $finish_time_adj }}">
@@ -37,7 +37,7 @@
                         @foreach($no_rest_times as $no_rest_time)
                             <div class="col-span-2">
                                 <input type="radio" name="no_rest_time" id="{{ $no_rest_time['minute'] }}" value="{{ $no_rest_time['minute'] }}" class="no_rest_time_select hidden" {{ $no_rest_time['minute'] == '0' ? 'checked' : '' }}>
-                                <label id="{{ $no_rest_time['minute'].'_label' }}" for="{{ $no_rest_time['minute'] }}" class="cursor-pointer flex flex-col w-full max-w-lg mx-auto text-center border-2 rounded-lg border-gray-900 p-2 text-2xl hover:bg-sky-500 hover:text-white">{{ $no_rest_time['text1'] }}</label>
+                                <label id="{{ $no_rest_time['minute'].'_label' }}" for="{{ $no_rest_time['minute'] }}" class="cursor-pointer flex flex-col w-full max-w-lg mx-auto text-center border-2 rounded-lg border-gray-900 p-2 text-2xl">{{ $no_rest_time['text1'] }}</label>
                             </div>
                         @endforeach
                     </div>
@@ -62,7 +62,7 @@
                 <ul class="tab_detail_wrap show">
                     <div class="grid grid-cols-12 gap-4 mt-5">
                         @foreach($customers as $customer)
-                            <button type="button" class="working_time_input_modal_open col-span-4 text-center text-2xl bg-black text-white hover:bg-sky-500 rounded-lg py-4 px-2" value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</button>
+                            <button type="button" class="working_time_input_modal_open col-span-4 text-center text-2xl bg-black text-white rounded-lg py-4 px-2" value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</button>
                         @endforeach
                     </div>
                 </ul>
@@ -70,13 +70,13 @@
                     <ul class="tab_detail_wrap">
                         <div class="grid grid-cols-12 gap-4 mt-5">
                             @foreach($customer_group->customers as $customer)
-                                <button type="button" class="working_time_input_modal_open col-span-4 text-center text-2xl bg-black text-white hover:bg-sky-500 rounded-lg py-4 px-2" value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</button>
+                                <button type="button" class="working_time_input_modal_open col-span-4 text-center text-2xl bg-black text-white rounded-lg py-4 px-2" value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</button>
                             @endforeach
                         </div>
                     </ul>
                 @endforeach
             </div>
-            <button type="submit" id="punch_finish_enter" class="w-full text-center bg-pink-200 hover:bg-sky-500 hover:text-white py-8 text-4xl rounded-lg mt-3">入力完了</button>
+            <button type="button" id="punch_finish_enter" class="punch_enter w-full text-center bg-pink-200 py-8 text-4xl rounded-lg mt-3">入力完了</button>
         </div>
     </form>
     <!-- モーダル -->
@@ -84,7 +84,7 @@
         <div class="relative mx-auto shadow-lg rounded-md bg-white">
             <!-- モーダルヘッダー -->
             <div class="flex justify-between items-center bg-black text-white text-xl rounded-t-md px-4 py-2">
-                <h4>荷主稼働時間入力画面</h4>
+                <h4>荷主稼働時間入力</h4>
                 <button class="working_time_input_modal_close"><i class="las la-window-close"></i></button>
             </div>
             <!-- モーダルボディー -->
@@ -129,12 +129,29 @@
             </div>
             <!-- モーダルフッター -->
             <div class="px-4 py-2 border-t border-t-gray-500 grid grid-cols-12">
-                <a id="working_time_input_enter" class="cursor-pointer rounded-lg text-white bg-blue-500 hover:bg-gray-200 hover:text-black hover:border hover:border-black text-center p-4 col-span-5">
+                <a id="working_time_input_enter" class="cursor-pointer rounded-lg text-white bg-blue-500 text-center p-4 col-span-5">
                     入力
                 </a>
-                <a class="working_time_input_modal_close cursor-pointer rounded-lg text-white bg-red-400 hover:bg-gray-200 hover:text-black hover:border hover:border-black text-center p-4 col-start-8 col-span-5">
+                <a class="working_time_input_modal_close cursor-pointer rounded-lg text-white bg-red-400 text-center p-4 col-start-8 col-span-5">
                     キャンセル
                 </a>
+            </div>
+        </div>
+    </div>
+    <!-- 打刻確認モーダル -->
+    <div id="punch_confirm_modal" class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-10">
+        <div class="relative top-52 mx-auto shadow-lg rounded-md bg-white">
+            <!-- モーダルヘッダー -->
+            <div class="flex justify-between items-center bg-blue-500 text-white text-xl rounded-t-md px-4 py-2">
+                <p id="modal_title" class="text-2xl">退勤処理を行いますか？</p>
+            </div>
+            <!-- モーダルボディー -->
+            <div class="p-10">
+                <div class="grid grid-cols-12">
+                    <p id="punch_target_employee_name" class="col-span-12 text-4xl mb-10">{{ $employee->employee_name }}さん</p>
+                    <a id="punch_confirm_enter" class="cursor-pointer rounded-lg text-white bg-black text-center p-4 col-span-5 text-4xl">退勤</a>
+                    <a id="punch_confirm_cancel" class="cursor-pointer rounded-lg text-white bg-red-400 text-center p-4 col-start-8 col-span-5 text-4xl">キャンセル</a>
+                </div>
             </div>
         </div>
     </div>

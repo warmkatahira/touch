@@ -10924,18 +10924,42 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 /*!**************************************!*\
-  !*** ./resources/js/punch_return.js ***!
+  !*** ./resources/js/punch_common.js ***!
   \**************************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-// 従業員ボタンが押下されたら
-$("[class^=punch_return_enter]").on("click", function () {
-  var result = window.confirm("戻り打刻を実施しますか？\n\n" + this.innerHTML); // 「はい」が押下されたらsubmit、「いいえ」が押下されたら処理キャンセル
+// 要素を取得
+var page_title = document.getElementById('page_title');
+var punch_confirm_modal = document.getElementById('punch_confirm_modal');
+var modal_title = document.getElementById('modal_title');
+var employee_no = document.getElementById('employee_no');
+var punch_target_employee_name = document.getElementById('punch_target_employee_name');
+var punch_confirm_enter = document.getElementById('punch_confirm_enter');
+var punch_enter_form = document.getElementById('punch_enter_form'); // 画面読み込み時の処理
 
-  if (result == true) {
-    submit();
-  } else {
-    return false;
-  }
+window.onload = function () {
+  // モーダルのタイトルをセット
+  modal_title.innerHTML = page_title.innerHTML + '処理を行いますか？'; // モーダルの確定ボタンの文字をセット
+
+  punch_confirm_enter.innerHTML = page_title.innerHTML;
+}; // 打刻確認モーダルを開く
+
+
+$("[class^=punch_enter]").on("click", function () {
+  // モーダルを表示
+  punch_confirm_modal.classList.remove('hidden'); // 従業員番号と従業員名を出力
+
+  employee_no.value = this.value;
+  punch_target_employee_name.innerHTML = this.innerHTML + 'さん';
+}); // 打刻確認モーダルを閉じる
+
+$("[id=punch_confirm_cancel]").on("click", function () {
+  // モーダルを非表示
+  punch_confirm_modal.classList.add('hidden');
+}); // 打刻実行ボタンが押下されたら
+
+$("[id=punch_confirm_enter]").on("click", function () {
+  // フォームをサブミット
+  punch_enter_form.submit();
 });
 })();
 

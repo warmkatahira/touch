@@ -34,9 +34,9 @@ class PunchBeginController extends Controller
         // リクエストパラメータを取得
         $req_param = $PunchBeginService->getRequestParameter($request);
         // 勤怠テーブルにレコードを追加
-        $kintai = $PunchBeginService->addKintai($req_param, $nowDate);
+        //$kintai = $PunchBeginService->addKintai($req_param, $nowDate);
         session()->flash('punch_type', '出勤');
-        session()->flash('employee_name', $kintai->employee->employee_name);
+        session()->flash('employee_name', '$kintai->employee->employee_name');
         return redirect()->route('punch.index');
     }
 }

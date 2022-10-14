@@ -9,9 +9,9 @@
                 <thead>
                     <tr class="text-left text-white bg-gray-600 border-gray-600">
                         <th class="font-thin p-2 px-2 w-2/12">拠点</th>
-                        <th class="font-thin p-2 px-2 w-1/12">従業員番号</th>
-                        <th class="font-thin p-2 px-2 w-4/12">従業員名</th>
-                        <th class="font-thin p-2 px-2 w-1/12">従業員区分</th>
+                        <th class="font-thin p-2 px-2 w-1/12">番号</th>
+                        <th class="font-thin p-2 px-2 w-4/12">氏名</th>
+                        <th class="font-thin p-2 px-2 w-1/12">区分</th>
                         <th class="font-thin p-2 px-2 w-2/12 text-right">稼働時間</th>
                         <th class="font-thin p-2 px-2 w-2/12 text-right">残業時間</th>
                     </tr>

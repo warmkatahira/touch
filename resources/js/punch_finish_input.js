@@ -9,6 +9,8 @@ const rest_time = document.getElementById('rest_time');
 const org_rest_time = document.getElementById('org_rest_time');
 const working_time = document.getElementById('working_time');
 const org_working_time = document.getElementById('org_working_time');
+const punch_confirm_modal = document.getElementById('punch_confirm_modal');
+const punch_enter_form = document.getElementById('punch_enter_form');
 
 // 荷主稼働時間入力モーダルを開く
 $("[class^=working_time_input_modal_open]").on("click",function(){
@@ -136,8 +138,22 @@ $("[id=punch_finish_enter]").on("click",function(){
         if (Number(input_time_left.innerHTML) < 0) {
             throw new Error('荷主稼働時間がマイナスになっています。\n時間を調整して下さい。');
         }
+        // モーダルを表示
+        punch_confirm_modal.classList.remove('hidden');
     } catch (e) {
         alert(e.message);
         return false;
     }
+});
+
+// 打刻確認モーダルを閉じる
+$("[id=punch_confirm_cancel]").on("click",function(){
+    // モーダルを非表示
+    punch_confirm_modal.classList.add('hidden');
+});
+
+// 打刻実行ボタンが押下されたら
+$("[id=punch_confirm_enter]").on("click",function(){
+    // フォームをサブミット
+    punch_enter_form.submit();
 });
