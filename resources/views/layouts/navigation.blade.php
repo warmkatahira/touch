@@ -70,7 +70,7 @@
                 </form>
             </ul>
         </div>
-        <p class="col-start-5 col-span-4 text-6xl text-blue-500 text-center" style="font-family:Source Sans Pro">T<i class="las la-clock la-xs la-spin"></i>uch</p>
+        <p class="col-start-5 col-span-4 text-6xl text-blue-500 text-center" style="font-family:Merriweather">T<i class="las la-clock la-xs la-spin"></i>uch</p>
         <p class="col-start-11 col-span-2 text-right text-xl mr-3 mt-3">{{ Auth::user()->name }}</p>
     </div>
 </header>
