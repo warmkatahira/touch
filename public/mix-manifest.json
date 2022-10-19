@@ -14,5 +14,6 @@
     "/css/loading.css": "/css/loading.css",
     "/css/clock.css": "/css/clock.css",
     "/css/navigation.css": "/css/navigation.css",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/css/theme_color.css": "/css/theme_color.css"
 }

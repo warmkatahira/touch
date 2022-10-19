@@ -33,6 +33,7 @@
     <body style="font-family:Kosugi Maru">
         <div class="min-h-screen">
             @include('layouts.navigation')
+            <x-alert/>
             <!-- Page Content -->
             <main>
                 {{ $slot }}

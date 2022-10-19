@@ -1,0 +1,23 @@
+.base_theme_bg {
+    background-color: #cab0b0;
+}
+
+.accent_theme_bg {
+    background-color: #8e8eff;
+}
+
+.sub_theme_bg {
+    background-color: #fff2e5;
+}
+
+.base_theme_tx {
+    color: #cab0b0;
+}
+
+.accent_theme_tx {
+    color: #8e8eff;
+}
+
+.sub_theme_tx {
+    color: #fff2e5;
+}

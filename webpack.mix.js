@@ -26,6 +26,7 @@ mix.js('resources/js/app.js', 'public/js')
 .js('resources/js/punch_complete_popup.js', 'public/js')
 .css('resources/css/punch_complete_popup.css', 'public/css')
 .js('resources/js/punch_common.js', 'public/js')
+.css('resources/css/theme_color.css', 'public/css')
 .autoload({
     jquery: ['$', 'window.jQuery']
 })

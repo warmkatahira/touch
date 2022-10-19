@@ -20,10 +20,6 @@
     flex: auto;
 }
 
-.tab_menu:hover{
-    background-color: rgb(229 231 235);
-}
-
 .tab_detail_wrap{
     display: none;
 }

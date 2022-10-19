@@ -52,7 +52,7 @@
                 </div>
             </div>
             <!-- 荷主情報のタブを表示 -->
-            <div class="mt-5 p-5 border-2 border-blue-500 rounded-lg bg-sky-100">
+            <div class="mt-5 p-5 border-2 border-blue-500 rounded-lg">
                 <ul class="tab">
                     <li class="tab_menu active">全て</li>
                     @foreach($customer_groups as $customer_group)

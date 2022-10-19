@@ -7,6 +7,7 @@ use App\Http\Controllers\PunchFinishController;
 use App\Http\Controllers\PunchOutController;
 use App\Http\Controllers\PunchReturnController;
 use App\Http\Controllers\KintaiCheckController;
+use App\Http\Controllers\KintaiListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,3 +66,8 @@ Route::controller(KintaiCheckController::class)->group(function(){
     Route::get('/this_month_kintai', 'this_month_kintai_index')->name('this_month_kintai.index');
 });
 
+// 勤怠一覧
+Route::controller(KintaiListController::class)->group(function(){
+    Route::get('/kintai_list', 'index')->name('kintai_list.index');
+    Route::get('/kintai_list_search', 'search')->name('kintai_list.search');
+});
