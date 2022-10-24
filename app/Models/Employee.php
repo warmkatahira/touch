@@ -59,4 +59,16 @@ class Employee extends Model
                 ->whereNotNull('out_time')
                 ->whereNull('return_time');
     }
+
+    // 従業員情報から拠点情報を取得
+    public function base()
+    {
+        return $this->belongsTo('App\Models\Base', 'base_id', 'base_id');
+    }
+
+    // 従業員情報から従業員区分情報を取得
+    public function employee_category()
+    {
+        return $this->belongsTo('App\Models\EmployeeCategory', 'employee_category_id', 'employee_category_id');
+    }
 }

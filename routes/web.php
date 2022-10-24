@@ -8,6 +8,7 @@ use App\Http\Controllers\PunchOutController;
 use App\Http\Controllers\PunchReturnController;
 use App\Http\Controllers\KintaiCheckController;
 use App\Http\Controllers\KintaiListController;
+use App\Http\Controllers\KintaiModifyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,4 +71,11 @@ Route::controller(KintaiCheckController::class)->group(function(){
 Route::controller(KintaiListController::class)->group(function(){
     Route::get('/kintai_list', 'index')->name('kintai_list.index');
     Route::get('/kintai_list_search', 'search')->name('kintai_list.search');
+    Route::get('/kintai_detail', 'detail')->name('kintai_list.detail');
+});
+
+// 勤怠修正
+Route::controller(KintaiModifyController::class)->group(function(){
+    Route::get('/kintai_modify', 'index')->name('kintai_modify.index');
+    Route::get('/kintai_modify_input', 'input')->name('kintai_modify.input');
 });

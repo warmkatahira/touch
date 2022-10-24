@@ -48,8 +48,6 @@ class PunchFinishController extends Controller
         $no_rest_times = $PunchFinishInputService->getNoRestTime($rest_time);
         // 稼働時間を算出
         $working_time = $PunchFinishInputService->getWorkingTime($kintai->begin_time_adj, $finish_time_adj, $rest_time, $kintai->out_return_time);
-        // 従業員情報を取得
-        $employee = Employee::where('employee_no', $request->employee_no)->first();
         // 自拠点の荷主情報を取得
         $customers = Customer::where('control_base_id', Auth::user()->base_id)->get();
         $customer_groups = CustomerGroup::all();
@@ -60,7 +58,6 @@ class PunchFinishController extends Controller
             'working_time' => $working_time,
             'rest_time' => $rest_time,
             'no_rest_times' => $no_rest_times,
-            'employee' => $employee,
             'customers' => $customers,
             'customer_groups' => $customer_groups,
         ]);

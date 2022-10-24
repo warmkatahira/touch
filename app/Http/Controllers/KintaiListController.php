@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Kintai;
+use App\Models\KintaiDetail;
 use App\Services\KintaiListService;
 
 class KintaiListController extends Controller
@@ -52,6 +54,19 @@ class KintaiListController extends Controller
             'kintais' => $kintais,
             'bases' => $pulldown['bases'],
             'employee_categories' => $pulldown['employee_categories'],
+        ]);
+    }
+
+    public function detail(Request $request)
+    {
+        // 勤怠IDで対象の勤怠を抽出
+        $kintai = Kintai::where('kintai_id', $request->kintai_id)->first();
+        $kintai_details = KintaiDetail::where('kintai_id', $request->kintai_id)
+                            ->orderBy('customer_working_time', 'desc')
+                            ->get();
+        return view('kintai_list.detail')->with([
+            'kintai' => $kintai,
+            'kintai_details' => $kintai_details,
         ]);
     }
 }

@@ -45,16 +45,17 @@ class PunchReturnService
     }
 
     // 戻り時間調整を算出・取得
-    public function getReturnTimeAdj($nowDate)
+    public function getReturnTimeAdj($Date)
     {
-        // 現在の日時をインスタンス化
-        $return_time_adj = new Carbon($nowDate);
+        // 日時をインスタンス化
+        $return_time_adj = new Carbon($Date);
         // 15分単位で切り上げ
         $return_time_adj = $return_time_adj->addMinutes(15 - $return_time_adj->minute % 15);
         $return_time_adj = $return_time_adj->format('H:i:00');
         return $return_time_adj;
     }
 
+    // 外出戻り時間を算出・取得
     public function getOutReturnTime($out_time_adj, $return_time_adj)
     {
         // 外出時間調整を分数に変換

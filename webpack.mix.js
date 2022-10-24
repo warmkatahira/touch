@@ -27,6 +27,7 @@ mix.js('resources/js/app.js', 'public/js')
 .css('resources/css/punch_complete_popup.css', 'public/css')
 .js('resources/js/punch_common.js', 'public/js')
 .css('resources/css/theme_color.css', 'public/css')
+.js('resources/js/kintai_list.js', 'public/js')
 .autoload({
     jquery: ['$', 'window.jQuery']
 })

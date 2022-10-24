@@ -9,4 +9,9 @@
             <p class="text-sm">{!! nl2br(e(session('alert_danger'))) !!}</p>
         </div>
     @endif
+    @foreach ($errors->all() as $error)
+        <div class="bg-red-200 border border-red-500 text-red-700 px-4 py-3 rounded mt-5">
+            <li class="text-sm text-red-700">{{ $error }}</li>
+        </div>
+    @endforeach
 </div>

@@ -15,4 +15,10 @@ class KintaiDetail extends Model
 
     // 操作するカラムを許可
     protected $fillable = ['kintai_detail_id', 'kintai_id', 'customer_id', 'customer_working_time',];
+
+    // 勤怠から荷主情報を取得
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\Customer', 'customer_id', 'customer_id');
+    }
 }

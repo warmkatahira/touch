@@ -41,10 +41,10 @@ class PunchOutService
     }
 
     // 外出時間調整を算出・取得
-    public function getOutTimeAdj($nowDate)
+    public function getOutTimeAdj($Date)
     {
-        // 現在の日時をインスタンス化
-        $out_time_adj = new Carbon($nowDate);
+        // 日時をインスタンス化
+        $out_time_adj = new Carbon($Date);
         // 15分単位で切り捨て
         $out_time_adj = $out_time_adj->subMinutes($out_time_adj->minute % 15);
         $out_time_adj = $out_time_adj->format('H:i:00');

@@ -62,6 +62,8 @@ class KintaiListService
 
     public function getKintaiSearch()
     {
+        // 現在のURLを取得
+        session(['back_url_1' => url()->full()]);
         // テーブルを結合して、出勤日の条件を適用
         $kintais = Employee::join('kintais', 'kintais.employee_no', 'employees.employee_no')
                     ->whereBetween('work_day', [session('search_work_day_from'), session('search_work_day_to')]);

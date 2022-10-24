@@ -8,7 +8,7 @@
         <div class="py-5 mx-5">
             <div class="grid grid-cols-12">
                 <a href="{{ route('punch_finish.index') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white mb-5">戻る</a>
-                <p class="col-start-4 col-span-6 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">勤務情報入力</p>
+                <p class="col-start-2 col-span-11 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">勤怠修正<i class="las la-caret-right"></i>勤務情報入力</p>
                 <!-- 概要情報を表示 -->
                 <div class="col-span-12 grid grid-cols-12 text-4xl py-3 text-white bg-blue-500 rounded-t-lg">
                     <p class="col-start-1 col-span-4 pl-3">{{ $kintai->employee->employee_name }}<span class="text-xl ml-3">さん</span></p>
@@ -129,10 +129,10 @@
             </div>
             <!-- モーダルフッター -->
             <div class="px-4 py-2 border-t border-t-gray-500 grid grid-cols-12">
-                <a id="working_time_input_enter" class="cursor-pointer rounded-lg text-white bg-blue-500 text-center p-4 col-span-5 text-3xl">
+                <a id="working_time_input_enter" class="cursor-pointer rounded-lg text-white bg-blue-500 text-center p-4 col-span-5">
                     入力
                 </a>
-                <a class="working_time_input_modal_close cursor-pointer rounded-lg text-white bg-red-400 text-center p-4 col-start-8 col-span-5 text-3xl">
+                <a class="working_time_input_modal_close cursor-pointer rounded-lg text-white bg-red-400 text-center p-4 col-start-8 col-span-5">
                     キャンセル
                 </a>
             </div>
