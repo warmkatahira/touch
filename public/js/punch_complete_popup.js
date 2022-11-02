@@ -9,7 +9,7 @@ window.addEventListener('load', function () {
   setTimeout(function () {
     punch_finish.classList.add('hide');
     scroll_enabled();
-  }, 60000);
+  }, 5000);
 }, false);
 
 function handle(event) {

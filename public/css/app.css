@@ -544,6 +544,8 @@ video {
   grid-column: span 10 / span 10;
 }.col-span-9 {
   grid-column: span 9 / span 9;
+}.col-span-8 {
+  grid-column: span 8 / span 8;
 }.col-start-8 {
   grid-column-start: 8;
 }.col-start-1 {
@@ -562,8 +564,8 @@ video {
   grid-column-start: 4;
 }.col-start-7 {
   grid-column-start: 7;
-}.col-start-6 {
-  grid-column-start: 6;
+}.col-start-10 {
+  grid-column-start: 10;
 }.row-span-1 {
   grid-row: span 1 / span 1;
 }.m-0 {
