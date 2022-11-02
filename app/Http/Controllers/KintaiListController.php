@@ -20,11 +20,11 @@ class KintaiListController extends Controller
         // 検索条件と一致した勤怠を取得
         $kintais = $KintaiListService->getKintaiSearch();
         // 検索条件に使用するプルダウン情報を取得
-        $pulldown = $KintaiListService->getPulldown();
+        $pulldown_info = $KintaiListService->getPulldownInfo();
         return view('kintai_list.index')->with([
             'kintais' => $kintais,
-            'bases' => $pulldown['bases'],
-            'employee_categories' => $pulldown['employee_categories'],
+            'bases' => $pulldown_info['bases'],
+            'employee_categories' => $pulldown_info['employee_categories'],
         ]);
     }
 
@@ -49,16 +49,18 @@ class KintaiListController extends Controller
             session()->flash('alert_danger', $error_info);
         }
         // 検索条件に使用するプルダウン情報を取得
-        $pulldown = $KintaiListService->getPulldown();
+        $pulldown_info = $KintaiListService->getPulldownInfo();
         return view('kintai_list.index')->with([
             'kintais' => $kintais,
-            'bases' => $pulldown['bases'],
-            'employee_categories' => $pulldown['employee_categories'],
+            'bases' => $pulldown_info['bases'],
+            'employee_categories' => $pulldown_info['employee_categories'],
         ]);
     }
 
     public function detail(Request $request)
     {
+        // 現在のURLを取得
+        session(['back_url_2' => url()->full()]);
         // 勤怠IDで対象の勤怠を抽出
         $kintai = Kintai::where('kintai_id', $request->kintai_id)->first();
         $kintai_details = KintaiDetail::where('kintai_id', $request->kintai_id)

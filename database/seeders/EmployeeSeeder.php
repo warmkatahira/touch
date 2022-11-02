@@ -21,6 +21,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => '社員A',
             'employee_category_id' => 1,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 0,
         ]);
         Employee::create([
             'employee_no' => '0002',
@@ -28,6 +29,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => '社員B',
             'employee_category_id' => 1,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 0,
         ]);
         Employee::create([
             'employee_no' => '0003',
@@ -35,6 +37,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => '社員C',
             'employee_category_id' => 1,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 0,
         ]);
         Employee::create([
             'employee_no' => '1001',
@@ -42,6 +45,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => 'パートA',
             'employee_category_id' => 2,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 40.25,
         ]);
         Employee::create([
             'employee_no' => '0005',
@@ -49,6 +53,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => '社員D',
             'employee_category_id' => 1,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 50,
         ]);
         Employee::create([
             'employee_no' => '1002',
@@ -56,6 +61,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => 'パートB',
             'employee_category_id' => 2,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 60.25,
         ]);
         Employee::create([
             'employee_no' => '1003',
@@ -63,6 +69,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => 'パートC',
             'employee_category_id' => 2,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 100,
         ]);
         Employee::create([
             'employee_no' => '1004',
@@ -70,6 +77,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => 'パートD',
             'employee_category_id' => 2,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 120,
         ]);
         Employee::create([
             'employee_no' => '1005',
@@ -77,6 +85,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => 'パートE',
             'employee_category_id' => 2,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 111.75,
         ]);
         Employee::create([
             'employee_no' => '1006',
@@ -84,6 +93,7 @@ class EmployeeSeeder extends Seeder
             'employee_name' => 'パートF',
             'employee_category_id' => 2,
             'hourly_wage' => 2000,
+            'monthly_workable_time_setting' => 0,
         ]);
     }
 }

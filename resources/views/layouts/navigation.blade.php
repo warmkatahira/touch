@@ -64,7 +64,10 @@
             <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
             <ul class="menu">
                 <li><a href="{{ route('punch.index') }}">打刻</a></li>
+                <li><a href="{{ route('punch_manual.index') }}">手動打刻</a></li>
                 <li><a href="{{ route('kintai_list.index') }}">勤怠一覧</a></li>
+                <li><a href="{{ route('employee_list.index') }}">従業員一覧</a></li>
+                <li><a href="{{ route('kintai_report_output.index') }}">勤怠表出力</a></li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">ログアウト</a></li>

@@ -11027,7 +11027,7 @@ function no_rest_time_select() {
   for (var i = 0; i < no_rest_times.length; i++) {
     if (no_rest_times[i].checked) {
       var element = document.getElementById(no_rest_times[i].id + '_label');
-      element.classList.add('bg-orange-300'); // 休憩時間を変更
+      element.classList.add('bg-blue-200'); // 休憩時間を変更
 
       var select_no_rest_time = document.getElementById(no_rest_times[i].id);
       rest_time.value = Number(org_rest_time.value) - Number(select_no_rest_time.value); // 勤務時間を変更
@@ -11046,7 +11046,7 @@ function no_rest_time_select() {
       // 非選択要素のCSSを調整
       var _element = document.getElementById(no_rest_times[i].id + '_label');
 
-      _element.classList.remove('bg-orange-300');
+      _element.classList.remove('bg-blue-200');
     }
   }
 } // 画面読み込み時の処理

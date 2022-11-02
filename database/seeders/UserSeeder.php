@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'user_name' => '01',
             'email' => 'warm01@warm.co.jp',
             'password' => bcrypt('warm1111'),
-            'role_id' => 21,
+            'role_id' => 41,
             'base_id' => 1,
             'status' => 1,
         ]);

@@ -30,7 +30,6 @@ class KintaiCheckController extends Controller
         $start_end_of_month = $ThisMonthKintaiService->getStartEndOfMonth();
         // 月単位で勤怠を集計・取得
         $month_kintais = $ThisMonthKintaiService->getMonthKintai($start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
-
         return view('this_month_kintai.index')->with([
             'month_kintais' => $month_kintais,
         ]);

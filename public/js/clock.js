@@ -14,7 +14,7 @@ var clock = function clock() {
   var date = d.getDate(); // 曜日を取得
 
   var dayNum = d.getDay();
-  var weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  var weekday = ["(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)"];
   var day = weekday[dayNum]; // 時を取得
 
   var hour = d.getHours(); // 分を取得

@@ -33,7 +33,10 @@
     <body style="font-family:Kosugi Maru">
         <div class="min-h-screen">
             @include('layouts.navigation')
+            <!-- アラート表示 -->
             <x-alert/>
+            <!-- 打刻完了ポップアップ画面 -->
+            <x-punch-complete-popup/>
             <!-- Page Content -->
             <main>
                 {{ $slot }}

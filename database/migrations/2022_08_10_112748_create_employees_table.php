@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->string('employee_no')->primary();
             $table->unsignedInteger('base_id');
-            $table->string('employee_name');
+            $table->string('employee_name', 30);
             $table->unsignedInteger('employee_category_id');
-            $table->unsignedInteger('start_customer_id')->nullable();
-            $table->unsignedInteger('hourly_wage');
+            $table->unsignedInteger('hourly_wage')->nullable();
+            $table->double('monthly_workable_time_setting', 5, 2)->nullable();
             $table->timestamps();
         });
     }

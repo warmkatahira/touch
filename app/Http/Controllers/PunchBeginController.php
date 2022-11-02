@@ -13,30 +13,24 @@ class PunchBeginController extends Controller
 
     public function index()
     {
-        // 現在の日時を取得
-        $nowDate = new Carbon('now');
-        // 現在の時刻が8時台より前であればon、9時台以降であればoff
-        $punch_begin_type_enabled = $nowDate->hour <= 8 ? 'on' : 'off';
-        // 自拠点の従業員情報を取得
-        $employees = Employee::where('base_id', Auth::user()->base_id)->doesntHave('punch_begin_targets')
-                        ->orderBy('employee_no')
-                        ->get();
+        // サービスクラスを定義
+        $PunchBeginService = new PunchBeginService;
+        // 出勤タイプを変更するボタンの表示を管理
+        $punch_begin_type_btn_disp = $PunchBeginService->getBeginTypeBtnDisp();
+        // 出勤打刻対象者を取得
+        $employees = $PunchBeginService->getPunchBeginTargetEmployee();
         return view('punch_begin.index')->with([
             'employees' => $employees,
-            'punch_begin_type_enabled' => $punch_begin_type_enabled,
+            'punch_begin_type_btn_disp' => $punch_begin_type_btn_disp,
         ]);
     }
 
     public function enter(Request $request)
     {
-        // 現在の日時を取得
-        $nowDate = new Carbon('now');
         // サービスクラスを定義
         $PunchBeginService = new PunchBeginService;
-        // リクエストパラメータを取得
-        $req_param = $PunchBeginService->getRequestParameter($request);
         // 勤怠テーブルにレコードを追加
-        $kintai = $PunchBeginService->addKintai($req_param, $nowDate);
+        $kintai = $PunchBeginService->addKintai($request);
         session()->flash('punch_type', '出勤');
         session()->flash('employee_name', $kintai->employee->employee_name);
         session()->flash('message', '本日も宜しくお願いします');

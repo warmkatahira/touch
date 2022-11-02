@@ -5,19 +5,15 @@
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12 gap-4">
             <a href="{{ route('punch.index') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white mb-5">戻る</a>
-            <p id="page_title" class="col-start-2 col-span-2 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">戻り</p>
+            <p class="col-start-2 col-span-2 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">戻り</p>
             <x-clock/>
         </div>
         <form method="post" id="punch_enter_form" action="{{ route('punch_return.enter') }}" class="m-0">
             @csrf
             <!-- 従業員名ボタンを表示 -->
-            <div class="grid grid-cols-12 gap-4 mt-10">
-                @foreach($employees as $employee)
-                    <button type="button" class="punch_enter col-span-3 bg-black text-white hover:bg-sky-500 text-center text-3xl rounded-lg px-8 py-10" value="{{ $employee->employee_no }}">{{ $employee->employee_name }}</button>
-                @endforeach
-            </div>
-            <input type="hidden" id="employee_no" name="employee_no">
+            <x-punch-employee-btn :employees="$employees" id="kintai_id"/>
         </form>
     </div>
-    <x-punch_confirm_modal/>
+    <!-- 打刻確認モーダル -->
+    <x-punch-confirm-modal-1 proc="戻り"/>
 </x-app-layout>

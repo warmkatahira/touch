@@ -10927,15 +10927,15 @@ var __webpack_exports__ = {};
   !*** ./resources/js/punch_finish.js ***!
   \**************************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-// 登録用のモーダルを開く
-$("[class^=punch_finish_confirm]").on("click", function () {
-  modal = document.getElementById('punch_finish_confirm_modal');
-  modal.classList.remove('hidden');
-}); // 登録用のモーダルを閉じる
+// 要素を取得
+var punch_enter_form = document.getElementById('punch_enter_form');
+var punch_key = document.getElementById('punch_key'); // 従業員名ボタンが押下されたら
 
-$("[class^=punch_finish_confirm_modal]").on("click", function () {
-  modal = document.getElementById('punch_finish_confirm_modal');
-  modal.classList.add('hidden');
+$("[class^=punch_enter]").on("click", function () {
+  // 勤怠IDをセット
+  punch_key.value = this.value; // 次の画面へ移動
+
+  punch_enter_form.submit();
 });
 })();
 

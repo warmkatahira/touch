@@ -102,7 +102,7 @@ function no_rest_time_select(){
     for(var i = 0; i < no_rest_times.length; i++){
         if(no_rest_times[i].checked) {
             const element = document.getElementById(no_rest_times[i].id + '_label');
-            element.classList.add('bg-orange-300');
+            element.classList.add('bg-blue-200');
             // 休憩時間を変更
             const select_no_rest_time = document.getElementById(no_rest_times[i].id);
             rest_time.value = Number(org_rest_time.value) - Number(select_no_rest_time.value);
@@ -118,7 +118,7 @@ function no_rest_time_select(){
         if(!no_rest_times[i].checked) {
             // 非選択要素のCSSを調整
             const element = document.getElementById(no_rest_times[i].id + '_label');
-            element.classList.remove('bg-orange-300');
+            element.classList.remove('bg-blue-200');
         }
     }
 }

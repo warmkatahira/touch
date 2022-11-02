@@ -27,12 +27,17 @@ return new class extends Migration
             $table->time('return_time_adj')->nullable();
             $table->boolean('out_enabled')->nullable();
             $table->unsignedInteger('rest_time')->nullable();
+            $table->unsignedInteger('no_rest_time')->nullable();
             $table->string('comment')->nullable();
-            $table->unsignedInteger('out_return_time');
+            $table->unsignedInteger('out_return_time')->nullable();
             $table->unsignedInteger('working_time')->nullable();
             $table->unsignedInteger('over_time')->nullable();
-            $table->boolean('early_work_enabled');
+            $table->boolean('is_early_worked');
+            $table->boolean('is_modified')->nullable();
+            $table->boolean('is_manual_punched')->nullable();
             $table->timestamps();
+            // 従業員番号に紐付けて更新
+            $table->foreign('employee_no')->references('employee_no')->on('employees')->onUpdate('CASCADE');
         });
     }
 

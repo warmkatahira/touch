@@ -10,7 +10,7 @@ const clock = () => {
     let date = d.getDate();
     // 曜日を取得
     let dayNum = d.getDay();
-    const weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    const weekday = ["(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)"];
     let day = weekday[dayNum];
     // 時を取得
     let hour = d.getHours();

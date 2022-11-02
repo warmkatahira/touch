@@ -5,7 +5,7 @@
             <p class="col-start-4 col-span-6 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">今月の勤怠</p>
         </div>
         <div class="grid grid-cols-12 gap-4 mt-5">
-            <table class="col-span-12">
+            <table class="col-span-12 text-sm">
                 <thead>
                     <tr class="text-left text-white bg-gray-600 border-gray-600">
                         <th class="font-thin p-2 px-2 w-2/12">拠点</th>

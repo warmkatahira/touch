@@ -2,29 +2,32 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Kintai;
+use App\Models\Employee;
 
 class PunchReturnService
 {
-    // リクエストパラメータを取得
-    public function getRequestParameter($request)
+    // 戻り打刻対象者を取得
+    public function getPunchReturnTargetEmployee()
     {
-        // リクエストパラメータを必要な分だけ取得
-        $req_param = $request->only([
-            'employee_no',
-        ]);
-        return $req_param;
-    }
-
-    // 更新する勤怠レコードを取得
-    public function getKintai($employee_no, $nowDate)
-    {
-        $kintai = Kintai::where('employee_no', $employee_no)
-                        ->where('work_day', $nowDate)
-                        ->first();
-        return $kintai;
+        // 現在の日時を取得
+        $nowDate = new Carbon('now');
+        // 当日の勤怠を取得
+        $today_kintais = Kintai::where('work_day', $nowDate->format('Y-m-d'));
+        // 自拠点の勤怠があって、外出時間がNot Nullかつ戻り時間がNullの従業員
+        $employees = Employee::joinSub($today_kintais, 'KINTAIS', function ($join) {
+                $join->on('employees.employee_no', '=', 'KINTAIS.employee_no');
+            })
+            ->where('base_id', Auth::user()->base_id)
+            ->whereNotNull('out_time')
+            ->whereNull('return_time')
+            ->select('employees.employee_no', 'employees.employee_name', 'KINTAIS.kintai_id')
+            ->orderBy('employee_no')
+            ->get();
+        return $employees;
     }
 
     // 勤怠テーブルに戻り情報を更新

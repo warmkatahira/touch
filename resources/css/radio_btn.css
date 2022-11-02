@@ -1,0 +1,4 @@
+.radio_btn:checked + label {
+    background-color: rgb(32, 121, 253);
+    color:white;
+}

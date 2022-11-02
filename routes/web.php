@@ -8,7 +8,12 @@ use App\Http\Controllers\PunchOutController;
 use App\Http\Controllers\PunchReturnController;
 use App\Http\Controllers\KintaiCheckController;
 use App\Http\Controllers\KintaiListController;
-use App\Http\Controllers\KintaiModifyController;
+use App\Http\Controllers\PunchModifyController;
+use App\Http\Controllers\KintaiDeleteController;
+use App\Http\Controllers\EmployeeListController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PunchManualController;
+use App\Http\Controllers\KintaiReportOutputController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,10 +77,44 @@ Route::controller(KintaiListController::class)->group(function(){
     Route::get('/kintai_list', 'index')->name('kintai_list.index');
     Route::get('/kintai_list_search', 'search')->name('kintai_list.search');
     Route::get('/kintai_detail', 'detail')->name('kintai_list.detail');
+    Route::get('/monthly_kintai_list_pdf', 'pdf')->name('pdf');
 });
 
 // 勤怠修正
-Route::controller(KintaiModifyController::class)->group(function(){
-    Route::get('/kintai_modify', 'index')->name('kintai_modify.index');
-    Route::get('/kintai_modify_input', 'input')->name('kintai_modify.input');
+Route::controller(PunchModifyController::class)->group(function(){
+    Route::get('/punch_modify', 'index')->name('punch_modify.index');
+    Route::get('/punch_modify_input', 'input')->name('punch_modify.input');
+    Route::post('/punch_modify_enter', 'enter')->name('punch_modify.enter');
+});
+
+// 勤怠削除
+Route::controller(KintaiDeleteController::class)->group(function(){
+    Route::get('/kintai_delete', 'delete')->name('kintai.delete');
+});
+
+// 従業員一覧
+Route::controller(EmployeeListController::class)->group(function(){
+    Route::get('/employee_list', 'index')->name('employee_list.index');
+    Route::get('/employee_list_search', 'search')->name('employee_list.search');
+    Route::get('/employee_list_detail', 'detail')->name('employee_list.detail');
+});
+
+// 従業員マスタ操作関連
+Route::controller(EmployeeController::class)->group(function(){
+    Route::get('/employee_register', 'register_index')->name('employee.register_index');
+    Route::post('/employee_register', 'register')->name('employee.register');
+    Route::post('/employee_modify', 'modify')->name('employee.modify');
+});
+
+// 手動打刻
+Route::controller(PunchManualController::class)->group(function(){
+    Route::get('/punch_manual', 'index')->name('punch_manual.index');
+    Route::get('/punch_manual_input', 'input')->name('punch_manual.input');
+    Route::post('/punch_manual_enter', 'enter')->name('punch_manual.enter');
+});
+
+// 勤怠表出力
+Route::controller(KintaiReportOutputController::class)->group(function(){
+    Route::get('/kintai_report_output', 'index')->name('kintai_report_output.index');
+    Route::post('/kintai_report_output_normal', 'output_normal')->name('kintai_report_output_normal.output');
 });

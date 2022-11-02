@@ -10,11 +10,15 @@
     "/js/punch_complete_popup.js": "/js/punch_complete_popup.js",
     "/js/punch_common.js": "/js/punch_common.js",
     "/js/kintai_list.js": "/js/kintai_list.js",
+    "/js/kintai_detail.js": "/js/kintai_detail.js",
+    "/js/employee_list.js": "/js/employee_list.js",
     "/css/punch_complete_popup.css": "/css/punch_complete_popup.css",
     "/css/punch_finish_tab.css": "/css/punch_finish_tab.css",
     "/css/loading.css": "/css/loading.css",
     "/css/clock.css": "/css/clock.css",
     "/css/navigation.css": "/css/navigation.css",
     "/css/app.css": "/css/app.css",
+    "/css/kintai_report_output.css": "/css/kintai_report_output.css",
+    "/css/radio_btn.css": "/css/radio_btn.css",
     "/css/theme_color.css": "/css/theme_color.css"
 }

@@ -2,29 +2,50 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
 use App\Models\Kintai;
+use App\Models\Customer;
+use App\Models\CustomerGroup;
+use App\Models\Employee;
 
 class PunchFinishInputService
 {
-    // 現状の勤怠情報を取得
-    public function getKintai($employee_no, $nowDate)
+    // 退勤打刻対象者を取得
+    public function getPunchFinishTargetEmployee()
     {
-        // 勤怠情報を取得
-        $kintai = Kintai::where('employee_no', $employee_no)
-                    ->where('work_day', $nowDate->format('Y-m-d'))
-                    ->first();
-        return $kintai;
+        // 現在の日時を取得
+        $nowDate = new Carbon('now');
+        // 当日の勤怠を取得
+        $today_kintais = Kintai::where('work_day', $nowDate->format('Y-m-d'));
+        // 自拠点の退勤時刻がNullかつ外出中フラグがNullの従業員
+        $employees = Employee::joinSub($today_kintais, 'KINTAIS', function ($join) {
+                $join->on('employees.employee_no', '=', 'KINTAIS.employee_no');
+            })
+            ->where('base_id', Auth::user()->base_id)
+            ->whereNull('finish_time')
+            ->whereNull('out_enabled')
+            ->select('employees.employee_no', 'employees.employee_name', 'KINTAIS.kintai_id')
+            ->orderBy('employee_no')
+            ->get();
+        return $employees;
+    }
+
+    // 退勤時間をフォーマット
+    public function formatFinishTime($nowDate)
+    {
+        // 退勤時間をフォーマット
+        $finish_time = $nowDate->format('H:i:00');
+        return $finish_time;
     }
 
     // 退勤時間調整を算出・取得
-    public function getFinishTimeAdj($nowDate)
+    public function getFinishTimeAdj($Date)
     {
         // 現在の日時をインスタンス化
-        $finish_time_adj = new Carbon('2022-10-12 18:00:00');
-        //$finish_time_adj = new Carbon($nowDate);
+        //$finish_time_adj = new Carbon('2022-10-12 18:00:00');
+        $finish_time_adj = new Carbon($Date);
         // 15分単位で切り捨て
         $finish_time_adj = $finish_time_adj->subMinutes($finish_time_adj->minute % 15);
         $finish_time_adj = $finish_time_adj->format('H:i:00');
@@ -132,4 +153,13 @@ class PunchFinishInputService
         $working_time = $finish_time_adj_minute - $begin_time_adj_minute - $rest_time - $out_return_time;
         return $working_time;
     }
+
+    public function getCustomerInfo()
+    {
+        // 自拠点の荷主情報を取得
+        $customers = Customer::where('control_base_id', Auth::user()->base_id)->get();
+        $customer_groups = CustomerGroup::all();
+        return compact('customers', 'customer_groups');
+    }
+
 }

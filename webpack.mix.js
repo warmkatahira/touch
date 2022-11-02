@@ -28,6 +28,10 @@ mix.js('resources/js/app.js', 'public/js')
 .js('resources/js/punch_common.js', 'public/js')
 .css('resources/css/theme_color.css', 'public/css')
 .js('resources/js/kintai_list.js', 'public/js')
+.js('resources/js/kintai_detail.js', 'public/js')
+.js('resources/js/employee_list.js', 'public/js')
+.css('resources/css/radio_btn.css', 'public/css')
+.css('resources/css/kintai_report_output.css', 'public/css')
 .autoload({
     jquery: ['$', 'window.jQuery']
 })

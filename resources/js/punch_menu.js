@@ -4,5 +4,4 @@
     $(function(){
         $('#alert_div').fadeOut(5000);
     });
-
 })();

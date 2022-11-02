@@ -37,7 +37,7 @@
             @if (Route::has('login'))
                 <div class="grid grid-cols-12 mt-20">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="col-start-4 col-span-6 text-6xl text-center bg-gray-300 h-60 py-20 rounded-lg">ホーム</a>
+                        <a href="{{ route('punch.index') }}" class="col-start-4 col-span-6 text-6xl text-center bg-gray-300 h-60 py-20 rounded-lg">ホーム</a>
                     @else
                         <a href="{{ route('login') }}" class="col-start-4 col-span-6 text-6xl text-center bg-gray-300 h-60 py-20 rounded-lg">ログイン</a>
                     @endauth
