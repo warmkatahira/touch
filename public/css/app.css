@@ -987,6 +987,8 @@ video {
   padding-top: 1.5rem;
 }.pt-8 {
   padding-top: 2rem;
+}.pt-11 {
+  padding-top: 2.75rem;
 }.pr-4 {
   padding-right: 1rem;
 }.text-left {
@@ -1289,6 +1291,9 @@ video {
 }@media (min-width: 1024px) {.lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+}@media (min-width: 1280px) {.xl\:pt-8 {
+    padding-top: 2rem;
   }
 }@media (min-width: 1536px) {.\32xl\:py-12 {
     padding-top: 3rem;
