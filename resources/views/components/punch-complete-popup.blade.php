@@ -1,4 +1,4 @@
-<div class="mx-5 mb-2">
+<div class="mx-5 mb-3">
     @if(session('punch_type'))
         <script src="{{ asset('js/punch_complete_popup.js') }}" defer></script>
         <link rel="stylesheet" href="{{ asset('css/punch_complete_popup.css') }}">
