@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
 setTimeout(function(){
     punch_finish.classList.add('hide');
     scroll_enabled();
-},3000);
+},60000);
 }, false );
 
 function handle(event) {
