@@ -7,9 +7,9 @@
                 <lord-icon src="https://cdn.lordicon.com/uutnmngi.json" trigger="loop" style="width:120px;height:120px" class="col-span-1 mx-auto block"></lord-icon>
                 <p class="text-7xl text-center col-start-2 col-span-3 mt-7 text-orange-600"></lord-icon>{{ session('punch_type') }}</p>
                 <p class="text-7xl col-start-6 col-span-7 mt-7 text-orange-600">{{ session('employee_name') }}さん</p>
-                <p class="text-5xl text-center col-start-1 col-span-4 text-white bg-blue-600 rounded-t-lg pt-8 px-2">{{ '月間稼働可能時間' }}</p>
-                <p class="text-5xl text-center col-start-5 col-span-4 text-white bg-blue-600 rounded-t-lg pt-8 px-2">{{ '総稼働時間' }}</p>
-                <p class="text-5xl text-center col-start-9 col-span-4 text-white bg-blue-600 rounded-t-lg pt-8 px-2">{{ '稼働可能時間' }}</p>
+                <p class="text-5xl text-center col-start-1 col-span-4 text-white bg-blue-600 rounded-t-lg pt-8 px-2">{{ '月間稼働可能' }}</p>
+                <p class="text-5xl text-center col-start-5 col-span-4 text-white bg-blue-600 rounded-t-lg pt-8 px-2">{{ '総稼働' }}</p>
+                <p class="text-5xl text-center col-start-9 col-span-4 text-white bg-blue-600 rounded-t-lg pt-8 px-2">{{ '稼働可能' }}</p>
                 <p class="text-5xl text-center col-start-1 col-span-4 text-blue-600 rounded-b-lg border-4 border-blue-600 pt-8 px-2">{{ number_format(session('monthly_workable_time_setting'), 2) }}</p>
                 <p class="text-5xl text-center col-start-5 col-span-4 text-blue-600 rounded-b-lg border-4 border-blue-600 pt-8 px-2">{{ number_format(session('total_month_working_time'), 2) }}</p>
                 <p class="text-5xl text-center col-start-9 col-span-4 text-blue-600 rounded-b-lg border-4 border-blue-600 pt-8 px-2">{{ number_format(session('workable_times'), 2) }}</p>
