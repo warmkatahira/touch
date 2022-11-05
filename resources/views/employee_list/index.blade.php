@@ -40,10 +40,12 @@
             <table class="col-span-12 text-sm">
                 <thead>
                     <tr class="text-left text-white bg-gray-600 border-gray-600">
-                        <th class="font-thin p-2 px-2 w-3/12">拠点</th>
+                        <th class="font-thin p-2 px-2 w-2/12">拠点</th>
                         <th class="font-thin p-2 px-2 w-2/12">区分</th>
-                        <th class="font-thin p-2 px-2 w-2/12">番号</th>
-                        <th class="font-thin p-2 px-2 w-5/12">氏名</th>
+                        <th class="font-thin p-2 px-2 w-1/12">番号</th>
+                        <th class="font-thin p-2 px-2 w-2/12">氏名</th>
+                        <th class="font-thin p-2 px-2 w-2/12 text-right">月間稼働設定</th>
+                        <th class="font-thin p-2 px-2 w-2/12 text-right">当月総残業時間</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -53,6 +55,8 @@
                             <td class="p-1 px-2 border">{{ $employee->employee_category->employee_category_name }}</td>
                             <td class="p-1 px-2 border">{{ $employee->employee_no }}</td>
                             <td class="p-1 px-2 border">{{ $employee->employee_name }}</td>
+                            <td class="p-1 px-2 border text-right">{{ number_format($employee->monthly_workable_time_setting, 2) }}</td>
+                            <td class="p-1 px-2 border text-right">{{ number_format($employee->total_over_time / 60, 2).' 時間' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

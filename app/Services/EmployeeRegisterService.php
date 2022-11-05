@@ -13,14 +13,8 @@ class EmployeeRegisterService
 {
     public function getPulldownInfo()
     {
-        // 拠点はロールによって可変
-        // システム管理者 = 全て、その他 = ログインアカウントの拠点
-        if(Auth::user()->role_id == 1){
-            $bases = Base::all();
-        }
-        if(Auth::user()->role_id != 1){
-            $bases = Base::where('base_id', Auth::user()->base_id)->get(); // firstだとエラーになるので、あえてgetにしている
-        }
+        // 拠点を取得
+        $bases = Base::all();
         // 従業員区分を取得
         $employee_categories = EmployeeCategory::all();
         return compact('bases', 'employee_categories');
@@ -34,6 +28,7 @@ class EmployeeRegisterService
             'employee_name' => $request->employee_name,
             'base_id' => $request->base,
             'employee_category_id' => $request->employee_category,
+            'monthly_workable_time_setting' => $request->monthly_workable_time_setting,
         ]);
         return;
     }

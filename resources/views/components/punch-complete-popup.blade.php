@@ -9,7 +9,7 @@
                     <p class="text-7xl text-center col-start-2 col-span-8 mt-7 text-orange-600">{{ session('employee_name') }}さん</p>
                     <p class="text-7xl text-center col-start-10 col-span-3 mt-7 text-orange-600"></lord-icon>{{ session('punch_type') }}</p>
                     <div class="text-5xl text-center col-start-1 col-span-4 row-span-1 text-white bg-blue-600 rounded-lg py-10">
-                        <p class="">{{ '月間稼働可能' }}</p>
+                        <p class="">{{ '月間稼働設定' }}</p>
                         <p class="mt-10">{{ number_format(session('monthly_workable_time_setting'), 2) }}</p>
                     </div>
                     <div class="text-5xl text-center col-start-5 col-span-4 row-span-1 text-white bg-blue-600 rounded-lg py-10">
@@ -17,7 +17,7 @@
                         <p class="mt-10">{{ number_format(session('total_month_working_time'), 2) }}</p>
                     </div>
                     <div class="text-5xl text-center col-start-9 col-span-4 row-span-1 text-white bg-blue-600 rounded-lg py-10">
-                        <p class="">{{ '稼働可能' }}</p>
+                        <p class="">{{ '稼働可能残' }}</p>
                         <p class="mt-10">{{ number_format(session('workable_times'), 2) }}</p>
                     </div>
                 @else

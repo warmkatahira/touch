@@ -212,6 +212,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'GetTodayKintaiStatusFunc' => App\Lib\GetTodayKintaiStatusFunc::class,
         'GetEmployeeFunc' => App\Lib\GetEmployeeFunc::class,
+        'KintaiListFunc' => App\Lib\KintaiListFunc::class,
     ])->toArray(),
 
 ];

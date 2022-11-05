@@ -60,7 +60,7 @@
             </div>
             <!-- 荷主情報のタブを表示 -->
             <x-customer-tab :customers="$customers" :customergroups="$customer_groups"></x-customer-tab>
-            <button type="button" id="punch_finish_enter" class="punch_enter w-full text-center bg-orange-300 py-8 text-4xl rounded-lg mt-3">修正完了</button>
+            <button type="button" id="punch_finish_enter" class="punch_enter w-full text-center bg-blue-200 py-8 text-4xl rounded-lg mt-3">修正完了</button>
         </div>
     </form>
     <!-- 時間入力モーダル -->

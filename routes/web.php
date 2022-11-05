@@ -14,6 +14,8 @@ use App\Http\Controllers\EmployeeListController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PunchManualController;
 use App\Http\Controllers\KintaiReportOutputController;
+use App\Http\Controllers\KintaiTagController;
+use App\Http\Controllers\OverTimeRankController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,7 +79,7 @@ Route::controller(KintaiListController::class)->group(function(){
     Route::get('/kintai_list', 'index')->name('kintai_list.index');
     Route::get('/kintai_list_search', 'search')->name('kintai_list.search');
     Route::get('/kintai_detail', 'detail')->name('kintai_list.detail');
-    Route::get('/monthly_kintai_list_pdf', 'pdf')->name('pdf');
+    Route::post('/manager_check', 'manager_check')->name('manager_check');
 });
 
 // 勤怠修正
@@ -97,6 +99,7 @@ Route::controller(EmployeeListController::class)->group(function(){
     Route::get('/employee_list', 'index')->name('employee_list.index');
     Route::get('/employee_list_search', 'search')->name('employee_list.search');
     Route::get('/employee_list_detail', 'detail')->name('employee_list.detail');
+    Route::get('/employee_list_modify', 'modify')->name('employee_list.modify');
 });
 
 // 従業員マスタ操作関連
@@ -117,4 +120,15 @@ Route::controller(PunchManualController::class)->group(function(){
 Route::controller(KintaiReportOutputController::class)->group(function(){
     Route::get('/kintai_report_output', 'index')->name('kintai_report_output.index');
     Route::post('/kintai_report_output_normal', 'output_normal')->name('kintai_report_output_normal.output');
+});
+
+// 勤怠タグ
+Route::controller(KintaiTagController::class)->group(function(){
+    Route::post('/kintai_tag_register', 'register')->name('kintai_tag.register');
+    Route::get('/kintai_tag_delete', 'delete')->name('kintai_tag.delete');
+});
+
+// 残業ランキング
+Route::controller(OverTimeRankController::class)->group(function(){
+    Route::get('/over_time_rank', 'index')->name('over_time_rank.index');
 });

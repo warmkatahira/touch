@@ -73,11 +73,11 @@ class PunchFinishController extends Controller
         // 残業時間を算出
         $over_time = $PunchFinishEnterService->getOverTime($kintai['kintai'], $request->working_time);
         // 勤怠概要を更新
-        //$PunchFinishEnterService->updatePunchFinishForKintai($request, $over_time);
+        $PunchFinishEnterService->updatePunchFinishForKintai($request, $over_time);
         // 勤怠詳細を追加
-        //$PunchFinishEnterService->addPunchFinishForKintaiDetail($request->kintai_id, $request->working_time_input);
+        $PunchFinishEnterService->addPunchFinishForKintaiDetail($request->kintai_id, $request->working_time_input);
         // 労働可能時間を算出
-        $hours_data = $PunchFinishEnterService->getWorkableHours($kintai['kintai']);
+        $hours_data = $PunchFinishEnterService->getWorkableTimes($kintai['kintai']);
         session()->flash('punch_type', '退勤');
         session()->flash('employee_name', $kintai['employee']['employee_name']);
         session()->flash('message', '1日お疲れ様でした');

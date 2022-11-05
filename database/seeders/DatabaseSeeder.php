@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             EmployeeCategorySeeder::class,
             EmployeeSeeder::class,
+            TagSeeder::class,
         ]);
     }
 }

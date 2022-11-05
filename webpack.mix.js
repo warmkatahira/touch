@@ -32,6 +32,8 @@ mix.js('resources/js/app.js', 'public/js')
 .js('resources/js/employee_list.js', 'public/js')
 .css('resources/css/radio_btn.css', 'public/css')
 .css('resources/css/kintai_report_output.css', 'public/css')
+.js('resources/js/employee_detail.js', 'public/js')
+.js('resources/js/over_time_rank.js', 'public/js')
 .autoload({
     jquery: ['$', 'window.jQuery']
 })

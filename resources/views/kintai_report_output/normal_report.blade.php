@@ -78,7 +78,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($kintai['kintai'] as $work_day => $value){
+                    @foreach($kintai['kintai'] as $work_day => $value)
                         <tr>
                             <td>{{ \Carbon\Carbon::parse($work_day)->isoFormat('MM月DD日(ddd)') }}</td>
                             @if(is_null($value))

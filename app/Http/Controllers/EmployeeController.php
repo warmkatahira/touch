@@ -35,7 +35,7 @@ class EmployeeController extends Controller
     {
         // サービスクラスを定義
         $EmployeeModifyService = new EmployeeModifyService;
-        // レコードを追加
+        // レコードを変更
         $EmployeeModifyService->modifyEmployee($request);
         session()->flash('alert_success', $request->employee_name.'さんの情報を更新しました。');
         return redirect(session('back_url_1'));

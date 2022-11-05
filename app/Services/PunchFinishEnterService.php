@@ -81,7 +81,7 @@ class PunchFinishEnterService
         return;
     }
 
-    public function getWorkableHours($kintai)
+    public function getWorkableTimes($kintai)
     {
         // 月間稼働可能時間設定を取得
         $employee = Employee::where('employee_no', $kintai->employee_no)->first();

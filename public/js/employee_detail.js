@@ -10923,95 +10923,83 @@ return jQuery;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!*************************************!*\
-  !*** ./resources/js/kintai_list.js ***!
-  \*************************************/
+/*!*****************************************!*\
+  !*** ./resources/js/employee_detail.js ***!
+  \*****************************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+var employee_no = document.getElementById('employee_no');
+var orange = 'rgba(246, 173, 85, 1)';
+var gray = 'rgb(99, 99, 99)';
+var red = 'rgb(229, 48, 110)';
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+window.onload = function () {
+  customer_working_time_chart();
+};
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function customer_working_time_chart() {
+  CustomerWoringTimeChart = null; // 環境でパスを可変させる
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-// クリックした勤怠の詳細へ遷移
-$('tr[data-href]').click(function () {
-  window.location = $(this).attr('data-href');
-}); // チェックアイコン(thタグ)を押下したら
-
-$('#all_check').on("click", function () {
-  // チェックボックス要素関連の情報を取得
-  var _get_checkbox = get_checkbox(),
-      _get_checkbox2 = _slicedToArray(_get_checkbox, 3),
-      chk = _get_checkbox2[0],
-      count = _get_checkbox2[1],
-      all = _get_checkbox2[2]; // チェックボックスがONの要素数と取得した全ての要素数が同じかどうかでONにするかOFFにするか判定
-
-
-  if (count == all) {
-    for (i = 0; i < chk.length; i++) {
-      // OFF
-      chk[i].checked = false;
-    }
-  } else {
-    for (i = 0; i < chk.length; i++) {
-      // ON
-      chk[i].checked = true;
-    }
-  }
-});
-
-function get_checkbox() {
-  // name属性がchk[]の要素を取得
-  var chk = document.getElementsByName("chk[]"); // カウント用の変数をセット
-
-  var count = 0;
-  var all = 0; // 取得した要素の分だけループ処理
-
-  for (var _i2 = 0; _i2 < chk.length; _i2++) {
-    // 要素の数をカウントしている
-    all++; // チェックボックスがONになっている要素をカウント
-
-    if (chk[_i2].checked) {
-      count++;
-    }
+  if (true) {
+    var ajax_url = '/customer_working_time_get_ajax';
   }
 
-  return [chk, count, all];
-} // 管理者確認実行ボタンが押下されたら
+  if (false) { var ajax_url; }
 
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: ajax_url,
+    type: 'POST',
+    data: {
+      "employee_no": employee_no.innerHTML
+    },
+    dataType: 'json',
+    success: function success(data) {
+      // チャートを表示
+      var Context = document.querySelector("#customer_working_time_chart").getContext('2d'); // 前回のチャートを破棄
 
-$("[id=manager_check_enter]").on("click", function () {
-  // チェックボックス要素関連の情報を取得
-  var _get_checkbox3 = get_checkbox(),
-      _get_checkbox4 = _slicedToArray(_get_checkbox3, 3),
-      chk = _get_checkbox4[0],
-      count = _get_checkbox4[1],
-      all = _get_checkbox4[2];
+      if (CustomerWoringTimeChart != null) {
+        CustomerWoringTimeChart.destroy();
+      }
 
-  try {
-    // チェックが入っている要素が無ければ処理を中断
-    if (count == 0) {
-      throw new Error('確認印を押す勤怠を選択して下さい。');
-    } // 確認メッセージを表示
-
-
-    var result = window.confirm(count + '件の勤怠を確認済みにしますか？'); // 「はい」が押下されたらsubmit、「いいえ」が押下されたら処理キャンセル
-
-    if (result == true) {
-      // フォームを送信
-      var manager_check_form = document.getElementById('manager_check_form');
-      manager_check_form.submit();
+      CustomerWoringTimeChart = new Chart(Context, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            // 
+            data: [data['first']['total_customer_working_time'], data['second']['total_customer_working_time'], data['third']['total_customer_working_time']],
+            backgroundColor: [orange, gray, red],
+            label: [data['first']['customer_name'], data['second']['customer_name'], data['third']['customer_name']]
+          }]
+        },
+        options: {
+          responsive: false,
+          title: {},
+          tooltips: {
+            bodyFontSize: 12,
+            bodyAlign: "right",
+            bodyFontColor: "black",
+            borderColor: 'black',
+            borderWidth: 1,
+            backgroundColor: 'white',
+            cornerRadius: "0",
+            xPadding: 10,
+            yPadding: 10,
+            callbacks: {
+              label: function label(tooltipItem, data) {
+                return data.datasets[0]['label'][tooltipItem.index] + "   " + (data.datasets[0]['data'][tooltipItem.index] / 60).toFixed(2) + '時間';
+              }
+            }
+          }
+        }
+      });
+    },
+    error: function error() {
+      alert('失敗');
     }
-  } catch (e) {
-    alert(e.message);
-  }
-});
+  });
+}
 })();
 
 /******/ })()

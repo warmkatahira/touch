@@ -62,6 +62,7 @@ class KintaiReportOutputService
 
     public function getOutputKintaiNormal($month_date, $employees, $start_day, $end_day)
     {
+        
         // 従業員分だけループ処理
         foreach($employees as $employee){
             // 勤怠情報を格納する配列をセット

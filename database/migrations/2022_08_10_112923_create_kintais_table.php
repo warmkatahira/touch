@@ -35,6 +35,7 @@ return new class extends Migration
             $table->boolean('is_early_worked');
             $table->boolean('is_modified')->nullable();
             $table->boolean('is_manual_punched')->nullable();
+            $table->timestamp('manager_checked_at')->nullable();
             $table->timestamps();
             // 従業員番号に紐付けて更新
             $table->foreign('employee_no')->references('employee_no')->on('employees')->onUpdate('CASCADE');
