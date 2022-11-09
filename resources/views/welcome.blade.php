@@ -31,7 +31,7 @@
         <div class="min-h-screen px-5">
             <div class="grid grid-cols-12">
                 <p class="col-span-4 text-6xl text-blue-500" style="font-family:Merriweather">T<lord-icon src="https://cdn.lordicon.com/mgmiqlge.json" trigger="loop" delay="2000" style="width:50px;height:50px"></lord-icon>uch</p>
-                <a href="{{ route('register') }}" class="col-start-12 col-span-1 text-center mt-2 bg-blue-200 rounded-lg pt-3">ユーザー登録</a>
+                <a href="{{ route('register') }}" class="col-start-12 col-span-1 text-center mt-2 bg-blue-200 rounded-lg pt-3 px-3">ユーザー登録</a>
             </div>
             <!-- アラート表示 -->
             <x-alert/>

@@ -8,7 +8,7 @@
         <div class="grid grid-cols-12 mt-5">
             <table class="col-span-12">
                 <thead>
-                    <tr class="text-center text-white bg-gray-600 border-gray-600 sticky top-0">
+                    <tr class="text-center text-white bg-gray-600 border-gray-600 sticky top-0 z-1">
                         <th class="font-thin p-2 px-2 w-2/12">出勤日</th>
                         <th class="font-thin p-2 px-2 w-1/12">出勤</th>
                         <th class="font-thin p-2 px-2 w-1/12">退勤</th>
