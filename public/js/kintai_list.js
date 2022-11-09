@@ -10939,11 +10939,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-// クリックした勤怠の詳細へ遷移
-$('tr[data-href]').click(function () {
-  window.location = $(this).attr('data-href');
-}); // チェックアイコン(thタグ)を押下したら
-
+// チェックアイコン(thタグ)を押下したら
 $('#all_check').on("click", function () {
   // チェックボックス要素関連の情報を取得
   var _get_checkbox = get_checkbox(),

@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('kintai_tag_id')->primary();
             $table->string('kintai_id');
             $table->unsignedBigInteger('register_user_id');
-            $table->integer('tag_id');
+            $table->unsignedInteger('tag_id');
             $table->timestamps();
             // 外部キー制約
             $table->foreign('kintai_id')->references('kintai_id')->on('kintais')->onDelete('cascade');
+            $table->foreign('tag_id')->references('tag_id')->on('tags')->onDelete('cascade');
         });
     }
 

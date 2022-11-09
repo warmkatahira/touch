@@ -10923,11 +10923,11 @@ return jQuery;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!****************************************!*\
-  !*** ./resources/js/over_time_rank.js ***!
-  \****************************************/
+/*!*********************************!*\
+  !*** ./resources/js/tr_link.js ***!
+  \*********************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-// クリックした従業員の詳細へ遷移
+// クリックしたリンクへ遷移
 $('tr[data-href]').click(function () {
   window.location = $(this).attr('data-href');
 });

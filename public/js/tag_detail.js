@@ -10923,13 +10923,17 @@ return jQuery;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***************************************!*\
-  !*** ./resources/js/employee_list.js ***!
-  \***************************************/
+/*!************************************!*\
+  !*** ./resources/js/tag_detail.js ***!
+  \************************************/
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-// クリックした従業員の詳細へ遷移
-$('tr[data-href]').click(function () {
-  window.location = $(this).attr('data-href');
+// 削除ボタンが押下されたら
+$("[id=tag_delete]").on("click", function () {
+  var result = window.confirm('タグ削除を実行しますか？'); // 「はい」が押下されたらsubmit、「いいえ」が押下されたら処理キャンセル
+
+  if (result == false) {
+    return false;
+  }
 });
 })();
 

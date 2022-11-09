@@ -29,6 +29,9 @@
         <!-- favicon -->
         <link rel="shortcut icon" href="{{ asset('image/favicon.svg') }}">
 
+        <!-- Scripts -->
+        <script src="{{ asset('js/tr_link.js') }}" defer></script>
+
     </head>
     <body style="font-family:Kosugi Maru">
         <div class="min-h-screen">

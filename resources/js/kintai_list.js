@@ -1,8 +1,3 @@
-// クリックした勤怠の詳細へ遷移
-$('tr[data-href]').click(function () {
-    window.location = $(this).attr('data-href');
-});
-
 // チェックアイコン(thタグ)を押下したら
 $('#all_check').on("click",function(){
     // チェックボックス要素関連の情報を取得

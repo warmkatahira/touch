@@ -31,9 +31,9 @@
         <div class="min-h-screen">
             <div class="">
                 <p class="ml-5 text-6xl text-blue-500" style="font-family:Merriweather">T<lord-icon src="https://cdn.lordicon.com/mgmiqlge.json" trigger="loop" delay="2000" style="width:50px;height:50px"></lord-icon>uch</p>
-
-
             </div>
+            <!-- アラート表示 -->
+            <x-alert/>
             @if (Route::has('login'))
                 <div class="grid grid-cols-12 mt-20">
                     @auth
