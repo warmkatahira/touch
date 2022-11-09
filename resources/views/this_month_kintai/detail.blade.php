@@ -4,11 +4,17 @@
             <a href="{{ route('this_month_kintai.index') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white mb-5">戻る</a>
             <p class="col-start-4 col-span-6 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">今月の勤怠詳細</p>
         </div>
+        <div class="grid grid-cols-12 mt-5">
+            <p class="col-start-1 col-span-1 bg-black text-white text-center py-2 text-sm">番号</p>
+            <p class="col-span-1 border border-black text-sm py-2 text-center">{{ $employee->employee_no }}</p>
+            <p class="col-span-1 bg-black text-white text-center py-2 text-sm">氏名</p>
+            <p class="col-span-2 border border-black text-sm py-2 text-center">{{ $employee->employee_name }}</p>
+        </div>
         <!-- 勤怠表 -->
         <div class="grid grid-cols-12 mt-5">
             <table class="col-span-12">
                 <thead>
-                    <tr class="text-center text-white bg-gray-600 border-gray-600 sticky top-0 z-1">
+                    <tr class="text-center text-white bg-gray-600 border-gray-600 sticky top-0">
                         <th class="font-thin p-2 px-2 w-2/12">出勤日</th>
                         <th class="font-thin p-2 px-2 w-1/12">出勤</th>
                         <th class="font-thin p-2 px-2 w-1/12">退勤</th>
