@@ -24,7 +24,7 @@
                             <td class="p-1 px-2 border text-center">{{ $user->user_name }}</td>
                             <td class="p-1 px-2 border text-center">{{ $user->role->role_name }}</td>
                             <td class="p-1 px-2 border text-center">{{ $user->base->base_name }}</td>
-                            <td class="p-1 px-2 border text-center">{{ $user->status }}</td>
+                            <td class="p-1 px-2 border text-center">{{ $user->status == 1 ? '有効' : '無効' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

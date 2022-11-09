@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\CommonService;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -20,7 +21,13 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        // サービスクラスを定義
+        $CommonService = new CommonService;
+        // 拠点情報を取得
+        $bases = $CommonService->getBases(false);
+        return view('auth.register')->with([
+            'bases' => $bases,
+        ]);
     }
 
     /**
@@ -35,6 +42,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'user_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -43,11 +51,16 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => 41,
+            'base_id' => $request->base,
+            'user_name' => $request->user_name,
+            'status' => 0,
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // 自動ログインさせない
+        //Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }

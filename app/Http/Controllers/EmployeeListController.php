@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\EmployeeListService;
 use App\Services\EmployeeRegisterService;
 use App\Services\KintaiReportOutputService;
+use App\Services\CommonService;
 
 class EmployeeListController extends Controller
 {
@@ -56,6 +57,9 @@ class EmployeeListController extends Controller
         // サービスクラスを定義
         $EmployeeListService = new EmployeeListService;
         $KintaiReportOutputService = new KintaiReportOutputService;
+        $CommonService = new CommonService;
+        // 月初・月末の日付を取得
+        $start_end_of_month = $CommonService->getStartEndOfMonth(Carbon::now());
         // 従業員の情報を取得
         $employee = $EmployeeListService->getEmployee($request->employee_no);
         // 当月稼働情報を取得
@@ -63,9 +67,9 @@ class EmployeeListController extends Controller
         // 荷主稼働時間トップ5の情報を取得
         $customer_working_time = $EmployeeListService->getCustomerWorkingTime($request->employee_no);
         // 当月の情報を取得
-        $month_date = $KintaiReportOutputService->getMonthDate(Carbon::now());
+        $month_date = $KintaiReportOutputService->getMonthDate($start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         // 勤怠表に使用する情報を取得
-        $kintais = $KintaiReportOutputService->getOutputKintaiNormal($month_date['month_date'], $employee['employees'], $month_date['start_day'], $month_date['end_day']);
+        $kintais = $KintaiReportOutputService->getOutputKintaiNormal($month_date['month_date'], $employee['employees'], $start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         return view('employee_list.detail')->with([
             'employee' => $employee['employee'],
             'working_days' => is_null($this_month_data['total_data']) ? 0 : $this_month_data['total_data']['working_days'],

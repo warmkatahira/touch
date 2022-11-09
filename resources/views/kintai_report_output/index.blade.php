@@ -4,7 +4,7 @@
             <p class="col-start-1 col-span-2 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">勤怠表出力</p>
         </div>
         <div class="grid grid-cols-12">
-            <form method="POST" action="{{ route('kintai_report_output_normal.output') }}" class="m-0 col-span-12 grid grid-cols-12">
+            <form method="POST" action="{{ route('kintai_report_output.output') }}" class="m-0 col-span-12 grid grid-cols-12">
                 @csrf
                 <div class="col-span-12 grid grid-cols-12">
                     <label for="base" class="col-span-1 bg-black text-white text-center text-sm px-3 py-2">拠点</label>

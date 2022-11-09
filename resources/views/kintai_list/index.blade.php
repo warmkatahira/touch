@@ -90,7 +90,7 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    <form method="post" action="{{ route('manager_check') }}" id="manager_check_form" class="m-0">
+                    <form method="post" action="{{ route('kintai_list.manager_check') }}" id="manager_check_form" class="m-0">
                         @csrf
                         @foreach($kintais as $kintai)
                             <tr id="all_check" class="hover:bg-teal-100">

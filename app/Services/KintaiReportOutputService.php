@@ -24,21 +24,15 @@ class KintaiReportOutputService
         return $bases;
     }
 
-    public function getMonthDate($month)
+    public function getMonthDate($start_of_month, $end_of_month)
     {
-        // 月初の日付を取得
-        $start_day = new Carbon($month);
-        $start_day = $start_day->startOfMonth();
-        // 月末の日付を取得
-        $end_day = new Carbon($month);
-        $end_day = $end_day->endOfMonth();
         // 月の日数を取得
-        $days = new Carbon($month);
-        $days = $end_day->daysInMonth;
+        $days = new Carbon($start_of_month);
+        $days = $days->daysInMonth;
         // 配列をセット
         $month_date = [];
         // 月初の日付をインスタンス化
-        $start_day_for = new Carbon($month);
+        $start_day_for = new Carbon($start_of_month);
         $start_day_for = $start_day_for->startOfMonth();
         // for文で月の日数をループ
         for($i = 0; $i < $days; $i++){
@@ -47,7 +41,7 @@ class KintaiReportOutputService
             // 配列に月初の日付+日数の日付をセット
             $month_date[$i] = $day->addDays($i)->toDateString();
         }
-        return compact('month_date', 'start_day', 'end_day');
+        return compact('month_date');
     }
 
     public function getOutputEmployee($base_id)
@@ -116,10 +110,10 @@ class KintaiReportOutputService
         return $filename;
     }
 
-    public function passOutputInfoNormal($kintais, $month, $base)
+    public function passOutputInfo($kintais, $month, $base)
     {
         // PDF出力ビューに情報を渡す
-        $pdf = PDF::loadView('kintai_report_output.normal_report', compact('kintais', 'month', 'base'));
+        $pdf = PDF::loadView('kintai_report_output.report', compact('kintais', 'month', 'base'));
         return $pdf;
     }
 }

@@ -33,7 +33,7 @@ class RoleSeeder extends Seeder
         ]);
         Role::create([
             'role_id' => 41,
-            'role_name' => '勤怠処理用',
+            'role_name' => '打刻用',
         ]);
     }
 }

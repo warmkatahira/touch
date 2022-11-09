@@ -4,25 +4,11 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Models\Employee;
 use App\Models\Kintai;
 
 class ThisMonthKintaiService
 {
-    public function getStartEndOfMonth()
-    {
-        // 現在の日時を取得
-        $nowDate = new Carbon('now');
-        // 月初と月末の日付を取得
-        $start_of_month = $nowDate->startOfMonth()->toDateString();
-        $end_of_month = $nowDate->endOfMonth()->toDateString();
-        return with([
-            'start_of_month' => $start_of_month,
-            'end_of_month' => $end_of_month,
-        ]);
-    }
-
     public function getMonthKintai($start_of_month, $end_of_month)
     {
         // 自拠点従業員の当月の勤怠を集計
