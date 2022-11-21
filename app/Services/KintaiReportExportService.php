@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
 use App\Models\Base;
 use App\Models\Kintai;
 use App\Models\Employee;
