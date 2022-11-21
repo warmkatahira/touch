@@ -41,7 +41,7 @@ class ThisMonthKintaiController extends Controller
         // 当月の情報を取得
         $month_date = $KintaiReportExportService->getMonthDate($start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         // 勤怠表に使用する情報を取得
-        $kintais = $KintaiReportExportService->getOutputKintaiNormal($month_date['month_date'], $employee['employees'], $start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
+        $kintais = $KintaiReportExportService->getExportKintaiNormal($month_date['month_date'], $employee['employees'], $start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         return view('this_month_kintai.detail')->with([
             'kintais' => $kintais,
             'employee' => $employee['employee']
