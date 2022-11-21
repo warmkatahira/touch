@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('customer_group_id');
             $table->unsignedInteger('base_id');
             $table->string('customer_group_name');
-            $table->unsignedInteger('customer_group_order');
+            $table->unsignedInteger('customer_group_order')->nullable();
             $table->timestamps();
         });
     }

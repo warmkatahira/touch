@@ -2,7 +2,7 @@
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12 gap-4">
             <a href="{{ session('back_url_1') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white mb-5">戻る</a>
-            <p class="col-span-2 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">従業員詳細</p>
+            <p class="col-span-10 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">従業員詳細</p>
             <!-- 経理ロール以上もしくは拠点管理者ロールであり自拠点の従業員であればボタンを表示 -->
             @if(Auth::user()->role_id <= 11 || Auth::user()->role_id == 31 && Auth::user()->base_id == $employee->base_id)
                 <a href="{{ route('employee_list.modify', ['employee_no' => $employee->employee_no]) }}" class="col-start-12 col-span-1 text-xl py-4 rounded-lg text-center bg-blue-200 mb-5">変更</a>
@@ -34,7 +34,7 @@
         </div>
         <!-- 荷主別稼働時間トップ3情報 -->
         <div class="grid grid-cols-12 mt-5">
-            <p class="col-span-12 text-2xl border-l-4 border-blue-500 pl-2">荷主別稼働時間トップ5</p>
+            <p class="col-span-12 text-2xl border-l-4 border-blue-500 pl-2">荷主別稼働時間トップ3</p>
             <p class="col-span-6 text-base mb-4 text-right underline text-red-600">※（）内は総稼働時間に対しての割合</p>
             @foreach($customer_working_time as $key => $data)
                 <div class="col-start-1 col-span-6 grid grid-cols-12 border-dashed border-b-2 border-blue-600">
@@ -48,7 +48,7 @@
             <p class="col-span-12 text-2xl border-l-4 border-blue-500 pl-2">勤怠表</p>
             <table class="col-span-12 text-sm mt-3">
                 <thead>
-                    <tr class="text-center text-white bg-gray-600 border-gray-600">
+                    <tr class="text-center text-white bg-gray-600 border-gray-600 sticky top-0">
                         <th class="font-thin p-2 px-2 w-2/12">出勤日</th>
                         <th class="font-thin p-2 px-2 w-1/12">出勤</th>
                         <th class="font-thin p-2 px-2 w-1/12">退勤</th>

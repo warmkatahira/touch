@@ -5,12 +5,12 @@
             <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
             <ul class="menu">
                 <li><a href="{{ route('punch.index') }}">打刻</a></li>
-                <li><a href="{{ route('punch_manual.index') }}">手動打刻</a></li>
                 <li><a href="{{ route('kintai_list.index') }}">勤怠一覧</a></li>
                 <li><a href="{{ route('employee_list.index') }}">従業員一覧</a></li>
                 <li><a href="{{ route('over_time_rank.index') }}">残業ランキング</a></li>
                 <li><a href="{{ route('customer_working_time_rank.index') }}">荷主稼働ランキング</a></li>
-                <li><a href="{{ route('kintai_report_output.index') }}">勤怠表出力</a></li>
+                <li><a href="{{ route('data_export.index') }}">データ出力</a></li>
+                <li><a href="{{ route('management_func.index') }}">管理者機能</a></li>
                 <li><a href="{{ route('system_mgt.index') }}">システム管理</a></li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

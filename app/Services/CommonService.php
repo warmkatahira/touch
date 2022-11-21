@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Base;
 use App\Models\Role;
 use App\Models\Employee;
+use App\Models\EmployeeCategory;
 
 class CommonService
 {
@@ -25,6 +26,14 @@ class CommonService
             $base_info[$base->base_id] = $base->base_name;
         }
         return $base_info;
+    }
+
+    // 従業員区分を取得
+    public function getEmployeeCategories()
+    {
+        // 従業員区分を取得
+        $employee_categories = EmployeeCategory::all();
+        return $employee_categories;
     }
 
     // 指定された従業員番号の情報を取得

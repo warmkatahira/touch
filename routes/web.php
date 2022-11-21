@@ -1,26 +1,38 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PunchController;
-use App\Http\Controllers\PunchBeginController;
-use App\Http\Controllers\PunchFinishController;
-use App\Http\Controllers\PunchOutController;
-use App\Http\Controllers\PunchReturnController;
-use App\Http\Controllers\KintaiCheckController;
-use App\Http\Controllers\ThisMonthKintaiController;
-use App\Http\Controllers\KintaiListController;
-use App\Http\Controllers\PunchModifyController;
-use App\Http\Controllers\KintaiDeleteController;
-use App\Http\Controllers\EmployeeListController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\PunchManualController;
-use App\Http\Controllers\KintaiReportOutputController;
-use App\Http\Controllers\KintaiTagController;
-use App\Http\Controllers\OverTimeRankController;
-use App\Http\Controllers\SystemMgtController;
-use App\Http\Controllers\TagMgtController;
-use App\Http\Controllers\UserMgtController;
-use App\Http\Controllers\CustomerWorkingTimeRankController;
+// Punch
+use App\Http\Controllers\Punch\PunchController;
+use App\Http\Controllers\Punch\PunchBeginController;
+use App\Http\Controllers\Punch\PunchFinishController;
+use App\Http\Controllers\Punch\PunchOutController;
+use App\Http\Controllers\Punch\PunchReturnController;
+use App\Http\Controllers\Punch\PunchManualController;
+use App\Http\Controllers\Punch\PunchModifyController;
+// SystemMgt
+use App\Http\Controllers\SystemMgt\SystemMgtController;
+use App\Http\Controllers\SystemMgt\TagMgtController;
+use App\Http\Controllers\SystemMgt\UserMgtController;
+use App\Http\Controllers\SystemMgt\HolidayMgtController;
+// Kintai
+use App\Http\Controllers\Kintai\KintaiListController;
+use App\Http\Controllers\Kintai\KintaiDeleteController;
+use App\Http\Controllers\Kintai\KintaiTagController;
+// Other
+use App\Http\Controllers\Other\TodayKintaiController;
+use App\Http\Controllers\Other\ThisMonthKintaiController;
+use App\Http\Controllers\Other\OverTimeRankController;
+use App\Http\Controllers\Other\CustomerWorkingTimeRankController;
+// DataExport
+use App\Http\Controllers\DataExport\DataExportController;
+use App\Http\Controllers\DataExport\CsvExportController;
+use App\Http\Controllers\DataExport\KintaiReportExportController;
+// Employee
+use App\Http\Controllers\Employee\EmployeeListController;
+use App\Http\Controllers\Employee\EmployeeController;
+// ManagementFunc
+use App\Http\Controllers\ManagementFunc\ManagementFuncController;
+use App\Http\Controllers\ManagementFunc\CustomerGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,7 +88,7 @@ Route::middleware(['auth','user.status'])->group(function () {
     });
 
     // 今日の勤怠
-    Route::controller(KintaiCheckController::class)->prefix('today_kintai')->name('today_kintai.')->group(function(){
+    Route::controller(TodayKintaiController::class)->prefix('today_kintai')->name('today_kintai.')->group(function(){
         Route::get('/', 'index')->name('index');
     });
 
@@ -121,19 +133,6 @@ Route::middleware(['auth','user.status'])->group(function () {
         Route::post('modify', 'modify')->name('modify');
     });
 
-    // 手動打刻
-    Route::controller(PunchManualController::class)->prefix('punch_manual')->name('punch_manual.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::get('input', 'input')->name('input');
-        Route::post('enter', 'enter')->name('enter');
-    });
-
-    // 勤怠表出力
-    Route::controller(KintaiReportOutputController::class)->prefix('kintai_report_output')->name('kintai_report_output.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::post('output', 'output')->name('output');
-    });
-
     // 勤怠タグ
     Route::controller(KintaiTagController::class)->prefix('kintai_tag')->name('kintai_tag.')->group(function(){
         Route::post('register', 'register')->name('register');
@@ -146,32 +145,71 @@ Route::middleware(['auth','user.status'])->group(function () {
         Route::get('search', 'search')->name('search');
     });
 
-    // システム管理
-    Route::controller(SystemMgtController::class)->prefix('system_mgt')->name('system_mgt.')->group(function(){
-        Route::get('/', 'index')->name('index');
-    });
-
-    // ユーザー管理
-    Route::controller(UserMgtController::class)->prefix('user_mgt')->name('user_mgt.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::get('detail', 'detail')->name('detail');
-        Route::post('modify', 'modify')->name('modify');
-    });
-
-    // タグ管理
-    Route::controller(TagMgtController::class)->prefix('tag_mgt')->name('tag_mgt.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::get('detail', 'detail')->name('detail');
-        Route::get('register', 'register_index')->name('register_index');
-        Route::post('register', 'register')->name('register');
-        Route::get('delete', 'delete')->name('delete');
-        Route::post('modify', 'modify')->name('modify');
-    });
-
     // 荷主稼働ランキング
     Route::controller(CustomerWorkingTimeRankController::class)->prefix('customer_working_time_rank')->name('customer_working_time_rank.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::get('search', 'search')->name('search');
         Route::get('detail', 'detail')->name('detail');
     });
+
+    // システム管理
+    Route::controller(SystemMgtController::class)->prefix('system_mgt')->name('system_mgt.')->group(function(){
+        Route::get('/', 'index')->name('index');
+    });
+        // ユーザー管理
+        Route::controller(UserMgtController::class)->prefix('user_mgt')->name('user_mgt.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('detail', 'detail')->name('detail');
+            Route::post('modify', 'modify')->name('modify');
+        });
+        // タグ管理
+        Route::controller(TagMgtController::class)->prefix('tag_mgt')->name('tag_mgt.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('detail', 'detail')->name('detail');
+            Route::get('register', 'register_index')->name('register_index');
+            Route::post('register', 'register')->name('register');
+            Route::get('delete', 'delete')->name('delete');
+            Route::post('modify', 'modify')->name('modify');
+        });
+        // 休日管理
+        Route::controller(HolidayMgtController::class)->prefix('holiday_mgt')->name('holiday_mgt.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('export', 'export')->name('export');
+            Route::post('import', 'import')->name('import');
+        });
+    // データ出力
+    Route::controller(DataExportController::class)->prefix('data_export')->name('data_export.')->group(function(){
+        Route::get('/', 'index')->name('index');
+    });
+        // 勤怠表出力
+        Route::controller(KintaiReportExportController::class)->prefix('kintai_report_export')->name('kintai_report_export.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::post('export', 'export')->name('export');
+        });
+        // CSV出力
+        Route::controller(CsvExportController::class)->prefix('csv_export')->name('csv_export.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('export', 'export')->name('export');
+        });
+
+    // 管理者機能
+    Route::controller(ManagementFuncController::class)->prefix('management_func')->name('management_func.')->group(function(){
+        Route::get('/', 'index')->name('index');
+    });
+        // 手動打刻
+        Route::controller(PunchManualController::class)->prefix('punch_manual')->name('punch_manual.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('input', 'input')->name('input');
+            Route::post('enter', 'enter')->name('enter');
+        });
+        // 荷主グループ設定
+        Route::controller(CustomerGroupController::class)->prefix('customer_group')->name('customer_group.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('detail', 'detail')->name('detail');
+            Route::get('delete_setting', 'delete_setting')->name('delete_setting');
+            Route::post('register_setting', 'register_setting')->name('register_setting');
+            Route::post('register_group', 'register_group')->name('register_group');
+            Route::get('delete_group', 'delete_group')->name('delete_group');
+            Route::post('modify', 'modify')->name('modify');
+        });
 });

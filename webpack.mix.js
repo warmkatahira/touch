@@ -34,6 +34,7 @@ mix.js('resources/js/app.js', 'public/js')
 .css('resources/css/kintai_report_output.css', 'public/css')
 .js('resources/js/employee_detail.js', 'public/js')
 .js('resources/js/tag_detail.js', 'public/js')
+.js('resources/js/customer_group.js', 'public/js')
 .autoload({
     jquery: ['$', 'window.jQuery']
 })

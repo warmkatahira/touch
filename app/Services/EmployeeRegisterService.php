@@ -2,24 +2,10 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Models\Employee;
-use App\Models\Base;
-use App\Models\EmployeeCategory;
 
 class EmployeeRegisterService
 {
-    public function getPulldownInfo()
-    {
-        // 拠点を取得
-        $bases = Base::all();
-        // 従業員区分を取得
-        $employee_categories = EmployeeCategory::all();
-        return compact('bases', 'employee_categories');
-    }
-
     public function addEmployee($request)
     {
         // レコードを追加

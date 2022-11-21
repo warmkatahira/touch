@@ -1,0 +1,1 @@
+<a href="{{ route($route) }}" class="col-span-3 text-center rounded-lg py-5 bg-blue-600 text-white">{{ $title }}</a>

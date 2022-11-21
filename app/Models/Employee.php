@@ -22,6 +22,7 @@ class Employee extends Model
         'employee_name',
         'base_id',
         'employee_category_id',
+        'monthly_workable_time_setting',
     ];
 
     // 出勤打刻が可能な対象を取得

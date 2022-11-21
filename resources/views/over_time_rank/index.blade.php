@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12 gap-4">
-            <p class="col-start-1 col-span-4 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">残業ランキング</p>
+            <p class="col-span-12 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">残業ランキング</p>
         </div>
         <div class="grid grid-cols-12">
             <!-- 抽出条件 -->
@@ -9,13 +9,13 @@
                 <form method="GET" action="{{ route('over_time_rank.search') }}" class="m-0 col-span-12 grid grid-cols-12">
                     <label for="search_month" class="col-start-1 col-span-1 bg-black text-white text-center py-2 text-sm">対象年月</label>
                     <input type="month" id="search_month" name="search_month" class="col-span-2 border border-black text-sm" value="{{ session('search_month') }}">
-                    <button type="submit" class="col-start-7 col-span-1 text-center bg-blue-200 rounded-lg"><i class="las la-search la-lg"></i></button>
+                    <button type="submit" class="col-start-7 col-span-1 text-sm text-center bg-black text-white rounded-lg mt-1"><i class="las la-search la-2x"></i></button>
                 </form>
             </div>
             <!-- 残業ランキング -->
             <table class="col-span-7 text-sm">
                 <thead>
-                    <tr class="text-left text-white bg-gray-600 border-gray-600">
+                    <tr class="text-left text-white bg-gray-600 border-gray-600 sticky top-0">
                         <th class="font-thin p-2 px-2 w-1/12">Rank</th>
                         <th class="font-thin p-2 px-2 w-3/12">拠点</th>
                         <th class="font-thin p-2 px-2 w-2/12">番号</th>

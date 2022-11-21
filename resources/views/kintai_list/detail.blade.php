@@ -4,7 +4,7 @@
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12 gap-4">
             <a href="{{ session('back_url_1') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white mb-5">戻る</a>
-            <p class="col-start-2 col-span-2 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">勤怠詳細</p>
+            <p class="col-start-2 col-span-9 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">勤怠詳細</p>
             <!-- 拠点管理者ロールであり自拠点の勤怠であればボタンを表示 -->
             @if(Auth::user()->role_id == 31 && Auth::user()->base_id == $kintai->employee->base_id)
                 <a href="{{ route('kintai.delete', ['kintai_id' => $kintai->kintai_id]) }}" id="kintai_delete" class="col-start-11 col-span-1 text-xl py-4 rounded-lg text-center bg-red-500 mb-5 text-white">削除</a>

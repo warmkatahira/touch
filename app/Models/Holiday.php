@@ -12,4 +12,10 @@ class Holiday extends Model
     protected $primaryKey = 'holiday';
     // オートインクリメント無効化
     public $incrementing = false;
+
+    // 操作するカラムを許可
+    protected $fillable = [
+        'holiday',
+        'holiday_note',
+    ];
 }

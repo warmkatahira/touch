@@ -11,8 +11,8 @@
                 @csrf
                 <label for="base" class="col-start-1 col-span-2 bg-black text-white py-2 text-center">拠点</label>
                 <select id="base" name="base" class="col-span-2">
-                    @foreach($bases as $base)
-                        <option value="{{ $base->base_id }}" {{ $base->base_id == old('base') ? 'selected' : '' }}>{{ $base->base_name }}</option>
+                    @foreach($bases as $base_id => $base_name)
+                        <option value="{{ $base_id }}" {{ $base_id == old('base') ? 'selected' : '' }}>{{ $base_name }}</option>
                     @endforeach
                 </select>
                 <label for="employee_category" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">従業員区分</label>
@@ -25,6 +25,8 @@
                 <input type="text" id="employee_no" name="employee_no" class="col-span-2 mt-1" autocomplete="off" value="{{ old('employee_no') }}" placeholder="4桁で入力して下さい。">
                 <label for="employee_name" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">従業員名</label>
                 <input type="text" id="employee_name" name="employee_name" class="col-span-2 mt-1" autocomplete="off" value="{{ old('employee_name') }}">
+                <label for="monthly_workable_time_setting" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">月間稼働設定</label>
+                <input type="text" id="monthly_workable_time_setting" name="monthly_workable_time_setting" class="col-span-2 mt-1" autocomplete="off" value="{{ old('monthly_workable_time_setting') }}">
                 <button class="col-start-1 col-span-4 py-4 rounded-lg text-center bg-blue-200 mt-5">追加</button>
             </form>
         </div>

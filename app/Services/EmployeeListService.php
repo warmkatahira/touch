@@ -42,17 +42,19 @@ class EmployeeListService
         session(['back_url_1' => url()->full()]);
         // 自拠点従業員の当月の残業時間を集計
         $this_month_over_time = Kintai::join('employees', 'employees.employee_no', 'kintais.employee_no')
-                                    ->where('base_id', session('search_base'))
                                     ->whereBetween('work_day', ['2022-11-01' , '2022-11-30'])
-                                    ->select(DB::raw("sum(over_time) as total_over_time, kintais.employee_no"))
+                                    ->select(DB::raw("sum(over_time) as total_over_time, sum(working_time) as total_working_time, kintais.employee_no"))
                                     ->groupBy('employee_no');
         // 集計した勤怠を従業員テーブルと結合
         $employees = Employee::
             leftJoinSub($this_month_over_time, 'OVERTIME', function ($join) {
                 $join->on('employees.employee_no', '=', 'OVERTIME.employee_no');
             })
-            ->where('employees.base_id', session('search_base'))
-            ->select('employees.*', 'OVERTIME.total_over_time');
+            ->select('employees.*', 'OVERTIME.total_over_time', 'OVERTIME.total_working_time');
+        // 拠点条件がある場合（全社以外で適用）
+        if (session('search_base') != 0) {
+            $employees->where('base_id', session('search_base'));
+        }
         // 氏名条件がある場合
         if (!empty(session('search_employee_name'))) {
             $employees->where('employee_name', 'LIKE', '%'.session('search_employee_name').'%');
@@ -61,24 +63,9 @@ class EmployeeListService
         if (!empty(session('search_employee_category'))) {
             $employees->where('employee_category_id', session('search_employee_category'));
         }
+        // 従業員番号で並び替え
         $employees = $employees->orderBy('employees.employee_no')->get();
         return $employees;
-    }
-
-    public function getPulldownInfo()
-    {
-        // 拠点と従業員区分を取得
-        $bases = Base::all();
-        $employee_categories = EmployeeCategory::all();
-        return compact('bases', 'employee_categories');
-    }
-
-    public function getEmployee($employee_no)
-    {
-        // 選択された従業員の情報を取得(getは勤怠表用)
-        $employee = Employee::where('employee_no', $employee_no)->first();
-        $employees = Employee::where('employee_no', $employee_no)->get();
-        return compact('employee', 'employees');
     }
 
     public function getThisMonthData($employee_no){
@@ -105,7 +92,7 @@ class EmployeeListService
             ->select(DB::raw("sum(customer_working_time) as total_customer_working_time, DATE_FORMAT(work_day, '%Y-%m') as date, kintai_details.customer_id, customer_name"))
             ->groupBy('date', 'customer_id')
             ->orderBy('total_customer_working_time', 'desc')
-            ->take(5)
+            ->take(3)
             ->get();
         return $customer_working_time;
     }

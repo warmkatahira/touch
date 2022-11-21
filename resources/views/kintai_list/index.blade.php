@@ -4,10 +4,10 @@
 <x-app-layout>
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12 gap-4">
-            <p class="col-start-1 col-span-2 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 mb-5">勤怠一覧</p>
-            <!-- 拠点管理者ロールであり自拠点の勤怠であれば確認ボタンを表示 -->
+            <p class="{{ Auth::user()->role_id == 31 && Auth::user()->base_id == session('search_base') ? 'col-span-11' : 'col-span-12' }} text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 mb-5">勤怠一覧</p>
+            <!-- 拠点管理者ロールであり自拠点の勤怠であればボタンを表示 -->
             @if(Auth::user()->role_id == 31 && Auth::user()->base_id == session('search_base'))
-                <button type="button" id="manager_check_enter" class="col-start-12 col-span-1 bg-blue-100 border-2 border-blue-600 rounded-lg text-center text-sm px-2 h-3/4"><i class="las la-stamp la-2x text-blue-600"></i></button>
+                <button type="button" id="manager_check_enter" class="col-span-1 bg-blue-100 border-2 border-blue-600 rounded-lg text-center text-sm px-2 h-3/4"><i class="las la-stamp la-2x text-blue-600"></i></button>
             @endif
         </div>
         <!-- 検索条件 -->
@@ -52,7 +52,6 @@
                 <!-- 拠点 -->
                 <label for="search_base" class="col-start-1 col-span-1 bg-black text-white text-center py-2 text-sm mt-1">拠点</label>
                 <select id="search_base" name="search_base" class="col-span-2 border border-black text-sm mt-1">
-                    <option value=""></option>
                     @foreach($bases as $base)
                         <option value="{{ $base->base_id }}" {{ $base->base_id == session('search_base') ? 'selected' : '' }}>{{ $base->base_name }}</option>
                     @endforeach
@@ -76,7 +75,7 @@
         <div class="grid grid-cols-12">
             <table class="col-span-12 text-sm">
                 <thead>
-                    <tr class="text-left text-white bg-gray-600 border-gray-600">
+                    <tr class="text-left text-white bg-gray-600 border-gray-600 sticky top-0">
                         <th id="all_check" class="font-thin p-2 px-2 w-1/12 text-center"><i class="las la-check-square la-lg"></i></th>
                         <th class="font-thin p-2 px-2 w-2/12 text-center">出勤日</th>
                         <th class="font-thin p-2 px-2 w-2/12">氏名</th>

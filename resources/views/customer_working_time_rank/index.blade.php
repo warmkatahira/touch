@@ -3,7 +3,7 @@
 <x-app-layout>
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12 gap-4">
-            <p class="col-start-1 col-span-4 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2">荷主稼働ランキング</p>
+            <p class="col-span-12 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2">荷主稼働ランキング</p>
         </div>
         <div class="grid grid-cols-12 mt-5">
             <!-- 検索条件 -->
@@ -39,7 +39,7 @@
             <!-- 荷主稼働ランキング -->
             <table class="col-span-12 text-sm">
                 <thead>
-                    <tr class="text-left text-white bg-gray-600 border-gray-600">
+                    <tr class="text-left text-white bg-gray-600 border-gray-600 sticky top-0">
                         <th class="font-thin p-2 px-2 w-1/12">Rank</th>
                         <th class="font-thin p-2 px-2 w-2/12">拠点</th>
                         <th class="font-thin p-2 px-2 w-3/12">荷主名</th>
