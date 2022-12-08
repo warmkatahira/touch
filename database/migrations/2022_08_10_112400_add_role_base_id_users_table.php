@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('user_name');
             $table->unsignedinteger('role_id');
-            $table->unsignedinteger('base_id');
+            $table->string('base_id');
             $table->boolean('status')->nullable();
             $table->timestamp('last_login_at')->nullable();
         });

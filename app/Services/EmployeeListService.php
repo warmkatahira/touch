@@ -10,6 +10,7 @@ use App\Models\Base;
 use App\Models\EmployeeCategory;
 use App\Models\Kintai;
 use App\Models\KintaiDetail;
+use App\Services\CommonService;
 
 class EmployeeListService
 {
@@ -40,9 +41,13 @@ class EmployeeListService
     {
         // 現在のURLを取得
         session(['back_url_1' => url()->full()]);
+        // サービスクラスを定義
+        $CommonService = new CommonService;
+        // 当月の月初・月末の日付を取得
+        $start_end_of_month = $CommonService->getStartEndOfMonth(Carbon::today());
         // 自拠点従業員の当月の残業時間を集計
         $this_month_over_time = Kintai::join('employees', 'employees.employee_no', 'kintais.employee_no')
-                                    ->whereBetween('work_day', ['2022-11-01' , '2022-11-30'])
+                                    ->whereBetween('work_day', [$start_end_of_month['start_of_month'] , $start_end_of_month['end_of_month']])
                                     ->select(DB::raw("sum(over_time) as total_over_time, sum(working_time) as total_working_time, kintais.employee_no"))
                                     ->groupBy('employee_no');
         // 集計した勤怠を従業員テーブルと結合

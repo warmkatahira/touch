@@ -64,5 +64,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'user.status' => \App\Http\Middleware\UserStatusCheckMiddleware::class,
+        'kintai.operation.check' => \App\Http\Middleware\KintaiOperationCheck::class,
+        'kintai.close.check' => \App\Http\Middleware\KintaiCloseCheck::class,
     ];
 }

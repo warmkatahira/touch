@@ -16,7 +16,7 @@ class OverTimeRankController extends Controller
         $OverTimeRankService->setDefaultCondition();
         // 正社員の残業時間情報を取得
         $employees = $OverTimeRankService->getOverTimeData();
-        return view('over_time_rank.index')->with([
+        return view('other.over_time_rank.index')->with([
             'employees' => $employees,
         ]);
     }
@@ -29,7 +29,7 @@ class OverTimeRankController extends Controller
         $OverTimeRankService->getSearchCondition($request->search_month);
         // 正社員の残業時間情報を取得
         $employees = $OverTimeRankService->getOverTimeData();
-        return view('over_time_rank.index')->with([
+        return view('other.over_time_rank.index')->with([
             'employees' => $employees,
         ]);
     }

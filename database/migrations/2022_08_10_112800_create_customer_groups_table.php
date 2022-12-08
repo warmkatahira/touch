@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('customer_groups', function (Blueprint $table) {
             $table->bigIncrements('customer_group_id');
-            $table->unsignedInteger('base_id');
+            $table->string('base_id');
             $table->string('customer_group_name');
             $table->unsignedInteger('customer_group_order')->nullable();
             $table->timestamps();

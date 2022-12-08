@@ -21,6 +21,28 @@ class PunchBeginService
         return $punch_begin_type_btn_disp;
     }
 
+    // 早出ができる状態の時、直近4時間分の情報を取得（15分刻みで）
+    public function getEarlyWorkSelectInfo($punch_begin_type_btn_disp)
+    {
+        // 変数をセット
+        $early_work_select_info = [];
+        // onの時のみ取得
+        if($punch_begin_type_btn_disp == 'on'){
+            // 現在の日時を取得
+            $nowDate = new Carbon('now');
+            // 15分単位で切り上げ
+            $nowDate = $nowDate->addMinutes(15 - $nowDate->minute % 15);
+            // 処理を4回実施
+            for($i = 0; $i < 4; $i++){
+                // 時刻部分だけの情報を格納（H:mm）
+                $early_work_select_info[] = $nowDate->toTimeString('minute');
+                $nowDate = new Carbon($nowDate);
+                $nowDate = $nowDate->addMinutes(15);
+            }
+        }
+        return $early_work_select_info;
+    }
+
     // 出勤打刻対象者を取得
     public function getPunchBeginTargetEmployee()
     {
@@ -34,10 +56,16 @@ class PunchBeginService
     // 勤怠テーブルに追加
     public function addKintai($request)
     {
-        // 現在の日時を取得
-        $nowDate = new Carbon('now');
         // 早出フラグを取得(リクエストパラメータがある = 早出となる) ※早出は1
         $is_early_worked = isset($request->punch_begin_type) ? 1 : 0;
+        // 早出かどうかで取得する日時を可変
+        if($is_early_worked == 0){
+            // 現在の日時を取得
+            $nowDate = new Carbon('now');
+        }
+        if($is_early_worked == 1){
+            $nowDate = new Carbon($request->early_work_select_info);
+        }
         // 出勤時間調整を算出・取得
         $begin_time_adj = $this->getBeginTimeAdj($nowDate, $is_early_worked);
         // レコードを追加

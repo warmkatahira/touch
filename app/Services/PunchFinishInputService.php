@@ -158,8 +158,15 @@ class PunchFinishInputService
     {
         // 自拠点の荷主情報を取得
         $customers = Customer::where('control_base_id', Auth::user()->base_id)->get();
-        $customer_groups = CustomerGroup::all();
+        $customer_groups = CustomerGroup::where('base_id', Auth::user()->base_id)->get();
         return compact('customers', 'customer_groups');
+    }
+
+    public function getSupportedBases()
+    {
+        // 荷主から拠点情報だけを取得
+        $support_bases = CustomerGroup::where('base_id', 'system_common')->get();
+        return $support_bases;
     }
 
 }

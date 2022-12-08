@@ -14,7 +14,7 @@ class KintaiDetail extends Model
     public $incrementing = false;
 
     // 操作するカラムを許可
-    protected $fillable = ['kintai_detail_id', 'kintai_id', 'customer_id', 'customer_working_time',];
+    protected $fillable = ['kintai_detail_id', 'kintai_id', 'customer_id', 'customer_working_time', 'is_supported'];
 
     // 勤怠から荷主情報を取得
     public function customer()

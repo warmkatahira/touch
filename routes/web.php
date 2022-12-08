@@ -18,7 +18,9 @@ use App\Http\Controllers\SystemMgt\HolidayMgtController;
 use App\Http\Controllers\Kintai\KintaiListController;
 use App\Http\Controllers\Kintai\KintaiDeleteController;
 use App\Http\Controllers\Kintai\KintaiTagController;
+use App\Http\Controllers\Kintai\KintaiCommentController;
 // Other
+use App\Http\Controllers\Other\OtherController;
 use App\Http\Controllers\Other\TodayKintaiController;
 use App\Http\Controllers\Other\ThisMonthKintaiController;
 use App\Http\Controllers\Other\OverTimeRankController;
@@ -33,6 +35,10 @@ use App\Http\Controllers\Employee\EmployeeController;
 // ManagementFunc
 use App\Http\Controllers\ManagementFunc\ManagementFuncController;
 use App\Http\Controllers\ManagementFunc\CustomerGroupController;
+use App\Http\Controllers\ManagementFunc\KintaiCloseController;
+// AccountingFunc
+use App\Http\Controllers\AccountingFunc\AccountingFuncController;
+use App\Http\Controllers\AccountingFunc\KintaiCloseCheckController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,30 +67,32 @@ Route::middleware(['auth','user.status'])->group(function () {
     Route::controller(PunchController::class)->prefix('punch')->name('punch.')->group(function(){
         Route::get('/', 'index')->name('index');
     });
+    // 勤怠提出がされていないか確認
+    Route::middleware(['kintai.close.check'])->group(function () {
+        // 出勤打刻
+        Route::controller(PunchBeginController::class)->prefix('punch_begin')->name('punch_begin.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::post('enter', 'enter')->name('enter');
+        });
 
-    // 出勤打刻
-    Route::controller(PunchBeginController::class)->prefix('punch_begin')->name('punch_begin.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::post('enter', 'enter')->name('enter');
-    });
+        // 退勤打刻
+        Route::controller(PunchFinishController::class)->prefix('punch_finish')->name('punch_finish.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('input', 'input')->name('input');
+            Route::post('enter', 'enter')->name('enter');
+        });
 
-    // 退勤打刻
-    Route::controller(PunchFinishController::class)->prefix('punch_finish')->name('punch_finish.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::get('input', 'input')->name('input');
-        Route::post('enter', 'enter')->name('enter');
-    });
+        // 外出打刻
+        Route::controller(PunchOutController::class)->prefix('punch_out')->name('punch_out.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::post('enter', 'enter')->name('enter');
+        });
 
-    // 外出打刻
-    Route::controller(PunchOutController::class)->prefix('punch_out')->name('punch_out.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::post('enter', 'enter')->name('enter');
-    });
-
-    // 戻り打刻
-    Route::controller(PunchReturnController::class)->prefix('punch_return')->name('punch_return.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::post('enter', 'enter')->name('enter');
+        // 戻り打刻
+        Route::controller(PunchReturnController::class)->prefix('punch_return')->name('punch_return.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::post('enter', 'enter')->name('enter');
+        });
     });
 
     // 今日の勤怠
@@ -108,14 +116,19 @@ Route::middleware(['auth','user.status'])->group(function () {
 
     // 勤怠修正
     Route::controller(PunchModifyController::class)->prefix('punch_modify')->name('punch_modify.')->group(function(){
-        Route::get('/', 'index')->name('index');
+        Route::get('/', 'index')->name('index')->middleware('kintai.operation.check');
         Route::get('input', 'input')->name('input');
         Route::post('enter', 'enter')->name('enter');
     });
 
     // 勤怠削除
-    Route::controller(KintaiDeleteController::class)->prefix('kintai_delete')->name('kintai.')->group(function(){
+    Route::controller(KintaiDeleteController::class)->prefix('kintai_delete')->name('kintai.')->middleware('kintai.operation.check')->group(function(){
         Route::get('/', 'delete')->name('delete');
+    });
+
+    // 勤怠コメント
+    Route::controller(KintaiCommentController::class)->prefix('kintai_comment')->name('kintai_comment.')->middleware('kintai.operation.check')->group(function(){
+        Route::get('/', 'update')->name('update');
     });
 
     // 従業員一覧
@@ -137,19 +150,6 @@ Route::middleware(['auth','user.status'])->group(function () {
     Route::controller(KintaiTagController::class)->prefix('kintai_tag')->name('kintai_tag.')->group(function(){
         Route::post('register', 'register')->name('register');
         Route::get('delete', 'delete')->name('delete');
-    });
-
-    // 残業ランキング
-    Route::controller(OverTimeRankController::class)->prefix('over_time_rank')->name('over_time_rank.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::get('search', 'search')->name('search');
-    });
-
-    // 荷主稼働ランキング
-    Route::controller(CustomerWorkingTimeRankController::class)->prefix('customer_working_time_rank')->name('customer_working_time_rank.')->group(function(){
-        Route::get('/', 'index')->name('index');
-        Route::get('search', 'search')->name('search');
-        Route::get('detail', 'detail')->name('detail');
     });
 
     // システム管理
@@ -199,7 +199,7 @@ Route::middleware(['auth','user.status'])->group(function () {
         // 手動打刻
         Route::controller(PunchManualController::class)->prefix('punch_manual')->name('punch_manual.')->group(function(){
             Route::get('/', 'index')->name('index');
-            Route::get('input', 'input')->name('input');
+            Route::get('input', 'input')->name('input')->middleware('kintai.close.check');
             Route::post('enter', 'enter')->name('enter');
         });
         // 荷主グループ設定
@@ -212,4 +212,34 @@ Route::middleware(['auth','user.status'])->group(function () {
             Route::get('delete_group', 'delete_group')->name('delete_group');
             Route::post('modify', 'modify')->name('modify');
         });
+        // 勤怠提出
+        Route::controller(KintaiCloseController::class)->prefix('kintai_close')->name('kintai_close.')->group(function(){
+            Route::get('/', 'index')->name('index');
+            Route::get('closing', 'closing')->name('closing');
+        });
+
+        // その他
+        Route::controller(OtherController::class)->prefix('other')->name('other.')->group(function(){
+            Route::get('/', 'index')->name('index');
+        });
+            // 残業ランキング
+            Route::controller(OverTimeRankController::class)->prefix('over_time_rank')->name('over_time_rank.')->group(function(){
+                Route::get('/', 'index')->name('index');
+                Route::get('search', 'search')->name('search');
+            });
+            // 荷主稼働ランキング
+            Route::controller(CustomerWorkingTimeRankController::class)->prefix('customer_working_time_rank')->name('customer_working_time_rank.')->group(function(){
+                Route::get('/', 'index')->name('index');
+                Route::get('search', 'search')->name('search');
+                Route::get('detail', 'detail')->name('detail');
+            });
+        // 経理機能
+        Route::controller(AccountingFuncController::class)->prefix('accounting_func')->name('accounting_func.')->group(function(){
+            Route::get('/', 'index')->name('index');
+        });
+            // 勤怠提出確認
+            Route::controller(KintaiCloseCheckController::class)->prefix('kintai_close_check')->name('kintai_close_check.')->group(function(){
+                Route::get('/', 'index')->name('index');
+                Route::get('search', 'search')->name('search');
+            });
 });

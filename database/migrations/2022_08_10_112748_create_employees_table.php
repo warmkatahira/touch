@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->string('employee_no')->primary();
-            $table->unsignedInteger('base_id');
+            $table->string('base_id');
             $table->string('employee_name', 30);
             $table->unsignedInteger('employee_category_id');
             $table->unsignedInteger('hourly_wage')->nullable();

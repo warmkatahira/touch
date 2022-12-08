@@ -4,6 +4,8 @@
             <p class="col-start-1 col-span-11 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">従業員一覧</p>
             <a href="{{ route('employee.register_index') }}" class="col-start-12 col-span-1 text-xl py-4 rounded-lg text-center bg-blue-200 mb-5">追加</a>
         </div>
+        <!-- アラート表示 -->
+        <x-alert/>
         <!-- 検索条件 -->
         <div class="grid grid-cols-12 my-2 border border-black p-5 rounded-lg bg-sky-100">
             <form method="GET" action="{{ route('employee_list.search') }}" class="m-0 col-span-12 grid grid-cols-12">

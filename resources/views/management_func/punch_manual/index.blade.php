@@ -1,12 +1,16 @@
+<script src="{{ asset('js/punch_manual.js') }}" defer></script>
+
 <x-app-layout>
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12 gap-4">
             <a href="{{ route('management_func.index') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white mb-5">戻る</a>
             <p class="col-span-11 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">手動打刻<i class="las la-caret-right"></i>時間入力</p>
         </div>
+        <!-- アラート表示 -->
+        <x-alert/>
         <div class="grid grid-cols-12">
             <form method="GET" action="{{ route('punch_manual.input') }}" class="m-0 col-span-12 grid grid-cols-12">
-                <x-punch-begin-type default="通常"/>
+                <x-punch-begin-type default="{{ old('punch_begin_type') ? '早出' : '通常' }}"/>
                 <label for="work_day" class="col-span-1 bg-black text-white text-center text-sm py-2 mt-3">出勤日</label>
                 <input type="date" id="work_day" name="work_day" class="col-span-1 text-sm mt-3" autocomplete="off" value="{{ old('work_day') }}">
                 <label for="employee" class="col-start-1 col-span-1 bg-black text-white text-center text-sm py-2 mt-1">従業員</label>

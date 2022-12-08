@@ -10,6 +10,8 @@
                 <button type="button" id="manager_check_enter" class="col-span-1 bg-blue-100 border-2 border-blue-600 rounded-lg text-center text-sm px-2 h-3/4"><i class="las la-stamp la-2x text-blue-600"></i></button>
             @endif
         </div>
+        <!-- アラート表示 -->
+        <x-alert/>
         <!-- 検索条件 -->
         <div class="grid grid-cols-12 mb-2 border border-black p-5 rounded-lg bg-sky-100">
             <p class="col-span-2 text-2xl mb-2 border-l-4 border-blue-500 pl-2">検索条件</p>
@@ -52,8 +54,8 @@
                 <!-- 拠点 -->
                 <label for="search_base" class="col-start-1 col-span-1 bg-black text-white text-center py-2 text-sm mt-1">拠点</label>
                 <select id="search_base" name="search_base" class="col-span-2 border border-black text-sm mt-1">
-                    @foreach($bases as $base)
-                        <option value="{{ $base->base_id }}" {{ $base->base_id == session('search_base') ? 'selected' : '' }}>{{ $base->base_name }}</option>
+                    @foreach($bases as $base_id => $base_name)
+                        <option value="{{ $base_id }}" {{ $base_id == session('search_base') ? 'selected' : '' }}>{{ $base_name }}</option>
                     @endforeach
                 </select>
                 <!-- 区分 -->
@@ -94,7 +96,10 @@
                         @foreach($kintais as $kintai)
                             <tr id="all_check" class="hover:bg-teal-100">
                                 <td class="p-1 px-2 border text-center">
-                                    <input type="checkbox" name="chk[]" value="{{ $kintai->kintai_id }}">
+                                    <!-- 退勤時間が埋まっている勤怠だけチェックボックスを表示 -->
+                                    @if(!is_null($kintai->finish_time_adj))
+                                        <input type="checkbox" name="chk[]" value="{{ $kintai->kintai_id }}">
+                                    @endif
                                 </td>
                                 <td class="p-1 px-2 border text-center"><a href="{{ route('kintai_list.detail', ['kintai_id' => $kintai->kintai_id]) }}" class="text-blue-600 underline">{{ \Carbon\Carbon::parse($kintai->work_day)->isoFormat('YYYY年MM月DD日(ddd)') }}</a></td>
                                 <td class="p-1 px-2 border">{{ $kintai->employee_name }}</td>

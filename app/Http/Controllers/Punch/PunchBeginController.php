@@ -18,11 +18,14 @@ class PunchBeginController extends Controller
         $PunchBeginService = new PunchBeginService;
         // 出勤タイプを変更するボタンの表示を管理
         $punch_begin_type_btn_disp = $PunchBeginService->getBeginTypeBtnDisp();
+        // 早出ができる状態の時、直近4時間分の情報を取得（15分刻みで）
+        $early_work_select_info = $PunchBeginService->getEarlyWorkSelectInfo($punch_begin_type_btn_disp);
         // 出勤打刻対象者を取得
         $employees = $PunchBeginService->getPunchBeginTargetEmployee();
         return view('punch_begin.index')->with([
             'employees' => $employees,
             'punch_begin_type_btn_disp' => $punch_begin_type_btn_disp,
+            'early_work_select_info' => $early_work_select_info,
         ]);
     }
 

@@ -4,7 +4,7 @@
     <div class="py-5 mx-5">
         <div class="grid grid-cols-12 gap-4">
             <a href="{{ session('back_url_1') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white mb-5">戻る</a>
-            <p id="page_title" class="col-span-2 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">従業員追加</p>
+            <p id="page_title" class="col-span-11 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">従業員追加</p>
         </div>
         <div class="grid grid-cols-12">
             <form method="POST" action="{{ route('employee.register') }}" class="m-0 col-span-12 grid grid-cols-12">

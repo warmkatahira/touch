@@ -57,6 +57,8 @@ class PunchManualController extends Controller
         $PunchModifyService->setSessionKintaiModifyInfo($out_return_time, $begin_finish_time, $rest_time, $no_rest_times, $working_time, $request->punch_begin_type);
         // 自拠点の荷主情報を取得
         $customer_info = $PunchFinishInputService->getCustomerInfo();
+        // 荷主から応援タブの情報を取得
+        $support_bases = $PunchFinishInputService->getSupportedBases();
         // 従業員情報を取得
         $employee = $PunchManualService->getEmployee($request->employee);
         return view('management_func.punch_manual.input')->with([
@@ -64,6 +66,7 @@ class PunchManualController extends Controller
             'customer_groups' => $customer_info['customer_groups'],
             'employee' => $employee,
             'work_day' => $request->work_day,
+            'support_bases' => $support_bases,
         ]);
     }
 

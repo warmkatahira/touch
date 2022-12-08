@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use App\Models\Base;
 use App\Models\Kintai;
 use App\Models\Employee;
 use App\Models\EmployeeCategory;
+use App\Models\Holiday;
 use Carbon\Carbon;
 
 class KintaiReportExportService
@@ -34,23 +36,24 @@ class KintaiReportExportService
 
     public function getExportEmployee($base_id)
     {
-        // 出力対象の従業員を取得
+        // 出力対象の従業員を取得(getは以降の処理で実施)
         $employees = Employee::where('employees.base_id', $base_id)
                         ->join('bases', 'employees.base_id', 'bases.base_id')
-                        ->select('employees.employee_no', 'employees.employee_name', 'bases.base_name')
-                        ->get();
+                        ->select('employees.employee_no', 'employees.employee_name', 'bases.base_name', 'employees.employee_category_id')
+                        ->orderBy('employees.employee_no', 'asc');
         return $employees;
     }
 
-    public function getExportKintaiNormal($month_date, $employees, $start_day, $end_day)
+    public function getExportKintai($month_date, $employees, $start_day, $end_day)
     {
-        
         // 従業員分だけループ処理
+        $employees = $employees->get();
         foreach($employees as $employee){
             // 勤怠情報を格納する配列をセット
             $kintais[$employee->employee_no] = [];
             $kintais[$employee->employee_no]['employee_name'] = $employee->employee_name;
             $kintais[$employee->employee_no]['base_name'] = $employee->base_name;
+            $kintais[$employee->employee_no]['employee_category_name'] = $employee->employee_category->employee_category_name;
             // 月の日数分だけループ処理
             foreach($month_date as $date){
                 // 勤怠情報と従業員情報を結合して取得
@@ -68,8 +71,64 @@ class KintaiReportExportService
             $kintais[$employee->employee_no]['total_over_time'] = Kintai::where('employee_no', $employee->employee_no)
                                                                         ->whereBetween('work_day', [$start_day, $end_day])
                                                                         ->sum('over_time');
+            // 応援稼働時間を取得 
+            $kintais[$employee->employee_no]['support_working_time'] = $this->getSupportWorkingTime($employee->employee_no, $start_day, $end_day);
+
         }
         return $kintais;
+    }
+
+    public function getSupportWorkingTime($employee_no, $start_day, $end_day)
+    {
+        // 従業員を取得
+        $employee = Employee::where('employee_no', $employee_no);
+        // 応援稼働時間を取得
+        $support_working_times = Kintai::joinSub($employee, 'EMPLOYEE', function ($join) {
+                    $join->on('kintais.employee_no', '=', 'EMPLOYEE.employee_no');
+                })
+                ->join('kintai_details', 'kintai_details.kintai_id', 'kintais.kintai_id')
+                ->whereBetween('work_day', [$start_day, $end_day])
+                ->where('kintai_details.customer_id', 'like', 'warm_%')
+                ->join('customers', 'customers.customer_id', 'kintai_details.customer_id')
+                ->select(DB::raw("sum(customer_working_time) as total_customer_working_time, EMPLOYEE.employee_no, kintai_details.customer_id, DATE_FORMAT(work_day, '%Y-%m') as date, customers.customer_name"))
+                ->groupBy('EMPLOYEE.employee_no', 'customers.customer_id', 'date')
+                ->orderBy('EMPLOYEE.employee_no', 'asc')
+                ->orderBy('kintai_details.customer_id', 'asc')
+                ->get();
+        return $support_working_times;
+    }
+
+    public function getOver40($month_date, $employees, $start_day, $end_day)
+    {
+        // 従業員数分だけループ処理
+        foreach($employees->get() as $employee){
+            // 従業員区分がパートのみを対象とする
+            if($employee->employee_category_id == 2){
+                // 情報を格納する配列をセット
+                $over40[$employee->employee_no] = [];
+                // 月の日数分だけループ処理
+                foreach($month_date as $date){
+                    // 日付をインスタンス化
+                    $to_day = new Carbon($date);
+                    // 日曜日だったら、週40時間超過情報を取得
+                    if($to_day->isSunday()){
+                        // 同週の月曜日の日付を取得
+                        $from_day = new Carbon($to_day);
+                        $from_day = $from_day->subDays(6);
+                        // フォーマット変換
+                        $from_day = $from_day->toDateString();
+                        $to_day = $to_day->toDateString();
+                        // 週40時間超過情報を取得
+                        $over40[$employee->employee_no][$date] = Kintai::where('employee_no', $employee->employee_no)
+                                                                    ->whereBetween('work_day', [$from_day , $to_day])
+                                                                    ->select(DB::raw("sum(working_time) as total_working_time, sum(over_time) as total_over_time, (sum(working_time) - sum(over_time) - 2400) as over40, DATE_FORMAT(work_day, '%v') as date"))
+                                                                    ->groupBy('employee_no', 'date')
+                                                                    ->first();
+                    }
+                }
+            }
+        }
+        return isset($over40) ? $over40 : array();
     }
 
     public function getBase($base_id)
@@ -88,6 +147,17 @@ class KintaiReportExportService
         return compact('base', 'total_employee');
     }
 
+    public function getHolidays($start_day, $end_day)
+    {
+        // 対象月の祝日を取得
+        $holidays = Holiday::whereBetween('holiday', [$start_day , $end_day])->get();
+        // 配列に祝日を格納
+        foreach($holidays as $holiday){
+            $holiday_info[$holiday->holiday] = $holiday->holiday;
+        }
+        return $holiday_info;
+    }
+
     public function getExportFileName($month, $base_name)
     {
         // 出力年月をフォーマット
@@ -98,10 +168,10 @@ class KintaiReportExportService
         return $filename;
     }
 
-    public function passExportInfo($kintais, $month, $base)
+    public function passExportInfo($kintais, $month, $base, $over40, $holidays)
     {
         // PDF出力ビューに情報を渡す
-        $pdf = PDF::loadView('data_export.kintai_report_export.report', compact('kintais', 'month', 'base'));
+        $pdf = PDF::loadView('data_export.kintai_report_export.report', compact('kintais', 'month', 'base', 'over40', 'holidays'));
         return $pdf;
     }
 }

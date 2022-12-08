@@ -16,9 +16,9 @@ class CsvExportController extends Controller
         // サービスクラスを定義
         $CommonService = new CommonService;
         // 拠点を取得
-        $bases = $CommonService->getBases(true);
+        $bases = $CommonService->getBases(true, false);
         // 従業員区分を取得
-        $employee_categories = $CommonService->getEmployeeCategories(true);
+        $employee_categories = $CommonService->getEmployeeCategories();
         return view('data_export.csv_export.index')->with([
             'bases' => $bases,
             'employee_categories' => $employee_categories,

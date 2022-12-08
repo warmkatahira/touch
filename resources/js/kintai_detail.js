@@ -15,3 +15,12 @@ $("[class^=kintai_tag_delete]").on("click",function(){
         return false;
     }
 });
+
+// コメント更新ボタンが押下されたら
+$("[id=comment_update]").on("click",function(){
+    const result = window.confirm('コメント更新を実行しますか？');
+    // 「はい」が押下されたらsubmit、「いいえ」が押下されたら処理キャンセル
+    if(result == false) {
+        return false;
+    }
+});

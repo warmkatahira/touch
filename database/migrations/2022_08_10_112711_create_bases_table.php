@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('bases', function (Blueprint $table) {
-            $table->unsignedinteger('base_id')->primary();
+            $table->string('base_id')->primary();
             $table->string('base_name');
             $table->timestamps();
         });

@@ -35,6 +35,8 @@ mix.js('resources/js/app.js', 'public/js')
 .js('resources/js/employee_detail.js', 'public/js')
 .js('resources/js/tag_detail.js', 'public/js')
 .js('resources/js/customer_group.js', 'public/js')
+.js('resources/js/kintai_close.js', 'public/js')
+.js('resources/js/punch_manual.js', 'public/js')
 .autoload({
     jquery: ['$', 'window.jQuery']
 })

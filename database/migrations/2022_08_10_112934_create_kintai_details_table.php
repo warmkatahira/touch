@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('kintai_details', function (Blueprint $table) {
             $table->string('kintai_detail_id')->primary();
             $table->string('kintai_id');
-            $table->unsignedBigInteger('customer_id');
+            $table->string('customer_id');
             $table->unsignedInteger('customer_working_time');
+            $table->boolean('is_supported')->nullable();
             $table->timestamps();
             // 外部キー制約
             $table->foreign('kintai_id')->references('kintai_id')->on('kintais')->onDelete('cascade');

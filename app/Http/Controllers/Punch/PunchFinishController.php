@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Employee;
-use App\Models\Customer;
-use App\Models\CustomerGroup;
-use App\Models\Kintai;
+use App\Models\Base;
 use App\Services\PunchFinishInputService;
 use App\Services\PunchFinishEnterService;
 use App\Services\KintaiCommonService;
+use App\Services\CommonService;
 
 class PunchFinishController extends Controller
 {
@@ -52,6 +50,8 @@ class PunchFinishController extends Controller
         $working_time = $PunchFinishInputService->getWorkingTime($kintai['kintai']['begin_time_adj'], $finish_time_adj, $rest_time, $kintai['kintai']['out_return_time']);
         // 自拠点の荷主情報を取得
         $customer_info = $PunchFinishInputService->getCustomerInfo();
+        // 荷主から応援タブの情報を取得
+        $support_bases = $PunchFinishInputService->getSupportedBases();
         return view('punch_finish.input')->with([
             'kintai' => $kintai['kintai'],
             'finish_time' => $finish_time,
@@ -61,6 +61,7 @@ class PunchFinishController extends Controller
             'no_rest_times' => $no_rest_times,
             'customers' => $customer_info['customers'],
             'customer_groups' => $customer_info['customer_groups'],
+            'support_bases' => $support_bases,
         ]);
     }
 

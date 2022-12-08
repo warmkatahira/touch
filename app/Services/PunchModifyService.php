@@ -127,6 +127,7 @@ class PunchModifyService
                 'kintai_id' => session('kintai_id'),
                 'customer_id' => $key,
                 'customer_working_time' => $value * 60, // 0.25単位から分単位に変換
+                'is_supported' => preg_match('/warm_/', $key),
             ]);
         }
         return;

@@ -10,6 +10,8 @@ class Customer extends Model
     use HasFactory;
     // 主キーカラムを変更
     protected $primaryKey = 'customer_id';
+    // オートインクリメント無効化
+    public $incrementing = false;
 
     Public function customer_group()
     {

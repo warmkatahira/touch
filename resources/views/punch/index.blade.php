@@ -1,5 +1,7 @@
 <x-app-layout>
     <div class="py-5 mx-5">
+        <!-- アラート表示 -->
+        <x-alert/>
         <div class="grid grid-cols-12 gap-x-4 gap-y-20">
             <a href="{{ route('punch_begin.index') }}" class="col-span-3 h-40 bg-black text-white text-6xl text-center font-semibold rounded-lg shadow-lg py-12">出勤</a>
             <a href="{{ route('punch_finish.index') }}" class="col-span-3 h-40 bg-black text-white text-6xl text-center font-semibold rounded-lg shadow-lg py-12">退勤</a>

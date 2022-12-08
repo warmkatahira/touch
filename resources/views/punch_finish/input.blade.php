@@ -55,7 +55,7 @@
                 </div>
             </div>
             <!-- 荷主情報のタブを表示 -->
-            <x-customer-tab :customers="$customers" :customergroups="$customer_groups"></x-customer-tab>
+            <x-customer-tab :customers="$customers" :customergroups="$customer_groups" :supportbases="$support_bases"></x-customer-tab>
             <button type="button" id="punch_finish_enter" class="punch_enter w-full text-center bg-blue-200 py-8 text-4xl rounded-lg mt-3">入力完了</button>
         </div>
     </form>

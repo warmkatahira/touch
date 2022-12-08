@@ -7,9 +7,6 @@
 
         <title>Touch</title>
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/navigation.css') }}">
@@ -36,8 +33,6 @@
     <body style="font-family:Kosugi Maru">
         <div class="min-h-screen">
             @include('layouts.navigation')
-            <!-- アラート表示 -->
-            <x-alert/>
             <!-- 打刻完了ポップアップ画面 -->
             <x-punch-complete-popup/>
             <!-- Page Content -->

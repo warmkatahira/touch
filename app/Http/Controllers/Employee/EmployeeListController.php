@@ -25,7 +25,7 @@ class EmployeeListController extends Controller
         // 従業員を取得
         $employees = $EmployeeListService->getEmployeeSearch();
         // 拠点情報を取得
-        $bases = $CommonService->getBases(true);
+        $bases = $CommonService->getBases(true, false);
         // 従業員区分を取得
         $employee_categories = $CommonService->getEmployeeCategories();
         return view('employee_list.index')->with([
@@ -47,7 +47,7 @@ class EmployeeListController extends Controller
         // 従業員を取得
         $employees = $EmployeeListService->getEmployeeSearch();
         // 拠点情報を取得
-        $bases = $CommonService->getBases(true);
+        $bases = $CommonService->getBases(true, false);
         // 従業員区分を取得
         $employee_categories = $CommonService->getEmployeeCategories();
         return view('employee_list.index')->with([

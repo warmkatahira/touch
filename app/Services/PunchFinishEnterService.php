@@ -14,14 +14,23 @@ class PunchFinishEnterService
     // 残業時間を算出・取得
     public function getOverTime($kintai, $working_time)
     {
-        // 定時時間の分数を取得(平日なら450分(7.5)、土日祝なら390分(6.5))
-        $regular_time = $this->getRegularTime($kintai->work_day);
-        // 初期値として0を設定(パートは残業時間=0なのでこのまま)
+        // 定時時間の分数を取得
+        // 社員：平日なら450分(7.5)、土日祝なら390分(6.5)
+        // パート：480分(8.0)
+        $regular_time = $this->getRegularTime($kintai->work_day, $kintai->employee->employee_category_id);
+        // 初期値として0を設定
         $over_time = 0;
-        // 社員は残業時間を算出
+        // 社員の場合
         if($kintai->employee->employee_category_id == 1){
             // 稼働時間が定時時間に60分足した時間以上であれば残業時間発生(定時時間から1時間経過したら残業が発生する)
             if($working_time >= $regular_time + 1){
+                $over_time = $working_time - $regular_time;
+            }
+        }
+        // パートの場合
+        if($kintai->employee->employee_category_id == 2){
+            // 単純に定時時間を超えた分から発生
+            if($working_time >= $regular_time){
                 $over_time = $working_time - $regular_time;
             }
         }
@@ -29,25 +38,32 @@ class PunchFinishEnterService
     }
 
     // 定時時間を算出・取得
-    public function getRegularTime($work_day)
+    public function getRegularTime($work_day, $employee_category_id)
     {
-        // 出勤日をインスタンス化してフォーマット
-        $work_day = new Carbon($work_day);
-        // 曜日番号から平日か土日かを判定
-        // 1->月,2->火,3->水,4->木,5->金,6->土,7->日
-        // 6よりも小さければ平日
-        if($work_day->dayOfWeekIso < 6){
-            // 平日用の定時時間をセット
-            $regular_time = 7.5;
-            // 祝日の可能性があるので、祝日マスタに存在する日付であるかチェック
-            if(Holiday::where('holiday', $work_day)->exists()){
-                // 存在した場合は、土日祝用の定時時間をセット
+        // 社員の場合
+        if($employee_category_id == 1){
+            // 出勤日をインスタンス化してフォーマット
+            $work_day = new Carbon($work_day);
+            // 曜日番号から平日か土日かを判定
+            // 1->月,2->火,3->水,4->木,5->金,6->土,7->日
+            // 6よりも小さければ平日
+            if($work_day->dayOfWeekIso < 6){
+                // 平日用の定時時間をセット
+                $regular_time = 7.5;
+                // 祝日の可能性があるので、祝日マスタに存在する日付であるかチェック
+                if(Holiday::where('holiday', $work_day)->exists()){
+                    // 存在した場合は、土日祝用の定時時間をセット
+                    $regular_time = 6.5;
+                }
+            }
+            // 6以上なら土日
+            if($work_day->dayOfWeekIso >= 6){
                 $regular_time = 6.5;
             }
         }
-        // 6以上なら土日
-        if($work_day->dayOfWeekIso >= 6){
-            $regular_time = 6.5;
+        // パートの場合
+        if($employee_category_id == 2){
+            $regular_time = 8.0;
         }
         return $regular_time;
     }
@@ -76,6 +92,7 @@ class PunchFinishEnterService
                 'kintai_id' => $kintai_id,
                 'customer_id' => $key,
                 'customer_working_time' => $value * 60, // 0.25単位から分単位に変換
+                'is_supported' => preg_match('/warm_/', $key),
             ]);
         }
         return;

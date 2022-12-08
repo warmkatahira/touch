@@ -143,14 +143,6 @@ class KintaiListService
         return $kintais;
     }
 
-    public function getPulldownInfo()
-    {
-        // 拠点と従業員区分を取得
-        $bases = Base::all();
-        $employee_categories = EmployeeCategory::all();
-        return compact('bases', 'employee_categories');
-    }
-
     public function getKintai($kintai_id)
     {
         // 勤怠IDで対象の勤怠を取得

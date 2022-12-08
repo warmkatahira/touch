@@ -1,3 +1,4 @@
+<script src="{{ asset('js/punch_begin.js') }}" defer></script>
 <script src="{{ asset('js/punch_common.js') }}" defer></script>
 
 <x-app-layout>
@@ -18,8 +19,8 @@
                 <!-- 従業員名ボタンを表示 -->
                 <x-punch-employee-btn :employees="$employees" id="employee_no"/>
             </div>
+            <!-- 打刻確認モーダル -->
+            <x-punch-confirm-modal-3 proc="出勤" :earlyWorkSelectInfo="$early_work_select_info" :punchBeginTypeBtnDisp="$punch_begin_type_btn_disp"/>
         </form>
     </div>
-    <!-- 打刻確認モーダル -->
-    <x-punch-confirm-modal-1 proc="出勤"/>
 </x-app-layout>

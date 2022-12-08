@@ -9,6 +9,7 @@ use App\Models\Kintai;
 use App\Models\KintaiDetail;
 use App\Services\KintaiListService;
 use Carbon\Carbon;
+use App\Services\CommonService;
 
 class KintaiListController extends Controller
 {
@@ -16,18 +17,21 @@ class KintaiListController extends Controller
     {
         // サービスクラスを定義
         $KintaiListService = new KintaiListService;
+        $CommonService = new CommonService;
         // 検索条件が格納されているセッションをクリア
         $KintaiListService->deleteSearchSession();
         // 初期条件をセット
         $KintaiListService->setDefaultCondition(); 
         // 検索条件と一致した勤怠を取得
         $kintais = $KintaiListService->getKintaiSearch(null);
-        // 検索条件に使用するプルダウン情報を取得
-        $pulldown_info = $KintaiListService->getPulldownInfo();
+        // 従業員区分情報を取得
+        $employee_categories = $CommonService->getEmployeeCategories();
+        // 拠点情報を取得
+        $bases = $CommonService->getBases(true, false);
         return view('kintai_list.index')->with([
             'kintais' => $kintais,
-            'bases' => $pulldown_info['bases'],
-            'employee_categories' => $pulldown_info['employee_categories'],
+            'bases' => $bases,
+            'employee_categories' => $employee_categories,
         ]);
     }
 
@@ -35,6 +39,7 @@ class KintaiListController extends Controller
     {
         // サービスクラスを定義
         $KintaiListService = new KintaiListService;
+        $CommonService = new CommonService;
         // 検索条件が格納されているセッションをクリア
         $KintaiListService->deleteSearchSession();
         // 検索条件をセッションに格納
@@ -43,12 +48,14 @@ class KintaiListController extends Controller
         $error_info = $KintaiListService->checkWorkdayCondition();
         // 指定された条件の勤怠を取得
         $kintais = $KintaiListService->getKintaiSearch($error_info);
-        // 検索条件に使用するプルダウン情報を取得
-        $pulldown_info = $KintaiListService->getPulldownInfo();
+        // 従業員区分情報を取得
+        $employee_categories = $CommonService->getEmployeeCategories();
+        // 拠点情報を取得
+        $bases = $CommonService->getBases(true, false);
         return view('kintai_list.index')->with([
             'kintais' => $kintais,
-            'bases' => $pulldown_info['bases'],
-            'employee_categories' => $pulldown_info['employee_categories'],
+            'bases' => $bases,
+            'employee_categories' => $employee_categories,
         ]);
     }
 

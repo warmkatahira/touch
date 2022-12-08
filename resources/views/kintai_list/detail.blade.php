@@ -5,12 +5,14 @@
         <div class="grid grid-cols-12 gap-4">
             <a href="{{ session('back_url_1') }}" class="col-start-1 col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white mb-5">戻る</a>
             <p class="col-start-2 col-span-9 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4">勤怠詳細</p>
-            <!-- 拠点管理者ロールであり自拠点の勤怠であればボタンを表示 -->
-            @if(Auth::user()->role_id == 31 && Auth::user()->base_id == $kintai->employee->base_id)
+            <!-- 経理ロール以上又は拠点管理者ロールの場合は自拠点の勤怠であれば(拠点管理者はロックがかかっていない場合のみ) -->
+            @if(Auth::user()->role_id <= 11 || Auth::user()->role_id == 31 && Auth::user()->base_id == $kintai->employee->base_id && is_null($kintai->locked_at))
                 <a href="{{ route('kintai.delete', ['kintai_id' => $kintai->kintai_id]) }}" id="kintai_delete" class="col-start-11 col-span-1 text-xl py-4 rounded-lg text-center bg-red-500 mb-5 text-white">削除</a>
                 <a href="{{ route('punch_modify.index', ['kintai_id' => $kintai->kintai_id]) }}" class="col-start-12 col-span-1 text-xl py-4 rounded-lg text-center bg-blue-200 mb-5">修正</a>
             @endif
         </div>
+        <!-- アラート表示 -->
+        <x-alert/>
         <div class="grid grid-cols-12">
             <form method="POST" action="{{ route('kintai_tag.register') }}" class="m-0 col-span-12 grid grid-cols-12">
                 @csrf
@@ -37,6 +39,14 @@
                     </div>
                 @endforeach
             </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 mt-5">
+            <p class="col-span-12 text-2xl border-l-4 border-blue-500 pl-2">コメント</p>
+            <form method="GET" action="{{ route('kintai_comment.update') }}" class="m-0 col-span-12 grid grid-cols-12">
+                <input type="text" name="comment" class="col-span-3 text-sm" value="{{ $kintai->comment }}" autocomplete="off">
+                <input type="hidden" name="kintai_id" value="{{ $kintai->kintai_id }}">
+                <button type="submit" id="comment_update" class="bg-blue-600 text-white text-sm text-center">更新</button>
+            </form>
         </div>
         <div class="grid grid-cols-12 mt-5">
             <p class="col-span-12 text-2xl mb-4 border-l-4 border-blue-500 pl-2">勤怠概要</p>

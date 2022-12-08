@@ -56,6 +56,8 @@ class PunchModifyController extends Controller
         $PunchModifyService->setSessionKintaiModifyInfo($out_return_time, $begin_finish_time, $rest_time, $no_rest_times, $working_time, $request->punch_begin_type);
         // 勤怠情報を取得
         $kintai = $KintaiCommonService->getKintai(session('kintai_id'));
+        // 荷主から応援タブの情報を取得
+        $support_bases = $PunchFinishInputService->getSupportedBases();
         // 自拠点の荷主情報を取得
         $customer_info = $PunchFinishInputService->getCustomerInfo();
         return view('punch_modify.input')->with([
@@ -63,6 +65,7 @@ class PunchModifyController extends Controller
             'kintai_details' => $kintai['kintai_details'],
             'customers' => $customer_info['customers'],
             'customer_groups' => $customer_info['customer_groups'],
+            'support_bases' => $support_bases,
         ]);
     }
 

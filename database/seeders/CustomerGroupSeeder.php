@@ -16,12 +16,17 @@ class CustomerGroupSeeder extends Seeder
     public function run()
     {
         CustomerGroup::create([
-            'base_id' => 1,
+            'base_id' => 'system_common',
+            'customer_group_name' => '応援',
+            'customer_group_order' => 1,
+        ]);
+        CustomerGroup::create([
+            'base_id' => 'warm_01',
             'customer_group_name' => 'A棟',
             'customer_group_order' => 1,
         ]);
         CustomerGroup::create([
-            'base_id' => 1,
+            'base_id' => 'warm_01',
             'customer_group_name' => 'コンタクト',
             'customer_group_order' => 2,
         ]);

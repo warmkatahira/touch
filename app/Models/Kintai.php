@@ -34,6 +34,7 @@ class Kintai extends Model
         'over_time',
         'is_modified',
         'is_manual_punched',
+        'locked_at',
     ];
 
     // 勤怠から従業員情報を取得

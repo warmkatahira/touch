@@ -8,16 +8,18 @@ class CustomerTab extends Component
 {
     public $customers;
     public $customergroups;
+    public $supportbases;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($customers, $customergroups)
+    public function __construct($customers, $customergroups, $supportbases)
     {
         $this->customers = $customers;
         $this->customergroups = $customergroups;
+        $this->supportbases = $supportbases;
     }
 
     /**

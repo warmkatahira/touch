@@ -5,6 +5,7 @@
         </div>
         <div class="grid grid-cols-12 gap-4 mt-5">
             <x-menu-btn route="punch_manual.index" title="手動打刻" />
+            <x-menu-btn route="kintai_close.index" title="勤怠提出" />
             <x-menu-btn route="customer_group.index" title="荷主グループ設定" />
         </div>
     </div>

@@ -2,7 +2,6 @@
 const punch_confirm_modal = document.getElementById('punch_confirm_modal');
 const punch_key = document.getElementById('punch_key');
 const punch_target_employee_name = document.getElementById('punch_target_employee_name');
-const punch_confirm_enter = document.getElementById('punch_confirm_enter');
 const punch_enter_form = document.getElementById('punch_enter_form');
 
 // 打刻確認モーダルを開く

@@ -21,8 +21,8 @@ class CustomerWorkingTimeRankController extends Controller
         // 並び順条件を適用
         $customers = $CustomerWorkingTimeRankService->setOrderbyCondition($customers);
         // 拠点情報を取得
-        $bases = $CommonService->getBases(true);
-        return view('customer_working_time_rank.index')->with([
+        $bases = $CommonService->getBases(true, false);
+        return view('other.customer_working_time_rank.index')->with([
             'customers' => $customers,
             'bases' => $bases,
         ]);
@@ -40,8 +40,8 @@ class CustomerWorkingTimeRankController extends Controller
         // 並び順条件を適用
         $customers = $CustomerWorkingTimeRankService->setOrderbyCondition($customers);
         // 拠点情報を取得
-        $bases = $CommonService->getBases(true);
-        return view('customer_working_time_rank.index')->with([
+        $bases = $CommonService->getBases(true, false);
+        return view('other.customer_working_time_rank.index')->with([
             'customers' => $customers,
             'bases' => $bases,
         ]);
@@ -55,7 +55,7 @@ class CustomerWorkingTimeRankController extends Controller
         $customer = $CustomerWorkingTimeRankService->getCustomerWorkingTimeDataForDetail($request->customer_id);
         // 稼働している従業員情報を取得
         $employees = $CustomerWorkingTimeRankService->getWorkingEmployees($request->customer_id);
-        return view('customer_working_time_rank.detail')->with([
+        return view('other.customer_working_time_rank.detail')->with([
             'customer' => $customer,
             'employees' => $employees,
         ]);
