@@ -15,6 +15,7 @@ class EmployeeRegisterService
             'base_id' => $request->base,
             'employee_category_id' => $request->employee_category,
             'monthly_workable_time_setting' => $request->monthly_workable_time_setting,
+            'over_time_start_setting' => $request->over_time_start_setting,
         ]);
         return;
     }

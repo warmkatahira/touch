@@ -73,6 +73,10 @@
                 <span class="info_label">総残業時間</span>
                 <span class="info_text">{{ number_format($kintai['total_over_time'] / 60, 2).'時間' }}</span>
             </div>
+            <div class="info_parent">
+                <span class="info_label">祝日総稼働時間</span>
+                <span class="info_text">{{ number_format($kintai['national_holiday_total_working_time'] / 60, 2).'時間' }}</span>
+            </div>
             <table class="kintai_table">
                 <thead>
                     <tr>
@@ -87,6 +91,10 @@
                         <th>早出</th>
                         <th>コメント</th>
                         <th>超過</th>
+                        <!-- 第1営業所のみ表示 -->
+                        @if($kintai['base_id'] == 'warm_02')
+                            <th>大洋</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -103,6 +111,10 @@
                             <td style="{{ \Carbon\Carbon::parse($work_day)->dayOfWeekIso >= 6 || isset($holidays[$work_day]) ? 'background-color: #CCFFFF' : '' }}">{{ is_null($value) ? '' : ($value->is_early_worked == 1 ? '○' : '') }}</td>
                             <td style="{{ \Carbon\Carbon::parse($work_day)->dayOfWeekIso >= 6 || isset($holidays[$work_day]) ? 'background-color: #CCFFFF' : '' }}">{{ is_null($value) ? '' : $value->comment }}</td>
                             <td style="{{ \Carbon\Carbon::parse($work_day)->dayOfWeekIso >= 6 || isset($holidays[$work_day]) ? 'background-color: #CCFFFF' : '' }}">{{ \Carbon\Carbon::parse($work_day)->isSunday() && isset($over40[$employee_no]) ? (isset($over40[$employee_no][$work_day]) ? ($over40[$employee_no][$work_day]->over40 > 0 ? number_format($over40[$employee_no][$work_day]->over40 / 60, 2) : '0.00') : '0.00') : '' }}</td>
+                            <!-- 第1営業所のみ表示 -->
+                            @if($kintai['base_id'] == 'warm_02')
+                                <td style="{{ \Carbon\Carbon::parse($work_day)->dayOfWeekIso >= 6 || isset($holidays[$work_day]) ? 'background-color: #CCFFFF' : '' }}">{{ isset($taiyo_working_times[$employee_no][$work_day]) ? '○' : '' }}</td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

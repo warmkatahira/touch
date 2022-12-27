@@ -39,7 +39,7 @@ class KintaiReportExportService
         // 出力対象の従業員を取得(getは以降の処理で実施)
         $employees = Employee::where('employees.base_id', $base_id)
                         ->join('bases', 'employees.base_id', 'bases.base_id')
-                        ->select('employees.employee_no', 'employees.employee_name', 'bases.base_name', 'employees.employee_category_id')
+                        ->select('employees.employee_no', 'employees.employee_name', 'bases.base_id', 'bases.base_name', 'employees.employee_category_id')
                         ->orderBy('employees.employee_no', 'asc');
         return $employees;
     }
@@ -52,6 +52,7 @@ class KintaiReportExportService
             // 勤怠情報を格納する配列をセット
             $kintais[$employee->employee_no] = [];
             $kintais[$employee->employee_no]['employee_name'] = $employee->employee_name;
+            $kintais[$employee->employee_no]['base_id'] = $employee->base_id;
             $kintais[$employee->employee_no]['base_name'] = $employee->base_name;
             $kintais[$employee->employee_no]['employee_category_name'] = $employee->employee_category->employee_category_name;
             // 月の日数分だけループ処理
@@ -73,9 +74,11 @@ class KintaiReportExportService
                                                                         ->sum('over_time');
             // 応援稼働時間を取得 
             $kintais[$employee->employee_no]['support_working_time'] = $this->getSupportWorkingTime($employee->employee_no, $start_day, $end_day);
-
+            // 国民の祝日の総稼働時間を取得
+            $kintais[$employee->employee_no]['national_holiday_total_working_time'] = $this->getNationalHolidayTotalWorkingTime($employee->employee_no, $start_day, $end_day);
         }
-        return $kintais;
+        // 出力するデータがなければ、nullを返す
+        return isset($kintais) ? $kintais : null;
     }
 
     public function getSupportWorkingTime($employee_no, $start_day, $end_day)
@@ -96,6 +99,26 @@ class KintaiReportExportService
                 ->orderBy('kintai_details.customer_id', 'asc')
                 ->get();
         return $support_working_times;
+    }
+
+    // 国民の祝日に稼働した時間を取得
+    public function getNationalHolidayTotalWorkingTime($employee_no, $start_day, $end_day)
+    {
+        // 従業員を取得
+        $employee = Employee::where('employee_no', $employee_no);
+        // 国民の祝日を取得
+        $national_holidays = Holiday::whereBetween('holiday', [$start_day , $end_day])
+                                ->where('is_national_holiday', 1);
+        // 稼働時間を取得
+        $national_holiday_total_working_time = Kintai::joinSub($employee, 'EMPLOYEE', function ($join) {
+                    $join->on('kintais.employee_no', '=', 'EMPLOYEE.employee_no');
+                })
+                ->whereBetween('work_day', [$start_day, $end_day])
+                ->joinSub($national_holidays, 'HOLIDAY', function ($join) {
+                    $join->on('kintais.work_day', '=', 'HOLIDAY.holiday');
+                })
+                ->sum('working_time');
+        return $national_holiday_total_working_time;
     }
 
     public function getOver40($month_date, $employees, $start_day, $end_day)
@@ -155,7 +178,38 @@ class KintaiReportExportService
         foreach($holidays as $holiday){
             $holiday_info[$holiday->holiday] = $holiday->holiday;
         }
-        return $holiday_info;
+        return isset($holiday_info) ? $holiday_info : array();
+    }
+
+    public function getTaiyoWorkingTimeAtHoliday($base, $month_date, $employees, $start_day, $end_day)
+    {
+        // 第1営業所のみ処理を実施
+        if($base == 'warm_02'){
+            // 指定された期間の国民の祝日を取得
+            $national_holidays = Holiday::whereBetween('holiday', [$start_day, $end_day])
+                                    ->where('is_national_holiday', 1);
+            // 従業員数分だけループ処理
+            foreach($employees->get() as $employee){
+                // 従業員区分がパートのみを対象とする
+                if($employee->employee_category_id == 2){
+                    // 国民の祝日に大洋製薬の稼働がある日を取得
+                    $kintais = Kintai::where('employee_no', $employee->employee_no)
+                                    ->joinSub($national_holidays, 'HOLIDAY', function ($join) {
+                                        $join->on('kintais.work_day', '=', 'HOLIDAY.holiday');
+                                    })
+                                    ->join('kintai_details', 'kintai_details.kintai_id', 'kintais.kintai_id')
+                                    ->whereBetween('work_day', [$start_day, $end_day])
+                                    ->where('kintai_details.customer_id', '10') // 大洋製薬のcustomer_idを設定
+                                    ->select('kintais.work_day', 'kintais.employee_no')
+                                    ->get();
+                    // 配列に格納
+                    foreach($kintais as $kintai){
+                        $taiyo_working_times[$employee->employee_no][$kintai->work_day] = $kintai->work_day;
+                    }
+                }
+            }
+        }
+        return isset($taiyo_working_times) ? $taiyo_working_times : array();
     }
 
     public function getExportFileName($month, $base_name)
@@ -168,10 +222,10 @@ class KintaiReportExportService
         return $filename;
     }
 
-    public function passExportInfo($kintais, $month, $base, $over40, $holidays)
+    public function passExportInfo($kintais, $month, $base, $over40, $holidays, $taiyo_working_times)
     {
         // PDF出力ビューに情報を渡す
-        $pdf = PDF::loadView('data_export.kintai_report_export.report', compact('kintais', 'month', 'base', 'over40', 'holidays'));
+        $pdf = PDF::loadView('data_export.kintai_report_export.report', compact('kintais', 'month', 'base', 'over40', 'holidays', 'taiyo_working_times'));
         return $pdf;
     }
 }

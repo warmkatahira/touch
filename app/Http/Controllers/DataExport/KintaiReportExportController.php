@@ -34,16 +34,23 @@ class KintaiReportExportController extends Controller
         $employees = $KintaiReportExportService->getExportEmployee($request->base);
         // 出力する勤怠情報を取得
         $kintais = $KintaiReportExportService->getExportKintai($month_date['month_date'], $employees, $start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
+        // nullであれば、出力するデータがないので、処理を中断
+        if($kintais == null){
+            session()->flash('alert_danger', "出力できる勤怠がありません。");
+            return redirect()->back()->withInput();
+        }
         // 週40時間超過情報を取得
         $over40 = $KintaiReportExportService->getOver40($month_date['month_date'], $employees, $start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         // 出力対象の営業所情報を取得
         $base = $KintaiReportExportService->getBase($request->base);
         // 対象月の祝日を取得
         $holidays = $KintaiReportExportService->getHolidays($start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
+        // 国民の祝日に大洋製薬の稼働がある日を取得
+        $taiyo_working_times = $KintaiReportExportService->getTaiyoWorkingTimeAtHoliday($request->base, $month_date['month_date'], $employees, $start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         // ファイル名を取得
         $filename = $KintaiReportExportService->getExportFileName($request->month, $base['base']['base_name']);
         // PDF出力ビューに情報を渡す
-        $pdf = $KintaiReportExportService->passExportInfo($kintais, $request->month, $base, $over40, $holidays);
+        $pdf = $KintaiReportExportService->passExportInfo($kintais, $request->month, $base, $over40, $holidays, $taiyo_working_times);
         // ファイル名を設定してPDFをダウンロード
         return $pdf->download($filename);
     }

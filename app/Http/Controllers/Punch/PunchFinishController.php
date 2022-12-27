@@ -52,6 +52,10 @@ class PunchFinishController extends Controller
         $customer_info = $PunchFinishInputService->getCustomerInfo();
         // 荷主から応援タブの情報を取得
         $support_bases = $PunchFinishInputService->getSupportedBases();
+        // 追加休憩取得時間を取得
+        $add_rest_times = $PunchFinishInputService->getAddRestTime();
+        // 追加休憩取得時間を表示させるか判定
+        $add_rest_time_disp = $PunchFinishInputService->getAddRestTimeDisp();
         return view('punch_finish.input')->with([
             'kintai' => $kintai['kintai'],
             'finish_time' => $finish_time,
@@ -62,6 +66,8 @@ class PunchFinishController extends Controller
             'customers' => $customer_info['customers'],
             'customer_groups' => $customer_info['customer_groups'],
             'support_bases' => $support_bases,
+            'add_rest_times' => $add_rest_times,
+            'add_rest_time_disp' => $add_rest_time_disp,
         ]);
     }
 
@@ -86,6 +92,10 @@ class PunchFinishController extends Controller
         session()->flash('monthly_workable_time_setting', $hours_data['monthly_workable_time_setting']);
         session()->flash('workable_times', $hours_data['monthly_workable_time_setting'] == 0 ? 0 : $hours_data['workable_times']);
         session()->flash('total_month_working_time', $hours_data['total_month_working_time']);
+        // 残業が発生していればメッセージを表示させる
+        if($over_time != 0){
+            session()->flash('over_time', $over_time);
+        }
         return redirect()->route('punch.index');
     }
 }

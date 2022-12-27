@@ -54,6 +54,7 @@ class PunchManualService
             'is_early_worked' => $is_early_worked,
             'rest_time' => $request->rest_time,
             'no_rest_time' => $request->no_rest_time,
+            'add_rest_time' => isset($request->add_rest_time) ? $request->add_rest_time : 0,
             'working_time' => $request->working_time * 60,
             'is_early_worked' => $is_early_worked,
             'is_manual_punched' => 1,

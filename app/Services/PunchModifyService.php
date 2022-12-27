@@ -102,6 +102,7 @@ class PunchModifyService
             'finish_time_adj' => session('finish_time_adj'),
             'rest_time' => $request->rest_time,
             'no_rest_time' => $request->no_rest_time,
+            'add_rest_time' => isset($request->add_rest_time) ? $request->add_rest_time : 0,
             'out_time' => session('out_time'),
             'out_time_adj' => session('out_time_adj'),
             'return_time' => session('return_time'),

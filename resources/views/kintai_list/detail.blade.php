@@ -74,6 +74,10 @@
             <p class="col-span-1 border border-black text-sm py-2 text-center mt-1">{{ is_null($kintai->rest_time) ? '' : number_format($kintai->rest_time / 60, 2) }}</p>
             <p class="col-span-1 bg-black text-white text-center py-2 text-sm mt-1">休憩未取得時間</p>
             <p class="col-span-1 border border-black text-sm py-2 text-center mt-1">{{ is_null($kintai->no_rest_time) ? '' : number_format($kintai->no_rest_time / 60, 2) }}</p>
+            @if($add_rest_time_disp == 'on')
+                <p class="col-span-1 bg-black text-white text-center py-2 text-sm mt-1">追加休憩取得時間</p>
+                <p class="col-span-1 border border-black text-sm py-2 text-center mt-1">{{ is_null($kintai->add_rest_time) ? '' : number_format($kintai->add_rest_time / 60, 2) }}</p>
+            @endif
             <p class="col-start-1 col-span-1 bg-black text-white text-center py-2 text-sm mt-1">稼働時間</p>
             <p class="col-span-1 border border-black text-sm py-2 text-center mt-1">{{ is_null($kintai->working_time) ? '' : number_format($kintai->working_time / 60, 2) }}</p>
             <p class="col-span-1 bg-black text-white text-center py-2 text-sm mt-1">残業時間</p>

@@ -1,11 +1,11 @@
 const punch_finish = document.querySelector('.punch_finish');
 
 window.addEventListener('load', () => {
-// 指定時間経過後に、要素の非表示とスクロール操作の禁止解除を実施
-setTimeout(function(){
-    punch_finish.classList.add('hide');
-    scroll_enabled();
-},3000);
+    // 指定時間経過後に、要素の非表示とスクロール操作の禁止解除を実施
+    setTimeout(function(){
+        punch_finish.classList.add('hide');
+        scroll_enabled();
+    },3000);
 }, false );
 
 function handle(event) {

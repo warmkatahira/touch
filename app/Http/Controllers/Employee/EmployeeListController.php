@@ -76,7 +76,7 @@ class EmployeeListController extends Controller
         // 当月の情報を取得
         $month_date = $KintaiReportExportService->getMonthDate($start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         // 勤怠表に使用する情報を取得
-        $kintais = $KintaiReportExportService->getExportKintaiNormal($month_date['month_date'], $employee['employees'], $start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
+        $kintais = $KintaiReportExportService->getExportKintai($month_date['month_date'], Employee::where('employee_no', $request->employee_no), $start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         return view('employee_list.detail')->with([
             'employee' => $employee['employee'],
             'working_days' => is_null($this_month_data['total_data']) ? 0 : $this_month_data['total_data']['working_days'],
@@ -97,7 +97,7 @@ class EmployeeListController extends Controller
         // 従業員の情報を取得
         $employee = $CommonService->getEmployee($request->employee_no);
         // 拠点情報を取得
-        $bases = $CommonService->getBases(false);
+        $bases = $CommonService->getBases(false, false);
         // 従業員区分を取得
         $employee_categories = $CommonService->getEmployeeCategories();
         return view('employee_list.modify')->with([

@@ -14,25 +14,17 @@ class PunchFinishEnterService
     // 残業時間を算出・取得
     public function getOverTime($kintai, $working_time)
     {
-        // 定時時間の分数を取得
+        // 定時時間を取得
         // 社員：平日なら450分(7.5)、土日祝なら390分(6.5)
         // パート：480分(8.0)
         $regular_time = $this->getRegularTime($kintai->work_day, $kintai->employee->employee_category_id);
+        // 残業開始時間を取得
+        $over_time_start = $this->getOverTimeStart($regular_time, $kintai->employee->employee_category_id, $kintai->employee->over_time_start_setting);
         // 初期値として0を設定
         $over_time = 0;
-        // 社員の場合
-        if($kintai->employee->employee_category_id == 1){
-            // 稼働時間が定時時間に60分足した時間以上であれば残業時間発生(定時時間から1時間経過したら残業が発生する)
-            if($working_time >= $regular_time + 1){
-                $over_time = $working_time - $regular_time;
-            }
-        }
-        // パートの場合
-        if($kintai->employee->employee_category_id == 2){
-            // 単純に定時時間を超えた分から発生
-            if($working_time >= $regular_time){
-                $over_time = $working_time - $regular_time;
-            }
+        // 稼働時間が残業開始時間を超えていたら残業発生
+        if($working_time >= $over_time_start['over_time_start_1']){
+            $over_time = $working_time - $over_time_start['over_time_start_2'];
         }
         return $over_time;
     }
@@ -45,7 +37,7 @@ class PunchFinishEnterService
             // 出勤日をインスタンス化してフォーマット
             $work_day = new Carbon($work_day);
             // 曜日番号から平日か土日かを判定
-            // 1->月,2->火,3->水,4->木,5->金,6->土,7->日
+            // 1->月, 2->火, 3->水, 4->木, 5->金, 6->土, 7->日
             // 6よりも小さければ平日
             if($work_day->dayOfWeekIso < 6){
                 // 平日用の定時時間をセット
@@ -68,6 +60,25 @@ class PunchFinishEnterService
         return $regular_time;
     }
 
+    // 残業が発生する時間を取得
+    public function getOverTimeStart($regular_time, $employee_category_id, $over_time_start_setting)
+    {
+        // $over_time_start_1 --- 残業時間を算出するかの判断に使用する時間
+        // $over_time_start_2 --- 残業時間を算出する時に使用する時間
+
+        // 残業開始時間設定が0.25以上であれば、設定を優先する
+        if($over_time_start_setting >= 0.25){
+            $over_time_start_1 = $over_time_start_setting;
+            $over_time_start_2 = $over_time_start_setting;
+        }
+        if($over_time_start_setting < 0.25){
+            // 社員は定時時間に1時間足した時間、パートは設定された時間
+            $over_time_start_1 = $employee_category_id == 1 ? $regular_time + 1 : $regular_time;
+            $over_time_start_2 = $regular_time;
+        }
+        return compact('over_time_start_1', 'over_time_start_2');
+    }
+
     // 退勤情報を勤怠テーブルに更新
     public function updatePunchFinishForKintai($request, $over_time)
     {
@@ -76,6 +87,7 @@ class PunchFinishEnterService
             'finish_time_adj' => $request->finish_time_adj,
             'rest_time' => $request->rest_time,
             'no_rest_time' => $request->no_rest_time,
+            'add_rest_time' => isset($request->add_rest_time) ? $request->add_rest_time : 0,
             'working_time' => $request->working_time * 60, // 0.25単位から分単位に変換
             'over_time' => $over_time * 60, // 0.25単位から分単位に変換
         ]);

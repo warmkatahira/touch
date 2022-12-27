@@ -19,8 +19,10 @@
             <p id="employee_no" class="col-span-1 border border-black px-2 pt-2">{{ $employee->employee_no }}</p>
             <label class="col-span-1 bg-black text-white py-2 text-center">従業員名</label>
             <p class="col-span-2 border border-black px-2 pt-2">{{ $employee->employee_name }}</p>
-            <label class="col-span-1 bg-black text-white py-2 text-center">月間稼働設定</label>
-            <p class="col-span-1 border border-black px-2 pt-2">{{ number_format($employee->monthly_workable_time_setting, 2) }}</p>
+            <label class="col-start-1 col-span-1 bg-black text-white py-2 text-center mt-1">月間稼働設定</label>
+            <p class="col-span-1 border border-black px-2 pt-2 mt-1 text-right">{{ number_format($employee->monthly_workable_time_setting, 2) }}</p>
+            <label class="col-span-2 bg-black text-white py-2 text-center mt-1">残業開始時間設定</label>
+            <p class="col-span-1 border border-black px-2 pt-2 mt-1 text-right">{{ number_format($employee->over_work_start_setting, 2) }}</p>
         </div>
         <!-- 当月稼働情報 -->
         <div class="grid grid-cols-12 mt-5">

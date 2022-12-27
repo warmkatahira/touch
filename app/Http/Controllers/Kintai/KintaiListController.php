@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Kintai;
 use App\Models\KintaiDetail;
 use App\Services\KintaiListService;
+use App\Services\PunchFinishInputService;
 use Carbon\Carbon;
 use App\Services\CommonService;
 
@@ -65,15 +66,19 @@ class KintaiListController extends Controller
         session(['back_url_2' => url()->full()]);
         // サービスクラスを定義
         $KintaiListService = new KintaiListService;
+        $PunchFinishInputService = new PunchFinishInputService;
         // 勤怠情報を取得
         $kintai = $KintaiListService->getKintai($request->kintai_id);
         // タグ情報を取得
         $tags = $KintaiListService->getTag();
+        // 追加休憩取得時間を表示させるか判定
+        $add_rest_time_disp = $PunchFinishInputService->getAddRestTimeDisp();
         return view('kintai_list.detail')->with([
             'kintai' => $kintai['kintai'],
             'kintai_details' => $kintai['kintai_details'],
             'kintai_tags' => $kintai['kintai_tags'],
-            'tags' => $tags
+            'tags' => $tags,
+            'add_rest_time_disp' => $add_rest_time_disp,
         ]);
     }
 

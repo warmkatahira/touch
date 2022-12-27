@@ -169,4 +169,30 @@ class PunchFinishInputService
         return $support_bases;
     }
 
+    // 追加休憩取得時間を取得
+    public function getAddRestTime()
+    {
+        // 変数をセット
+        $add_rest_times = [];
+        array_push($add_rest_times, ['minute' => 0, 'text1' => 'なし']);
+        array_push($add_rest_times, ['minute' => 15, 'text1' => '15分']);
+        array_push($add_rest_times, ['minute' => 30, 'text1' => '30分']);
+        array_push($add_rest_times, ['minute' => 45, 'text1' => '45分']);
+        array_push($add_rest_times, ['minute' => 60, 'text1' => '60分']);
+        array_push($add_rest_times, ['minute' => 75, 'text1' => '75分']);
+        return $add_rest_times;
+    }
+
+    // 追加休憩取得時間を表示させるか判定
+    public function getAddRestTimeDisp()
+    {
+        // 初期値をセット
+        $add_rest_time_disp = 'off';
+        // 拠点が広島営業所であれば表示
+        if(Auth::user()->base_id == 'warm_02'){
+            $add_rest_time_disp = 'on';
+        }
+        return $add_rest_time_disp;
+    }
+
 }

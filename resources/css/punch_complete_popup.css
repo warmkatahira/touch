@@ -54,3 +54,28 @@
     }
   }
   
+  /* 時間外申請表示のアニメーション（下線を引く） */
+  .border{
+    position: relative;
+    text-align: center;
+  }
+  
+  .border:before{
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    border-bottom: solid 4px rgba(20, 102, 209, 0.897);
+    transform: translateX(-50%);
+    animation: border_anim 3s linear forwards;
+  }
+  
+  @keyframes border_anim {
+    0%{
+      width: 0%;
+    }
+    100%{
+      width: 100%;
+    }
+  }

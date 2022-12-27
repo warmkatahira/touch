@@ -59,6 +59,10 @@ class PunchManualController extends Controller
         $customer_info = $PunchFinishInputService->getCustomerInfo();
         // 荷主から応援タブの情報を取得
         $support_bases = $PunchFinishInputService->getSupportedBases();
+        // 追加休憩取得時間を取得
+        $add_rest_times = $PunchFinishInputService->getAddRestTime();
+        // 追加休憩取得時間を表示させるか判定
+        $add_rest_time_disp = $PunchFinishInputService->getAddRestTimeDisp();
         // 従業員情報を取得
         $employee = $PunchManualService->getEmployee($request->employee);
         return view('management_func.punch_manual.input')->with([
@@ -67,6 +71,8 @@ class PunchManualController extends Controller
             'employee' => $employee,
             'work_day' => $request->work_day,
             'support_bases' => $support_bases,
+            'add_rest_times' => $add_rest_times,
+            'add_rest_time_disp' => $add_rest_time_disp,
         ]);
     }
 

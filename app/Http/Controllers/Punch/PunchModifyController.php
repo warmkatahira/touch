@@ -60,12 +60,18 @@ class PunchModifyController extends Controller
         $support_bases = $PunchFinishInputService->getSupportedBases();
         // 自拠点の荷主情報を取得
         $customer_info = $PunchFinishInputService->getCustomerInfo();
+        // 追加休憩取得時間を取得
+        $add_rest_times = $PunchFinishInputService->getAddRestTime();
+        // 追加休憩取得時間を表示させるか判定
+        $add_rest_time_disp = $PunchFinishInputService->getAddRestTimeDisp();
         return view('punch_modify.input')->with([
             'kintai' => $kintai['kintai'],
             'kintai_details' => $kintai['kintai_details'],
             'customers' => $customer_info['customers'],
             'customer_groups' => $customer_info['customer_groups'],
             'support_bases' => $support_bases,
+            'add_rest_times' => $add_rest_times,
+            'add_rest_time_disp' => $add_rest_time_disp,
         ]);
     }
 

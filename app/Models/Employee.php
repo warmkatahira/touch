@@ -23,6 +23,7 @@ class Employee extends Model
         'base_id',
         'employee_category_id',
         'monthly_workable_time_setting',
+        'over_time_start_setting',
     ];
 
     // 出勤打刻が可能な対象を取得

@@ -17,7 +17,7 @@ class EmployeeController extends Controller
         $EmployeeRegisterService = new EmployeeRegisterService;
         $CommonService = new CommonService;
         // 拠点情報を取得
-        $bases = $CommonService->getBases(false);
+        $bases = $CommonService->getBases(false, false);
         // 従業員区分を取得
         $employee_categories = $CommonService->getEmployeeCategories();
         return view('employee_register.index')->with([

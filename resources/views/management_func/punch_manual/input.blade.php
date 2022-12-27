@@ -44,6 +44,20 @@
                         @endforeach
                     </div>
                 </div>
+                <!-- 追加休憩取得時間を表示 -->
+                @if($add_rest_time_disp == 'on')
+                    <p class="col-start-1 col-span-12 text-4xl py-3 pl-3 text-white bg-blue-500">追加休憩取得時間</p>
+                    <div class="col-start-1 col-span-12 border-2 border-blue-500">
+                        <div class="p-5 grid grid-cols-12 gap-4">
+                            @foreach($add_rest_times as $add_rest_time)
+                                <div class="col-span-2">
+                                    <input type="radio" name="add_rest_time" id="{{ $add_rest_time['minute'].'_add_rest_time' }}" value="{{ $add_rest_time['minute'] }}" class="add_rest_time_select hidden" {{ $add_rest_time['minute'] == '0' ? 'checked' : '' }}>
+                                    <label id="{{ $add_rest_time['minute'].'_add_rest_time_label' }}" for="{{ $add_rest_time['minute'].'_add_rest_time' }}" class="cursor-pointer flex flex-col w-full max-w-lg mx-auto text-center border-2 rounded-lg border-gray-900 p-2 text-2xl">{{ $add_rest_time['text1'] }}</label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
                 <!-- 入力した荷主稼働時間情報を表示 -->
                 <div class="col-span-12 grid grid-cols-12 text-4xl py-3 text-white bg-blue-500">
                     <p class="col-span-4 pl-3">荷主稼働時間</p>

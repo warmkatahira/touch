@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('holidays', function (Blueprint $table) {
             $table->date('holiday')->primary();
             $table->string('holiday_note')->nullable();
+            $table->boolean('is_national_holiday')->nullable();
             $table->timestamps();
         });
     }

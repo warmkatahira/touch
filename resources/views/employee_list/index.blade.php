@@ -44,7 +44,8 @@
                         <th class="font-thin p-2 px-2 w-1/12">区分</th>
                         <th class="font-thin p-2 px-2 w-1/12">番号</th>
                         <th class="font-thin p-2 px-2 w-2/12">氏名</th>
-                        <th class="font-thin p-2 px-2 w-2/12 text-right">月間稼働設定</th>
+                        <th class="font-thin p-2 px-2 w-1/12 text-right">月間稼働設定</th>
+                        <th class="font-thin p-2 px-2 w-1/12 text-right">残業開始時間設定</th>
                         <th class="font-thin p-2 px-2 w-2/12 text-right">当月総稼働時間</th>
                         <th class="font-thin p-2 px-2 w-2/12 text-right">当月総残業時間</th>
                     </tr>
@@ -57,6 +58,7 @@
                             <td class="p-1 px-2 border">{{ $employee->employee_no }}</td>
                             <td class="p-1 px-2 border">{{ $employee->employee_name }}</td>
                             <td class="p-1 px-2 border text-right">{{ number_format($employee->monthly_workable_time_setting, 2) }}</td>
+                            <td class="p-1 px-2 border text-right">{{ number_format($employee->over_time_start_setting, 2) }}</td>
                             <td class="p-1 px-2 border text-right">{{ number_format($employee->total_working_time / 60, 2).' 時間' }}</td>
                             <td class="p-1 px-2 border text-right">{{ number_format($employee->total_over_time / 60, 2).' 時間' }}</td>
                         </tr>

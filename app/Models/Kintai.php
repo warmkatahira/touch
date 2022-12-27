@@ -30,6 +30,7 @@ class Kintai extends Model
         'is_early_worked',
         'rest_time',
         'no_rest_time',
+        'add_rest_time',
         'working_time',
         'over_time',
         'is_modified',

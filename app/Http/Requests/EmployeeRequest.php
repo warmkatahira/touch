@@ -33,6 +33,7 @@ class EmployeeRequest extends FormRequest
                 'min:4'
             ],
             'employee_name' => 'required|max:30',
+            'over_time_start_setting' => 'nullable|numeric|min:1',
         ];
     }
 
@@ -45,6 +46,8 @@ class EmployeeRequest extends FormRequest
             'employee_no.min' => '従業員番号は4桁で入力して下さい。',
             'employee_name.required' => '従業員名を入力して下さい。',
             'employee_name.max' => '従業員名は30文字以内で入力して下さい。',
+            'over_time_start_setting.numeric' => '残業開始時間は数値で入力して下さい。',
+            'over_time_start_setting.min' => '残業開始時間は1以上の数値で入力して下さい。（設定しない場合は空欄にして下さい。）',
         ];
     }
 }

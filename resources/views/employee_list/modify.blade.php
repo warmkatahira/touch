@@ -25,6 +25,8 @@
                 <input type="text" id="employee_name" name="employee_name" class="col-span-2 mt-1" autocomplete="off" value="{{ old('employee_name', $employee->employee_name) }}">
                 <label for="monthly_workable_time_setting" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">月間稼働設定</label>
                 <input type="text" id="monthly_workable_time_setting" name="monthly_workable_time_setting" class="col-span-2 mt-1" autocomplete="off" value="{{ old('monthly_workable_time_setting', $employee->monthly_workable_time_setting) }}">
+                <label for="over_time_start_setting" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">残業開始時間設定</label>
+                <input type="text" id="over_time_start_setting" name="over_time_start_setting" class="col-span-2 mt-1" autocomplete="off" value="{{ old('over_time_start_setting', $employee->over_time_start_setting) }}">
                 <!-- 経理ロール以上もしくは拠点管理者ロールであり自拠点の従業員であればボタンを表示 -->
                 @if(Auth::user()->role_id <= 11 || Auth::user()->role_id == 31 && Auth::user()->base_id == $employee->base_id)
                     <button class="col-start-1 col-span-4 py-4 rounded-lg text-center bg-blue-200 mt-5">変更</button>

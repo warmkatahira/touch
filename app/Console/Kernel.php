@@ -7,6 +7,12 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+
+    protected $commands = [
+        // コマンドの登録
+        \App\Console\Commands\PunchFinishCheckCommand::class,
+    ];
+
     /**
      * Define the application's command schedule.
      *
@@ -16,6 +22,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // スケジュールの登録
+        $schedule->command('mail:no_punch_finish')->everyMinute();
     }
 
     /**
