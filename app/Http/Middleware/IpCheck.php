@@ -27,7 +27,7 @@ class IpCheck
         // ipが含まれていない時の処理
         if (!$detect) {
             // ここでは route()->name('invalid')にリダイレクト
-            return redirect('welcome');
+            return redirect()->route('welcome');
         }
         // ipが含まれていればリクエストが通る
         return $next($request);
