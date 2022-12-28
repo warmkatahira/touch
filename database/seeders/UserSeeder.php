@@ -18,9 +18,9 @@ class UserSeeder extends Seeder
         User::create([
             'name' => '本社',
             'user_name' => '01',
-            'email' => 'warm01@warm.co.jp',
+            'email' => 't.katahira@warm.co.jp',
             'password' => bcrypt('warm1111'),
-            'role_id' => 41,
+            'role_id' => 31,
             'base_id' => 'warm_02',
             'status' => 1,
         ]);
