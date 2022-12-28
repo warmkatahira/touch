@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'user.status' => \App\Http\Middleware\UserStatusCheckMiddleware::class,
         'kintai.operation.check' => \App\Http\Middleware\KintaiOperationCheck::class,
         'kintai.close.check' => \App\Http\Middleware\KintaiCloseCheck::class,
+        'ip.check' => \App\Http\Middleware\IpCheck::class,
     ];
 }
