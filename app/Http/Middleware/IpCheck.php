@@ -18,13 +18,12 @@ class IpCheck
     {
         // IPの配列 * 実際に使う時はDBからデータを取得すると思います
         $ip = [
-            ['id' => 1, 'name' => '東京本社', 'ip' => '127.0.0.1'],
+            ['id' => 1, 'name' => '東京本社', 'ip' => '60.41.201.219'],
             ['id' => 2, 'name' => '大阪支社', 'ip' => '127.0.0.2'],
           ];
         /* 上の変数$ipにアクセスされたIPが含まれているかチェック */
         // $request->ip() で クライアントipが取得できます
         $detect = collect($ip)->contains('ip', $request->ip());
-        dd($request->ip());
         // ipが含まれていない時の処理
         if (!$detect) {
             // ここでは route()->name('invalid')にリダイレクト
