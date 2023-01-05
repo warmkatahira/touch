@@ -62,7 +62,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 // ログインしているか、ユーザーステータスが有効であるかチェック
-Route::middleware(['auth','user.status', 'ip.check'])->group(function () {
+Route::middleware(['auth','user.status'])->group(function () {
     // 打刻メニュー
     Route::controller(PunchController::class)->prefix('punch')->name('punch.')->group(function(){
         Route::get('/', 'index')->name('index');

@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         // スケジュールの登録
-        $schedule->command('mail:no_punch_finish_warning')->everyMinute();
+        $schedule->command('no_punch_finish_warning')->everyMinute();
     }
 
     /**
