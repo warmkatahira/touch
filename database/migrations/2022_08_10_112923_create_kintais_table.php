@@ -25,7 +25,7 @@ return new class extends Migration
             $table->time('return_time')->nullable();
             $table->time('out_time_adj')->nullable();
             $table->time('return_time_adj')->nullable();
-            $table->boolean('out_enabled')->nullable();
+            $table->boolean('out_enabled')->default(0);
             $table->unsignedInteger('rest_time')->nullable();
             $table->unsignedInteger('no_rest_time')->nullable();
             $table->unsignedInteger('add_rest_time')->nullable();

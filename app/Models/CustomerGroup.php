@@ -21,18 +21,18 @@ class CustomerGroup extends Model
     Public function customers()
     {
         // Customerモデルのデータを引っ張てくる
-        return $this->hasMany('App\Models\Customer', 'customer_group_id', 'customer_group_id');
+        return $this->hasMany(Customer::class, 'customer_group_id', 'customer_group_id');
     }
 
     // 荷主グループ情報から拠点情報を取得
     public function base()
     {
-        return $this->belongsTo('App\Models\Base', 'base_id', 'base_id');
+        return $this->belongsTo(Base::class, 'base_id', 'base_id');
     }
 
     // 登録されている荷主数をカウント
     public function setting_customer_count()
     {
-        return $this->hasMany('App\Models\Customer', 'customer_group_id', 'customer_group_id')->count();
+        return $this->hasMany(Customer::class, 'customer_group_id', 'customer_group_id')->count();
     }
 }

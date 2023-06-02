@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Punch;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use App\Models\Kintai;
+use App\Models\Base;
 use App\Models\Customer;
 use App\Models\CustomerGroup;
 use App\Models\Employee;
@@ -16,7 +17,7 @@ class PunchFinishInputService
     public function getPunchFinishTargetEmployee()
     {
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 当日の勤怠を取得
         $today_kintais = Kintai::where('work_day', $nowDate->format('Y-m-d'));
         // 自拠点の退勤時刻がNullかつ外出中フラグがNullの従業員
@@ -25,7 +26,7 @@ class PunchFinishInputService
             })
             ->where('base_id', Auth::user()->base_id)
             ->whereNull('finish_time')
-            ->whereNull('out_enabled')
+            ->where('out_enabled', 0)
             ->select('employees.employee_no', 'employees.employee_name', 'KINTAIS.kintai_id')
             ->orderBy('employee_no')
             ->get();
@@ -41,11 +42,11 @@ class PunchFinishInputService
     }
 
     // 退勤時間調整を算出・取得
-    public function getFinishTimeAdj($Date)
+    public function getFinishTimeAdj($nowDate)
     {
         // 現在の日時をインスタンス化
-        //$finish_time_adj = new Carbon('2022-10-12 18:00:00');
-        $finish_time_adj = new Carbon($Date);
+        //$finish_time_adj = new CarbonImmutable('2023-06-01 17:00:00');
+        $finish_time_adj = new CarbonImmutable($nowDate);
         // 15分単位で切り捨て
         $finish_time_adj = $finish_time_adj->subMinutes($finish_time_adj->minute % 15);
         $finish_time_adj = $finish_time_adj->format('H:i:00');
@@ -107,33 +108,38 @@ class PunchFinishInputService
     }
 
     // 休憩未取得回数の情報を取得
-    public function getNoRestTime($rest_time)
+    public function getNoRestTime($employee_no, $rest_time)
     {
+        // 従業員情報を取得
+        $employee = Employee::getSpecify($employee_no)->first();
         // 変数をセット
         $no_rest_times = [];
         array_push($no_rest_times, ['minute' => 0, 'text1' => 'なし']);
-        // 休憩時間に合わせて選択肢を変動
-        if($rest_time == 15){
-            array_push($no_rest_times, ['minute' => 15, 'text1' => '15分']);
-        }
-        if($rest_time == 30){
-            array_push($no_rest_times, ['minute' => 15, 'text1' => '15分']);
-            array_push($no_rest_times, ['minute' => 30, 'text1' => '30分']);
-        }
-        if($rest_time == 60){
-            array_push($no_rest_times, ['minute' => 60, 'text1' => '60分']);
-        }
-        if($rest_time == 75){
-            array_push($no_rest_times, ['minute' => 15, 'text1' => '15分']);
-            array_push($no_rest_times, ['minute' => 60, 'text1' => '60分']);
-            array_push($no_rest_times, ['minute' => 75, 'text1' => '75分']);
-        }
-        if($rest_time == 90){
-            array_push($no_rest_times, ['minute' => 15, 'text1' => '15分']);
-            array_push($no_rest_times, ['minute' => 30, 'text1' => '30分']);
-            array_push($no_rest_times, ['minute' => 60, 'text1' => '60分']);
-            array_push($no_rest_times, ['minute' => 75, 'text1' => '75分']);
-            array_push($no_rest_times, ['minute' => 90, 'text1' => '90分']);
+        // 従業員区分がパートの場合のみ時間を表示させる
+        if($employee->employee_category_id == 2){
+            // 休憩時間に合わせて選択肢を変動
+            if($rest_time == 15){
+                array_push($no_rest_times, ['minute' => 15, 'text1' => '15分']);
+            }
+            if($rest_time == 30){
+                array_push($no_rest_times, ['minute' => 15, 'text1' => '15分']);
+                array_push($no_rest_times, ['minute' => 30, 'text1' => '30分']);
+            }
+            if($rest_time == 60){
+                array_push($no_rest_times, ['minute' => 60, 'text1' => '60分']);
+            }
+            if($rest_time == 75){
+                array_push($no_rest_times, ['minute' => 15, 'text1' => '15分']);
+                array_push($no_rest_times, ['minute' => 60, 'text1' => '60分']);
+                array_push($no_rest_times, ['minute' => 75, 'text1' => '75分']);
+            }
+            if($rest_time == 90){
+                array_push($no_rest_times, ['minute' => 15, 'text1' => '15分']);
+                array_push($no_rest_times, ['minute' => 30, 'text1' => '30分']);
+                array_push($no_rest_times, ['minute' => 60, 'text1' => '60分']);
+                array_push($no_rest_times, ['minute' => 75, 'text1' => '75分']);
+                array_push($no_rest_times, ['minute' => 90, 'text1' => '90分']);
+            }
         }
         return $no_rest_times;        
     }
@@ -164,8 +170,8 @@ class PunchFinishInputService
 
     public function getSupportedBases()
     {
-        // 荷主から拠点情報だけを取得
-        $support_bases = CustomerGroup::where('base_id', 'system_common')->get();
+        // 拠点情報を取得
+        $support_bases = Base::all();
         return $support_bases;
     }
 
@@ -188,8 +194,8 @@ class PunchFinishInputService
     {
         // 初期値をセット
         $add_rest_time_disp = 'off';
-        // 拠点が広島営業所であれば表示
-        if(Auth::user()->base_id == 'warm_02'){
+        // 追加休憩取得が可能であれば「on」にする
+        if(Auth::user()->base->is_add_rest_available == 1){
             $add_rest_time_disp = 'on';
         }
         return $add_rest_time_disp;

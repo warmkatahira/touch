@@ -49,12 +49,12 @@ class User extends Authenticatable
     // ユーザーから拠点情報を取得
     public function base()
     {
-        return $this->belongsTo('App\Models\Base', 'base_id', 'base_id');
+        return $this->belongsTo(Base::class, 'base_id', 'base_id');
     }
 
     // ユーザーからロール情報を取得
     public function role()
     {
-        return $this->belongsTo('App\Models\Role', 'role_id', 'role_id');
+        return $this->belongsTo(Role::class, 'role_id', 'role_id');
     }
 }

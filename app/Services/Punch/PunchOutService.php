@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Punch;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use App\Models\Kintai;
 use App\Models\Employee;
 
@@ -14,7 +14,7 @@ class PunchOutService
     public function getPunchOutTargetEmployee()
     {
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 当日の勤怠を取得
         $today_kintais = Kintai::where('work_day', $nowDate->format('Y-m-d'));
         // 自拠点の勤怠があって、退勤時間がNullかつ外出時間がNullの従業員
@@ -45,10 +45,10 @@ class PunchOutService
     }
 
     // 外出時間調整を算出・取得
-    public function getOutTimeAdj($Date)
+    public function getOutTimeAdj($nowDate)
     {
         // 日時をインスタンス化
-        $out_time_adj = new Carbon($Date);
+        $out_time_adj = new CarbonImmutable($nowDate);
         // 15分単位で切り捨て
         $out_time_adj = $out_time_adj->subMinutes($out_time_adj->minute % 15);
         $out_time_adj = $out_time_adj->format('H:i:00');

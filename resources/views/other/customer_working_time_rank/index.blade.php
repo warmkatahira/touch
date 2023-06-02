@@ -37,7 +37,17 @@
                     <button type="submit" class="col-start-12 col-span-1 text-sm text-center bg-black text-white rounded-lg mt-1"><i class="las la-search la-2x"></i></button>
                 </form>
             </div>
-            <!-- 荷主稼働ランキング -->
+        </div>
+        <!-- ページネーション -->
+        <div class="ml-auto">
+            @if($customers)
+                <div class="">
+                    {{ $customers->appends(request()->input())->links() }}
+                </div>
+            @endif
+        </div>
+        <!-- 荷主稼働ランキング -->
+        <div class="grid grid-cols-12">
             <table class="col-span-12 text-sm">
                 <thead>
                     <tr class="text-left text-white bg-gray-600 border-gray-600 sticky top-0">

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Punch;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Services\PunchManualService;
-use App\Services\PunchFinishInputService;
-use App\Services\PunchModifyService;
-use App\Services\PunchFinishEnterService;
+use App\Services\Punch\PunchManualService;
+use App\Services\Punch\PunchFinishInputService;
+use App\Services\Punch\PunchModifyService;
+use App\Services\Punch\PunchFinishEnterService;
 use App\Http\Requests\PunchManualRequest;
 
 class PunchManualController extends Controller
@@ -50,7 +50,7 @@ class PunchManualController extends Controller
             $rest_time = $PunchFinishInputService->getRestTimeForOutReturn($rest_time, $out_return_time['out_time_adj'], $out_return_time['return_time_adj']);
         }
         // 休憩未取得回数の情報を取得
-        $no_rest_times = $PunchFinishInputService->getNoRestTime($rest_time);
+        $no_rest_times = $PunchFinishInputService->getNoRestTime($request->employee, $rest_time);
         // 稼働時間を算出
         $working_time = $PunchFinishInputService->getWorkingTime($begin_finish_time['begin_time_adj'], $begin_finish_time['finish_time_adj'], $rest_time, $out_return_time['out_return_time']);
         // 各種情報をセッションに格納

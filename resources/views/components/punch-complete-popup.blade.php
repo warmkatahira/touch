@@ -8,9 +8,9 @@
                     <lord-icon src="https://cdn.lordicon.com/uutnmngi.json" trigger="loop" style="width:120px;height:120px" class="col-span-1 mx-auto block"></lord-icon>
                     <p class="text-5xl text-center col-start-2 col-span-8 mt-7 text-orange-600">{{ session('employee_name') }}さん</p>
                     <p class="text-5xl text-center col-start-10 col-span-3 mt-7 text-orange-600"></lord-icon>{{ session('punch_type') }}</p>
-                    @if(session('over_time'))
+                    {{-- @if(session('over_time'))
                         <p class="text-5xl text-center col-span-12 mb-2 border">{{ '時間外申請の提出をお願いします。（'.session('over_time').'時間）' }}</p>
-                    @endif
+                    @endif --}}
                     <div class="text-5xl text-center col-start-1 col-span-4 row-span-1 text-white bg-blue-600 rounded-lg py-10">
                         <p class="">{{ '月間稼働設定' }}</p>
                         <p class="mt-10">{{ number_format(session('monthly_workable_time_setting'), 2) }}</p>

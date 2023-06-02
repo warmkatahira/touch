@@ -12,4 +12,9 @@ class Base extends Model
     protected $primaryKey = 'base_id';
     // オートインクリメント無効化
     public $incrementing = false;
+    // 指定された拠点を取得
+    public static function getSpecify($base_id)
+    {
+        return self::where('base_id', $base_id);
+    }
 }

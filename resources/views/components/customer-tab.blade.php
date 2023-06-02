@@ -22,13 +22,11 @@
             </div>
         </ul>
     @endforeach
-    @foreach($supportbases as $support_base)
-        <ul class="tab_detail_wrap">
-            <div class="grid grid-cols-12 gap-4 mt-5">
-                @foreach($support_base->customers as $customer)
-                    <button type="button" class="working_time_input_modal_open col-span-4 text-center text-2xl bg-black text-white rounded-lg py-4 px-2" value="{{ $customer->customer_id }}">{{ $customer->customer_name }}</button>
-                @endforeach
-            </div>
-        </ul>
-    @endforeach
+    <ul class="tab_detail_wrap">
+        <div class="grid grid-cols-12 gap-4 mt-5">
+            @foreach($supportbases as $support_base)
+                <button type="button" class="working_time_input_modal_open col-span-4 text-center text-2xl bg-black text-white rounded-lg py-4 px-2" value="{{ $support_base->base_id }}">{{ $support_base->base_name }}</button>
+            @endforeach
+        </div>
+    </ul>
 </div>

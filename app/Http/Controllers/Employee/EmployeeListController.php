@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
-use App\Services\EmployeeListService;
+use App\Services\Employee\EmployeeListService;
 use App\Services\EmployeeRegisterService;
 use App\Services\KintaiReportExportService;
 use App\Services\CommonService;
@@ -65,14 +65,16 @@ class EmployeeListController extends Controller
         $EmployeeListService = new EmployeeListService;
         $KintaiReportExportService = new KintaiReportExportService;
         $CommonService = new CommonService;
+        // 現在の日時を取得
+        $nowDate = CarbonImmutable::now();
         // 月初・月末の日付を取得
-        $start_end_of_month = $CommonService->getStartEndOfMonth(Carbon::now());
+        $start_end_of_month = $CommonService->getStartEndOfMonth(CarbonImmutable::now());
         // 従業員の情報を取得
         $employee = $CommonService->getEmployee($request->employee_no);
         // 当月稼働情報を取得
-        $this_month_data = $EmployeeListService->getThisMonthData($request->employee_no);
-        // 荷主稼働時間トップ5の情報を取得
-        $customer_working_time = $EmployeeListService->getCustomerWorkingTime($request->employee_no);
+        $this_month_data = $EmployeeListService->getThisMonthData($nowDate, $request->employee_no);
+        // 荷主稼働時間トップ3の情報を取得
+        $customer_working_time = $EmployeeListService->getCustomerWorkingTime($nowDate, $request->employee_no);
         // 当月の情報を取得
         $month_date = $KintaiReportExportService->getMonthDate($start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         // 勤怠表に使用する情報を取得

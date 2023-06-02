@@ -73,6 +73,14 @@
                 <button type="submit" class="col-start-12 col-span-1 text-sm text-center bg-black text-white mt-1 rounded-lg"><i class="las la-search la-2x"></i></button>
             </form>
         </div>
+        <!-- ページネーション -->
+        <div class="ml-auto">
+            @if($kintais)
+                <div class="">
+                    {{ $kintais->appends(request()->input())->links() }}
+                </div>
+            @endif
+        </div>
         <!-- 勤怠一覧 -->
         <div class="grid grid-cols-12">
             <table class="col-span-12 text-sm">

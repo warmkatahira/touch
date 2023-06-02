@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Punch;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Kintai;
 use App\Models\KintaiDetail;
-use App\Services\PunchOutService;
-use App\Services\PunchReturnService;
-use App\Services\PunchBeginService;
-use App\Services\PunchFinishInputService;
+use App\Models\Base;
+use App\Models\Customer;
+use App\Services\Punch\PunchOutService;
+use App\Services\Punch\PunchReturnService;
+use App\Services\Punch\PunchBeginService;
+use App\Services\Punch\PunchFinishInputService;
 
 class PunchModifyService
 {
@@ -61,6 +63,23 @@ class PunchModifyService
             'begin_time' => $request->begin_time,
             'finish_time' => $request->finish_time,
         ]);
+    }
+
+    public function getCustomerWorkingTime($kintai_id)
+    {
+        // 荷主マスタと拠点マスタをユニオン
+        $subquery = Customer::select('customer_id', 'customer_name')
+                ->union(Base::select('base_id', 'base_name'));
+        // 勤怠詳細テーブルと荷主・拠点情報を結合
+        $kintai_details = KintaiDetail::where('kintai_id', $kintai_id)
+            ->joinSub($subquery, 'SUBQUERY', function ($join) {
+                $join->on('kintai_details.customer_id', '=', 'SUBQUERY.customer_id');
+            })
+            ->select(DB::raw("sum(customer_working_time) as customer_working_time, kintai_details.customer_id, SUBQUERY.customer_name"))
+            ->groupBy('kintai_details.customer_id', 'SUBQUERY.customer_name')
+            ->orderBy('customer_working_time', 'desc')
+            ->get();
+        return $kintai_details;
     }
 
     public function setSessionKintaiModifyInfo($out_return_time, $begin_finish_time, $rest_time, $no_rest_times, $working_time, $punch_begin_type)
@@ -128,7 +147,7 @@ class PunchModifyService
                 'kintai_id' => session('kintai_id'),
                 'customer_id' => $key,
                 'customer_working_time' => $value * 60, // 0.25単位から分単位に変換
-                'is_supported' => preg_match('/warm_/', $key),
+                'is_supported' => Base::getSpecify($key)->count(), // IDにbasesに含まれていたら応援なので、1をセット（カウントで自動で1か0が入る）
             ]);
         }
         return;

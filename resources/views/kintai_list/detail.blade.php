@@ -92,7 +92,7 @@
             @foreach($kintai_details as $kintai_detail)
                 <div class="col-span-3 bg-blue-100 py-5 rounded-lg text-center">
                     <p class="">{{ number_format($kintai_detail->customer_working_time / 60, 2) }}</p>
-                    <p class="">{{ $kintai_detail->customer->customer_name }}</p>
+                    <p class="">{{ $kintai_detail->customer_name }}</p>
                 </div>
             @endforeach
         </div>

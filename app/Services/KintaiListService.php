@@ -9,6 +9,7 @@ use App\Models\Kintai;
 use App\Models\KintaiDetail;
 use App\Models\Employee;
 use App\Models\Base;
+use App\Models\Customer;
 use App\Models\EmployeeCategory;
 use App\Models\Tag;
 use App\Models\KintaiTag;
@@ -133,7 +134,7 @@ class KintaiListService
                 $kintais->where('employee_category_id', session('search_employee_category'));
             }
             // 出勤日と従業員番号で並び替え
-            $kintais = $kintais->orderBy('work_day')->orderBy('employees.employee_no')->get();
+            $kintais = $kintais->orderBy('work_day')->orderBy('employees.employee_no')->paginate(50);
         }
         // エラーがあればメッセージを表示
         if(!is_null($error_info)){
@@ -147,9 +148,17 @@ class KintaiListService
     {
         // 勤怠IDで対象の勤怠を取得
         $kintai = Kintai::where('kintai_id', $kintai_id)->first();
+        // 荷主マスタと拠点マスタをユニオン
+        $subquery = Customer::select('customer_id', 'customer_name')
+                ->union(Base::select('base_id', 'base_name'));
+        // 勤怠詳細テーブルと荷主・拠点情報を結合
         $kintai_details = KintaiDetail::where('kintai_id', $kintai_id)
-                            ->orderBy('customer_working_time', 'desc')
-                            ->get();
+                        ->join(DB::raw("({$subquery->toSql()}) as temp"), function($join) {
+                            $join->on('kintai_details.customer_id', '=', 'temp.customer_id');
+                        })
+                        ->select('temp.customer_name', 'kintai_details.customer_working_time')
+                        ->orderBy('kintai_details.customer_working_time', 'desc')
+                        ->get();
         // 勤怠に紐付いているタグ情報を取得
         $kintai_tags = KintaiTag::where('kintai_id', $kintai_id)->get();
         return compact('kintai', 'kintai_details', 'kintai_tags');

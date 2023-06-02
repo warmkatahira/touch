@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Other;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\CommonService;
-use App\Services\CustomerWorkingTimeRankService;
+use App\Services\Other\CustomerWorkingTimeRankService;
 
 class CustomerWorkingTimeRankController extends Controller
 {

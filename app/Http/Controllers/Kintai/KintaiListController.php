@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Kintai;
 use App\Models\KintaiDetail;
 use App\Services\KintaiListService;
-use App\Services\PunchFinishInputService;
-use Carbon\Carbon;
+use App\Services\Punch\PunchFinishInputService;
+use Carbon\CarbonImmutable;
 use App\Services\CommonService;
 
 class KintaiListController extends Controller
@@ -85,7 +85,7 @@ class KintaiListController extends Controller
     public function manager_check(Request $request)
     {
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 勤怠IDを指定して拠点管理者確認日時を更新
         foreach($request->chk as $kintai_id){
             Kintai::where('kintai_id', $kintai_id)->update([

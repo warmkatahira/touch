@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Other;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\OverTimeRankService;
+use App\Services\Other\OverTimeRankService;
 
 class OverTimeRankController extends Controller
 {

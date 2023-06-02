@@ -24,6 +24,6 @@ class KintaiTag extends Model
     // 勤怠タグからタグを取得
     public function tag()
     {
-        return $this->belongsTo('App\Models\Tag', 'tag_id', 'tag_id');
+        return $this->belongsTo(Tag::class, 'tag_id', 'tag_id');
     }
 }

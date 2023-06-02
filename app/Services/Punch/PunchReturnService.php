@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Punch;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use App\Models\Kintai;
 use App\Models\Employee;
 
@@ -14,7 +14,7 @@ class PunchReturnService
     public function getPunchReturnTargetEmployee()
     {
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 当日の勤怠を取得
         $today_kintais = Kintai::where('work_day', $nowDate->format('Y-m-d'));
         // 自拠点の勤怠があって、外出時間がNot Nullかつ戻り時間がNullの従業員
@@ -41,17 +41,17 @@ class PunchReturnService
         Kintai::where('kintai_id', $kintai_id)->update([
             'return_time' => $nowDate->format('H:i:00'),
             'return_time_adj' => $return_time_adj,
-            'out_enabled' => null,
+            'out_enabled' => 0,
             'out_return_time' => $out_return_time,
         ]);
         return;
     }
 
     // 戻り時間調整を算出・取得
-    public function getReturnTimeAdj($Date)
+    public function getReturnTimeAdj($nowDate)
     {
         // 日時をインスタンス化
-        $return_time_adj = new Carbon($Date);
+        $return_time_adj = new CarbonImmutable($nowDate);
         // 15分単位で切り上げ
         $return_time_adj = $return_time_adj->addMinutes(15 - $return_time_adj->minute % 15);
         $return_time_adj = $return_time_adj->format('H:i:00');

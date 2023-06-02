@@ -20,12 +20,12 @@ class Tag extends Model
     // タグからロール情報を取得
     public function role()
     {
-        return $this->belongsTo('App\Models\Role', 'owner_role_id', 'role_id');
+        return $this->belongsTo(Role::class, 'owner_role_id', 'role_id');
     }
 
     // 勤怠に登録されているタグ数をカウント
     public function kintai_tags_count()
     {
-        return $this->hasMany('App\Models\KintaiTag', 'tag_id', 'tag_id')->count();
+        return $this->hasMany(KintaiTag::class, 'tag_id', 'tag_id')->count();
     }
 }

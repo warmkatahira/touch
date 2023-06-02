@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Other;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use App\Models\Employee;
 use App\Models\Kintai;
 
@@ -13,7 +13,7 @@ class OverTimeRankService
     public function setDefaultCondition()
     {
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 初期条件をセット
         session(['search_month' => $nowDate->format('Y-m')]);
         return;
@@ -32,8 +32,8 @@ class OverTimeRankService
         // 現在のURLを取得
         session(['back_url_1' => url()->full()]);
         // 月初と月末の日付を取得
-        $start_day = new Carbon(session('search_month'));
-        $end_day = new Carbon(session('search_month'));
+        $start_day = new CarbonImmutable(session('search_month'));
+        $end_day = new CarbonImmutable(session('search_month'));
         // 正社員の残業時間を集計
         $kintais = Kintai::join('employees', 'employees.employee_no', 'kintais.employee_no')
                                 ->where('employee_category_id', 1)

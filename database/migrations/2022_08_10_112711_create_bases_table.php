@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('bases', function (Blueprint $table) {
             $table->string('base_id')->primary();
             $table->string('base_name');
+            $table->boolean('is_add_rest_available')->default(0);
             $table->timestamps();
         });
     }

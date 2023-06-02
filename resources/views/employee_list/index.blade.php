@@ -35,7 +35,15 @@
                 <button type="submit" class="col-start-12 col-span-1 text-sm text-center bg-black text-white rounded-lg mt-1"><i class="las la-search la-2x"></i></button>
             </form>
         </div>
-        <!-- 勤怠一覧 -->
+        <!-- ページネーション -->
+        <div class="ml-auto">
+            @if($employees)
+                <div class="">
+                    {{ $employees->appends(request()->input())->links() }}
+                </div>
+            @endif
+        </div>
+        <!-- 従業員一覧 -->
         <div class="grid grid-cols-12">
             <table class="col-span-12 text-sm">
                 <thead>

@@ -65,7 +65,7 @@
                     <div id="input_working_time_info" class="p-5 col-span-12 grid grid-cols-12 gap-4">
                         @foreach($kintai_details as $kintai_detail)
                             <button type="button" id="working_time_input_{{ $kintai_detail->customer_id }}" class="working_time_info_delete col-span-4 py-5 text-center bg-blue-200 text-xl rounded-lg cursor-pointer working_time_input_{{ $kintai_detail->customer_id }}">
-                                {{ $kintai_detail->customer->customer_name }}<br>{{ number_format($kintai_detail->customer_working_time / 60, 2) }}
+                                {{ $kintai_detail->customer_name }}<br>{{ number_format($kintai_detail->customer_working_time / 60, 2) }}
                             </button>
                             <input type="hidden" id="working_time_input_{{ $kintai_detail->customer_id }}_hidden" class="working_time_input working_time_input_{{ $kintai_detail->customer_id }}" name="working_time_input[{{ $kintai_detail->customer_id }}]" value="{{ number_format($kintai_detail->customer_working_time / 60, 2) }}">
                         @endforeach

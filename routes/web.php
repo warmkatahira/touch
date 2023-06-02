@@ -57,10 +57,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 // ログインしているか、ユーザーステータスが有効であるかチェック
 Route::middleware(['auth','user.status'])->group(function () {
     // 打刻メニュー
@@ -74,38 +70,32 @@ Route::middleware(['auth','user.status'])->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('enter', 'enter')->name('enter');
         });
-
         // 退勤打刻
         Route::controller(PunchFinishController::class)->prefix('punch_finish')->name('punch_finish.')->group(function(){
             Route::get('/', 'index')->name('index');
             Route::get('input', 'input')->name('input');
             Route::post('enter', 'enter')->name('enter');
         });
-
         // 外出打刻
         Route::controller(PunchOutController::class)->prefix('punch_out')->name('punch_out.')->group(function(){
             Route::get('/', 'index')->name('index');
             Route::post('enter', 'enter')->name('enter');
         });
-
         // 戻り打刻
         Route::controller(PunchReturnController::class)->prefix('punch_return')->name('punch_return.')->group(function(){
             Route::get('/', 'index')->name('index');
             Route::post('enter', 'enter')->name('enter');
         });
     });
-
     // 今日の勤怠
     Route::controller(TodayKintaiController::class)->prefix('today_kintai')->name('today_kintai.')->group(function(){
         Route::get('/', 'index')->name('index');
     });
-
     // 今月の勤怠
     Route::controller(ThisMonthKintaiController::class)->prefix('this_month_kintai')->name('this_month_kintai.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::get('detail', 'detail')->name('detail');
     });
-
     // 勤怠一覧
     Route::controller(KintaiListController::class)->prefix('kintai_list')->name('kintai_list.')->group(function(){
         Route::get('/', 'index')->name('index');
@@ -113,24 +103,20 @@ Route::middleware(['auth','user.status'])->group(function () {
         Route::get('detail', 'detail')->name('detail');
         Route::post('manager_check', 'manager_check')->name('manager_check');
     });
-
     // 勤怠修正
     Route::controller(PunchModifyController::class)->prefix('punch_modify')->name('punch_modify.')->group(function(){
         Route::get('/', 'index')->name('index')->middleware('kintai.operation.check');
         Route::get('input', 'input')->name('input');
         Route::post('enter', 'enter')->name('enter');
     });
-
     // 勤怠削除
     Route::controller(KintaiDeleteController::class)->prefix('kintai_delete')->name('kintai.')->middleware('kintai.operation.check')->group(function(){
         Route::get('/', 'delete')->name('delete');
     });
-
     // 勤怠コメント
     Route::controller(KintaiCommentController::class)->prefix('kintai_comment')->name('kintai_comment.')->middleware('kintai.operation.check')->group(function(){
         Route::get('/', 'update')->name('update');
     });
-
     // 従業員一覧
     Route::controller(EmployeeListController::class)->prefix('employee_list')->name('employee_list.')->group(function(){
         Route::get('/', 'index')->name('index');
@@ -138,20 +124,17 @@ Route::middleware(['auth','user.status'])->group(function () {
         Route::get('detail', 'detail')->name('detail');
         Route::get('modify', 'modify')->name('modify');
     });
-
     // 従業員マスタ操作関連
     Route::controller(EmployeeController::class)->prefix('employee')->name('employee.')->group(function(){
         Route::get('register', 'register_index')->name('register_index');
         Route::post('register', 'register')->name('register');
         Route::post('modify', 'modify')->name('modify');
     });
-
     // 勤怠タグ
     Route::controller(KintaiTagController::class)->prefix('kintai_tag')->name('kintai_tag.')->group(function(){
         Route::post('register', 'register')->name('register');
         Route::get('delete', 'delete')->name('delete');
     });
-
     // システム管理
     Route::controller(SystemMgtController::class)->prefix('system_mgt')->name('system_mgt.')->group(function(){
         Route::get('/', 'index')->name('index');

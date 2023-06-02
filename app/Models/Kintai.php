@@ -37,10 +37,19 @@ class Kintai extends Model
         'is_manual_punched',
         'locked_at',
     ];
-
-    // 勤怠から従業員情報を取得
+    // employeesテーブルとのリレーション
     public function employee()
     {
-        return $this->belongsTo('App\Models\Employee', 'employee_no', 'employee_no');
+        return $this->belongsTo(Employee::class, 'employee_no', 'employee_no');
+    }
+    // 全て取得
+    public static function getAll()
+    {
+        return self::orderBy('employee_no', 'asc');
+    }
+    // 指定した勤怠を取得
+    public static function getSpecify($kintai_id)
+    {
+        return self::where('kintai_id', $kintai_id);
     }
 }

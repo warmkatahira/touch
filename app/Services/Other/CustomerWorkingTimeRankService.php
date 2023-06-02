@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Other;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use App\Models\Customer;
 use App\Models\Kintai;
 use App\Models\KintaiDetail;
@@ -15,7 +15,7 @@ class CustomerWorkingTimeRankService
     public function setDefaultCondition()
     {
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 初期条件をセット
         session(['search_month' => $nowDate->format('Y-m')]);
         session(['search_base' => Auth::user()->base_id]);
@@ -57,8 +57,8 @@ class CustomerWorkingTimeRankService
     public function getStartEndDay()
     {
         // 月初と月末の日付を取得
-        $start_day = new Carbon(session('search_month'));
-        $end_day = new Carbon(session('search_month'));
+        $start_day = new CarbonImmutable(session('search_month'));
+        $end_day = new CarbonImmutable(session('search_month'));
         $start_day = $start_day->startOfMonth()->toDateString();
         $end_day = $end_day->endOfMonth()->toDateString();
         return compact('start_day', 'end_day');
@@ -66,9 +66,8 @@ class CustomerWorkingTimeRankService
 
     public function getCommonCustomerWorkingTime($start_day, $end_day)
     {
-        // 取得する情報の共通部分を定義
-        $common_kintais = new Kintai;
-        $common_kintais = $common_kintais->join('kintai_details', 'kintai_details.kintai_id', 'kintais.kintai_id')
+        // この後の様々な情報取得で共通する部分を定義
+        $common_kintais = Kintai::join('kintai_details', 'kintai_details.kintai_id', 'kintais.kintai_id')
                             ->join('employees', 'employees.employee_no', 'kintais.employee_no')
                             ->whereBetween('work_day', [$start_day, $end_day]);
         return $common_kintais;
@@ -138,7 +137,7 @@ class CustomerWorkingTimeRankService
             $customers->orderBy('total_customer_working_time_part', 'desc')
                         ->orderBy('total_customer_working_time_shain', 'desc');
         }
-        $customers = $customers->get();
+        $customers = $customers->paginate(20);;
         return $customers;
     }
 

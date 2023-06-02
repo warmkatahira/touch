@@ -7,8 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Employee;
-use App\Services\PunchReturnService;
-use App\Services\KintaiCommonService;
+use App\Services\Punch\PunchReturnService;
 
 class PunchReturnController extends Controller
 {
@@ -27,15 +26,14 @@ class PunchReturnController extends Controller
     {
         // サービスクラスを定義
         $PunchReturnService = new PunchReturnService;
-        $KintaiCommonService = new KintaiCommonService;
         // 現在の日時を取得
         $nowDate = new Carbon('now');
         // 勤怠情報を取得
-        $kintai = $KintaiCommonService->getKintai($request->punch_key);
+        $kintai = Kintai::getSpecify($request->punch_key)->first();
         // 勤怠テーブルに戻り情報を更新
-        $PunchReturnService->updatePunchReturnForKintai($kintai['kintai']['kintai_id'], $nowDate, $kintai['kintai']['out_time_adj']);
+        $PunchReturnService->updatePunchReturnForKintai($kintai->kintai_id, $nowDate, $kintai->out_time_adj);
         session()->flash('punch_type', '戻り');
-        session()->flash('employee_name', $kintai['employee']['employee_name']);
+        session()->flash('employee_name', $kintai->employee->employee_name);
         session()->flash('message', '');
         return redirect()->route('punch.index');
     }

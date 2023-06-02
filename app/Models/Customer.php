@@ -12,16 +12,14 @@ class Customer extends Model
     protected $primaryKey = 'customer_id';
     // オートインクリメント無効化
     public $incrementing = false;
-
     Public function customer_group()
     {
         // CustomerGroupモデルのデータを引っ張てくる
-        return $this->belongsTo('App\Models\CustomerGroup', 'customer_group_id');
+        return $this->belongsTo(CustomerGroup::class, 'customer_group_id', 'customer_group_id');
     }
-
     // 荷主から拠点情報を取得
     public function base()
     {
-        return $this->belongsTo('App\Models\Base', 'control_base_id', 'base_id');
+        return $this->belongsTo(Base::class, 'control_base_id', 'base_id');
     }
 }

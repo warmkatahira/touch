@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('kintai_id');
             $table->string('customer_id');
             $table->unsignedInteger('customer_working_time');
-            $table->boolean('is_supported')->nullable();
+            $table->boolean('is_supported');
             $table->timestamps();
             // 外部キー制約
             $table->foreign('kintai_id')->references('kintai_id')->on('kintais')->onDelete('cascade');

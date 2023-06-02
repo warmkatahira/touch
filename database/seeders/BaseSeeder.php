@@ -16,10 +16,6 @@ class BaseSeeder extends Seeder
     public function run()
     {
         Base::create([
-            'base_id' => 'system_common',
-            'base_name' => 'システム共通',
-        ]);
-        Base::create([
             'base_id' => 'warm_01',
             'base_name' => '本社',
         ]);
@@ -50,6 +46,7 @@ class BaseSeeder extends Seeder
         Base::create([
             'base_id' => 'warm_08',
             'base_name' => '広島営業所',
+            'is_add_rest_available' => 1,
         ]);
         Base::create([
             'base_id' => 'warm_09',
@@ -61,10 +58,6 @@ class BaseSeeder extends Seeder
         ]);
         Base::create([
             'base_id' => 'warm_11',
-            'base_name' => 'システム係',
-        ]);
-        Base::create([
-            'base_id' => 'warm_12',
             'base_name' => 'ロジステーションプラス',
         ]);
     }
