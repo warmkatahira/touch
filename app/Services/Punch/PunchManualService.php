@@ -4,36 +4,19 @@ namespace App\Services\Punch;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-use App\Models\Employee;
 use App\Models\Kintai;
 
 class PunchManualService
 {
-    public function getEmployeeBase()
-    {
-        // 自拠点の従業員情報を取得
-        $employees = Employee::where('base_id', Auth::user()->base_id)->get();
-        return $employees;
-    }
-
     public function checkPunchAvailable($request)
     {
         // 入力された出勤日と従業員の勤怠が存在するか確認
-        $kintai = Kintai::where('employee_no', $request->employee)
+        return Kintai::where('employee_no', $request->employee)
                         ->where('work_day', $request->work_day)
                         ->first();
-        return $kintai;
     }
 
-    public function getEmployee($employee_no)
-    {
-        // 従業員情報を取得
-        $employee = Employee::where('employee_no', $employee_no)->first();
-        return $employee;
-    }
-
-    public function addKintai($request)
+    public function createKintai($request)
     {
         // 早出フラグを取得(リクエストパラメータがある = 早出となる) ※早出は1
         $is_early_worked = is_null(session('punch_begin_type')) ? 0 : 1;

@@ -3,7 +3,6 @@
 namespace App\Services\Punch;
 
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Models\Kintai;
 use App\Models\KintaiDetail;
 use App\Models\Base;
@@ -22,6 +21,23 @@ class PunchModifyService
         return;
     }
 
+    public function getCustomerWorkingTime($kintai_id)
+    {
+        // 荷主マスタと拠点マスタをユニオン
+        $subquery = Customer::select('customer_id', 'customer_name')
+                ->union(Base::select('base_id', 'base_name'));
+        // 勤怠詳細テーブルと荷主・拠点情報を結合
+        $kintai_details = KintaiDetail::where('kintai_id', $kintai_id)
+            ->joinSub($subquery, 'SUB', function ($join) {
+                $join->on('kintai_details.customer_id', '=', 'SUB.customer_id');
+            })
+            ->select(DB::raw("sum(customer_working_time) as customer_working_time, kintai_details.customer_id, SUB.customer_name"))
+            ->groupBy('kintai_details.customer_id', 'SUB.customer_name')
+            ->orderBy('customer_working_time', 'desc')
+            ->get();
+        return $kintai_details;
+    }
+
     public function getOutReturnTime($request)
     {
         // 初期値をセット
@@ -29,7 +45,7 @@ class PunchModifyService
         $return_time_adj = null;
         $out_return_time = 0;
         if(isset($request->out_time)){
-            // サービスクラスを定義
+            // インスタンス化
             $PunchOutService = new PunchOutService;
             $PunchReturnService = new PunchReturnService;
             // 外出時間調整を取得
@@ -63,23 +79,6 @@ class PunchModifyService
             'begin_time' => $request->begin_time,
             'finish_time' => $request->finish_time,
         ]);
-    }
-
-    public function getCustomerWorkingTime($kintai_id)
-    {
-        // 荷主マスタと拠点マスタをユニオン
-        $subquery = Customer::select('customer_id', 'customer_name')
-                ->union(Base::select('base_id', 'base_name'));
-        // 勤怠詳細テーブルと荷主・拠点情報を結合
-        $kintai_details = KintaiDetail::where('kintai_id', $kintai_id)
-            ->joinSub($subquery, 'SUBQUERY', function ($join) {
-                $join->on('kintai_details.customer_id', '=', 'SUBQUERY.customer_id');
-            })
-            ->select(DB::raw("sum(customer_working_time) as customer_working_time, kintai_details.customer_id, SUBQUERY.customer_name"))
-            ->groupBy('kintai_details.customer_id', 'SUBQUERY.customer_name')
-            ->orderBy('customer_working_time', 'desc')
-            ->get();
-        return $kintai_details;
     }
 
     public function setSessionKintaiModifyInfo($out_return_time, $begin_finish_time, $rest_time, $no_rest_times, $working_time, $punch_begin_type)

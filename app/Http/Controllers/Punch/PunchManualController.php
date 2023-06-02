@@ -10,6 +10,7 @@ use App\Services\Punch\PunchFinishInputService;
 use App\Services\Punch\PunchModifyService;
 use App\Services\Punch\PunchFinishEnterService;
 use App\Http\Requests\PunchManualRequest;
+use App\Models\Employee;
 
 class PunchManualController extends Controller
 {
@@ -17,10 +18,10 @@ class PunchManualController extends Controller
     {
         // 現在のURLを取得
         session(['back_url_1' => url()->full()]);
-        // サービスクラスを定義
+        // インスタンス化
         $PunchManualService = new PunchManualService;
         // 自拠点の従業員を取得
-        $employees = $PunchManualService->getEmployeeBase();
+        $employees = Employee::getSpecifyBase(Auth::user()->base_id)->get();
         return view('management_func.punch_manual.index')->with([
             'employees' => $employees,
         ]);
@@ -28,7 +29,7 @@ class PunchManualController extends Controller
 
     public function input(PunchManualRequest $request)
     {
-        // サービスクラスを定義
+        // インスタンス化
         $PunchManualService = new PunchManualService;
         $PunchFinishInputService = new PunchFinishInputService;
         $PunchModifyService = new PunchModifyService;
@@ -64,7 +65,7 @@ class PunchManualController extends Controller
         // 追加休憩取得時間を表示させるか判定
         $add_rest_time_disp = $PunchFinishInputService->getAddRestTimeDisp();
         // 従業員情報を取得
-        $employee = $PunchManualService->getEmployee($request->employee);
+        $employee = Employee::getSpecify($request->employee)->first();
         return view('management_func.punch_manual.input')->with([
             'customers' => $customer_info['customers'],
             'customer_groups' => $customer_info['customer_groups'],
@@ -78,18 +79,18 @@ class PunchManualController extends Controller
 
     public function enter(Request $request)
     {
-        // サービスクラスを定義
+        // インスタンス化
         $PunchModifyService = new PunchModifyService;
         $PunchFinishEnterService = new PunchFinishEnterService;
         $PunchManualService = new PunchManualService;
         // 概要を追加
-        $kintai = $PunchManualService->addKintai($request);
+        $kintai = $PunchManualService->createKintai($request);
         // 残業時間を算出
         $over_time = $PunchFinishEnterService->getOverTime($kintai, $request->working_time);
         // 残業時間を更新
         $PunchManualService->updateOverTime($kintai->kintai_id, $over_time);
         // 勤怠詳細を追加
-        $PunchFinishEnterService->addPunchFinishForKintaiDetail($kintai->kintai_id, $request->working_time_input);
+        $PunchFinishEnterService->createPunchFinishForKintaiDetail($kintai->kintai_id, $request->working_time_input);
         // セッションをクリア
         $PunchModifyService->removeSessionKintaiModifyInfo();
         session()->flash('alert_success', $kintai->employee->employee_name.'さん【出勤日:'.$kintai->work_day.'】の手動打刻が完了しました。');

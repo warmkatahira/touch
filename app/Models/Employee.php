@@ -43,9 +43,19 @@ class Employee extends Model
     {
         return $this->belongsTo(EmployeeCategory::class, 'employee_category_id', 'employee_category_id');
     }
-    // 指定された拠点を取得
+    // 全て取得
+    public static function getAll()
+    {
+        return self::orderBy('employee_no', 'asc');
+    }
+    // 指定された従業員を取得
     public static function getSpecify($employee_no)
     {
         return self::where('employee_no', $employee_no);
+    }
+    // 指定された拠点の従業員を取得
+    public static function getSpecifyBase($base_id)
+    {
+        return self::where('base_id', $base_id);
     }
 }

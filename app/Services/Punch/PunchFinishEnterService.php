@@ -62,7 +62,7 @@ class PunchFinishEnterService
     }
 
     // 荷主稼働時間の情報を勤怠詳細テーブルに追加
-    public function addPunchFinishForKintaiDetail($kintai_id, $working_time_input)
+    public function createPunchFinishForKintaiDetail($kintai_id, $working_time_input)
     {
         // 荷主稼働時間の要素分だけループ処理
         foreach($working_time_input as $key => $value){
