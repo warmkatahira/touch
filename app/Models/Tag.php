@@ -28,4 +28,14 @@ class Tag extends Model
     {
         return $this->hasMany(KintaiTag::class, 'tag_id', 'tag_id')->count();
     }
+    // 指定されたタグを取得
+    public static function getSpecify($tag_id)
+    {
+        return self::where('tag_id', $tag_id);
+    }
+    // 指定された所有権限のタグを取得
+    public static function getSpecifyOwnerRole($owner_role_id)
+    {
+        return self::where('owner_role_id', $owner_role_id);
+    }
 }

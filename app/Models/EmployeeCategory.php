@@ -12,4 +12,9 @@ class EmployeeCategory extends Model
     protected $primaryKey = 'employee_category_id';
     // オートインクリメント無効化
     public $incrementing = false;
+    // 全て取得
+    public static function getAll()
+    {
+        return self::orderBy('employee_category_id', 'asc');
+    }
 }

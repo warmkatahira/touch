@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Kintai;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\KintaiTag;

@@ -26,4 +26,9 @@ class KintaiTag extends Model
     {
         return $this->belongsTo(Tag::class, 'tag_id', 'tag_id');
     }
+    // 全て取得
+    public static function getAll()
+    {
+        return self::orderBy('tag_id', 'asc');
+    }
 }

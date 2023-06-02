@@ -1,32 +1,40 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Kintai;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use App\Models\Kintai;
 use App\Models\KintaiDetail;
 use App\Models\Employee;
 use App\Models\Base;
 use App\Models\Customer;
 use App\Models\EmployeeCategory;
-use App\Models\Tag;
 use App\Models\KintaiTag;
 
 class KintaiListService
 {
+    // セッションを削除
     public function deleteSearchSession()
     {
-        // セッションを削除
-        session()->forget(['search_target', 'search_manager_checked', 'search_tag', 'search_employee_name', 'search_base', 'search_employee_category', 'search_work_day_from', 'search_work_day_to']);
+        session()->forget([
+            'search_target',
+            'search_manager_checked',
+            'search_tag',
+            'search_employee_name',
+            'search_base',
+            'search_employee_category',
+            'search_work_day_from',
+            'search_work_day_to',
+        ]);
         return;
     }
 
     public function setDefaultCondition()
     {
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 初期条件をセット
         session(['search_target' => 'all_target']);
         session(['search_manager_checked' => 'all_manager_checked']);
@@ -60,8 +68,8 @@ class KintaiListService
         // 条件2:開始と終了の期間が60日以内であるか
         if (!empty(session('search_work_day_from')) && !empty(session('search_work_day_to'))) {
             // 開始と終了の日にちの差を取得
-            $from = new Carbon(session('search_work_day_from'));
-            $to = new Carbon(session('search_work_day_to'));
+            $from = new CarbonImmutable(session('search_work_day_from'));
+            $to = new CarbonImmutable(session('search_work_day_to'));
             $diff_days_from_to = $from->diffInDays($to);
             // 日にちの差が60日より大きければNG
             if($diff_days_from_to > 60){
@@ -144,30 +152,19 @@ class KintaiListService
         return $kintais;
     }
 
-    public function getKintai($kintai_id)
+    public function getKintaiDetail($kintai_id)
     {
-        // 勤怠IDで対象の勤怠を取得
-        $kintai = Kintai::where('kintai_id', $kintai_id)->first();
         // 荷主マスタと拠点マスタをユニオン
         $subquery = Customer::select('customer_id', 'customer_name')
                 ->union(Base::select('base_id', 'base_name'));
         // 勤怠詳細テーブルと荷主・拠点情報を結合
-        $kintai_details = KintaiDetail::where('kintai_id', $kintai_id)
-                        ->join(DB::raw("({$subquery->toSql()}) as temp"), function($join) {
-                            $join->on('kintai_details.customer_id', '=', 'temp.customer_id');
+        $kintai_details = KintaiDetail::getSpecify($kintai_id)
+                        ->joinSub($subquery, 'SUB', function ($join) {
+                            $join->on('kintai_details.customer_id', '=', 'SUB.customer_id');
                         })
-                        ->select('temp.customer_name', 'kintai_details.customer_working_time')
+                        ->select('SUB.customer_name', 'kintai_details.customer_working_time')
                         ->orderBy('kintai_details.customer_working_time', 'desc')
                         ->get();
-        // 勤怠に紐付いているタグ情報を取得
-        $kintai_tags = KintaiTag::where('kintai_id', $kintai_id)->get();
-        return compact('kintai', 'kintai_details', 'kintai_tags');
-    }
-
-    public function getTag()
-    {
-        // タグ情報を取得(ロールに合わせて変動)
-        $tags = Tag::where('owner_role_id', Auth::user()->role_id)->get();
-        return $tags;
+        return $kintai_details;
     }
 }

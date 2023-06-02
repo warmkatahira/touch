@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Kintai;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\KintaiTagService;
+use App\Services\Kintai\KintaiTagService;
 
 class KintaiTagController extends Controller
 {
     public function register(Request $request)
     {
-        // サービスクラスを定義
+        // インスタンス化
         $KintaiTagService = new KintaiTagService;
         // 既に存在するタグではないか確認
         $kintai_tag = $KintaiTagService->checkKintaiTagAddable($request->kintai_id, $request->tag);
@@ -26,7 +26,7 @@ class KintaiTagController extends Controller
 
     public function delete(Request $request)
     {
-        // サービスクラスを定義
+        // インスタンス化
         $KintaiTagService = new KintaiTagService;
         // タグを削除
         $KintaiTagService->deleteKintaiTag($request->kintai_tag_id);
