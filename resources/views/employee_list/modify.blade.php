@@ -4,6 +4,8 @@
             <a href="{{ session('back_url_2') }}" class="col-span-1 text-xl py-4 rounded-lg text-center bg-black text-white mb-5">戻る</a>
             <p class="col-span-11 text-center text-4xl bg-emerald-100 border-b-4 border-emerald-400 rounded-t-lg py-2 h-3/4 mb-5">従業員情報変更</p>
         </div>
+        <!-- アラート -->
+        <x-alert/>
         <div class="grid grid-cols-12">
             <form method="POST" action="{{ route('employee.modify') }}" class="m-0 col-span-12 grid grid-cols-12">
                 @csrf

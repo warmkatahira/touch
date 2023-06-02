@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Employee;
 
 use App\Models\Employee;
 
 class EmployeeRegisterService
 {
-    public function addEmployee($request)
+    public function createEmployee($request)
     {
         // レコードを追加
         Employee::create([

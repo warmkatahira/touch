@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('employee_name', 30);
             $table->unsignedInteger('employee_category_id');
             $table->unsignedInteger('hourly_wage')->nullable();
-            $table->double('monthly_workable_time_setting', 5, 2)->nullable();
-            $table->double('over_time_start_setting')->nullable();
+            $table->double('monthly_workable_time_setting', 5, 2)->default(0);
+            $table->double('over_time_start_setting', 5, 2)->default(0);
             $table->timestamps();
         });
     }

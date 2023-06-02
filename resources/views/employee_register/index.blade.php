@@ -28,9 +28,9 @@
                 <label for="employee_name" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">従業員名</label>
                 <input type="text" id="employee_name" name="employee_name" class="col-span-2 mt-1" autocomplete="off" value="{{ old('employee_name') }}">
                 <label for="monthly_workable_time_setting" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">月間稼働設定</label>
-                <input type="text" id="monthly_workable_time_setting" name="monthly_workable_time_setting" class="col-span-2 mt-1" autocomplete="off" value="{{ old('monthly_workable_time_setting') }}">
+                <input type="text" id="monthly_workable_time_setting" name="monthly_workable_time_setting" class="col-span-2 mt-1" autocomplete="off" value="{{ old('monthly_workable_time_setting', 0) }}">
                 <label for="over_time_start_setting" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">残業開始時間設定</label>
-                <input type="text" id="over_time_start_setting" name="over_time_start_setting" class="col-span-2 mt-1" autocomplete="off" value="{{ old('over_time_start_setting') }}">
+                <input type="text" id="over_time_start_setting" name="over_time_start_setting" class="col-span-2 mt-1" autocomplete="off" value="{{ old('over_time_start_setting', 0) }}">
                 <button class="col-start-1 col-span-4 py-4 rounded-lg text-center bg-blue-200 mt-5">追加</button>
             </form>
         </div>

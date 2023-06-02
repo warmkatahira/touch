@@ -34,9 +34,9 @@
             <label class="col-span-1 bg-black text-white py-2 text-center">総残業時間</label>
             <p class="col-span-1 border border-black px-2 pt-2 text-right">{{ number_format($total_over_time / 60, 2).' 時間' }}</p>
         </div>
-        <!-- 荷主別稼働時間トップ3情報 -->
+        <!-- 当月荷主別稼働時間トップ3情報 -->
         <div class="grid grid-cols-12 mt-5">
-            <p class="col-span-12 text-2xl border-l-4 border-blue-500 pl-2">荷主別稼働時間トップ3</p>
+            <p class="col-span-12 text-2xl border-l-4 border-blue-500 pl-2">当月荷主別稼働時間トップ3</p>
             <p class="col-span-6 text-base mb-4 text-right underline text-red-600">※（）内は総稼働時間に対しての割合</p>
             @foreach($customer_working_time as $key => $data)
                 <div class="col-start-1 col-span-6 grid grid-cols-12 border-dashed border-b-2 border-blue-600">

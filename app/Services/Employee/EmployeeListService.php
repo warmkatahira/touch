@@ -18,7 +18,11 @@ class EmployeeListService
     public function deleteSearchSession()
     {
         // セッションを削除
-        session()->forget(['search_base', 'search_employee_category', 'search_employee_name']);
+        session()->forget([
+            'search_base',
+            'search_employee_category',
+            'search_employee_name'
+        ]);
         return;
     }
 
@@ -42,7 +46,7 @@ class EmployeeListService
     {
         // 現在のURLを取得
         session(['back_url_1' => url()->full()]);
-        // サービスクラスを定義
+        // インスタンス化
         $CommonService = new CommonService;
         // 当月の月初・月末の日付を取得
         $start_end_of_month = $CommonService->getStartEndOfMonth(CarbonImmutable::today());
@@ -76,12 +80,11 @@ class EmployeeListService
 
     public function getThisMonthData($nowDate, $employee_no){
         // 当月の合計時間・稼働日数を取得
-        $total_data = Kintai::where('employee_no', $employee_no)
+        return Kintai::where('employee_no', $employee_no)
                         ->whereBetween('work_day', [$nowDate->startOfMonth()->toDateString(), $nowDate->endOfMonth()->toDateString()])
                         ->select(DB::raw("sum(working_time) as total_working_time, sum(over_time) as total_over_time, count(work_day) as working_days, DATE_FORMAT(work_day, '%Y-%m') as date"))
                         ->groupBy('employee_no', 'date')
                         ->first();
-        return compact('total_data');
     }
 
     public function getCustomerWorkingTime($nowDate, $employee_no)

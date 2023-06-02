@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Models\EmployeeCategory;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use App\Services\Employee\EmployeeListService;
-use App\Services\EmployeeRegisterService;
+use App\Services\Employee\EmployeeRegisterService;
 use App\Services\KintaiReportExportService;
 use App\Services\CommonService;
 
@@ -15,7 +16,7 @@ class EmployeeListController extends Controller
 {
     public function index()
     {
-        // サービスクラスを定義
+        // インスタンス化
         $EmployeeListService = new EmployeeListService;
         $CommonService = new CommonService;
         // セッションを削除
@@ -27,7 +28,7 @@ class EmployeeListController extends Controller
         // 拠点情報を取得
         $bases = $CommonService->getBases(true, false);
         // 従業員区分を取得
-        $employee_categories = $CommonService->getEmployeeCategories();
+        $employee_categories = EmployeeCategory::getAll()->get();
         return view('employee_list.index')->with([
             'employees' => $employees,
             'bases' => $bases,
@@ -37,7 +38,7 @@ class EmployeeListController extends Controller
 
     public function search(Request $request)
     {
-        // サービスクラスを定義
+        // インスタンス化
         $EmployeeListService = new EmployeeListService;
         $CommonService = new CommonService;
         // セッションを削除
@@ -49,7 +50,7 @@ class EmployeeListController extends Controller
         // 拠点情報を取得
         $bases = $CommonService->getBases(true, false);
         // 従業員区分を取得
-        $employee_categories = $CommonService->getEmployeeCategories();
+        $employee_categories = EmployeeCategory::getAll()->get();
         return view('employee_list.index')->with([
             'employees' => $employees,
             'bases' => $bases,
@@ -61,7 +62,7 @@ class EmployeeListController extends Controller
     {
         // 現在のURLを取得
         session(['back_url_2' => url()->full()]);
-        // サービスクラスを定義
+        // インスタンス化
         $EmployeeListService = new EmployeeListService;
         $KintaiReportExportService = new KintaiReportExportService;
         $CommonService = new CommonService;
@@ -81,9 +82,9 @@ class EmployeeListController extends Controller
         $kintais = $KintaiReportExportService->getExportKintai($month_date['month_date'], Employee::where('employee_no', $request->employee_no), $start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
         return view('employee_list.detail')->with([
             'employee' => $employee['employee'],
-            'working_days' => is_null($this_month_data['total_data']) ? 0 : $this_month_data['total_data']['working_days'],
-            'total_working_time' => is_null($this_month_data['total_data']) ? 0 : $this_month_data['total_data']['total_working_time'],
-            'total_over_time' => is_null($this_month_data['total_data']) ? 0 : $this_month_data['total_data']['total_over_time'],
+            'working_days' => is_null($this_month_data) ? 0 : $this_month_data->working_days,
+            'total_working_time' => is_null($this_month_data) ? 0 : $this_month_data->total_working_time,
+            'total_over_time' => is_null($this_month_data) ? 0 : $this_month_data->total_over_time,
             'customer_working_time' => $customer_working_time,
             'month_date' => $month_date,
             'kintais' => $kintais,
