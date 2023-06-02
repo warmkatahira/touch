@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\ManagementFunc;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Kintai;
 use App\Models\Employee;
 use App\Models\KintaiClose;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 
 class KintaiCloseService
 {
@@ -44,7 +44,7 @@ class KintaiCloseService
         return $not_close_kintais;
     }
 
-    public function addKintaiClose($close_date)
+    public function createKintaiClose($close_date)
     {
         // 勤怠提出テーブルを追加
         KintaiClose::create([
@@ -57,12 +57,16 @@ class KintaiCloseService
 
     public function updateLockedAt($start_of_month, $end_of_month)
     {
+        // 現在の日時を取得
+        $nowDate = CarbonImmutable::now();
         // 指定した月の勤怠のロック日時を更新
         Employee::join('kintais', 'kintais.employee_no', 'employees.employee_no')
                     ->whereBetween('work_day', [$start_of_month , $end_of_month])
-                    ->where('base_id', Auth::user()->base_id)->update([
-            'locked_at' => Carbon::now(),
-        ]);
+                    ->where('base_id', Auth::user()->base_id)
+                    ->update([
+                        'locked_at' => $nowDate,
+                    ]
+        );
         return;
     }
 }

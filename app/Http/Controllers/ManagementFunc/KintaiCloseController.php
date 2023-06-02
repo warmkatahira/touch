@@ -4,15 +4,15 @@ namespace App\Http\Controllers\ManagementFunc;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\KintaiCloseService;
+use App\Services\ManagementFunc\KintaiCloseService;
 use App\Services\CommonService;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 
 class KintaiCloseController extends Controller
 {
     public function index()
     {
-        // サービスクラスを定義
+        // インスタンス化
         $KintaiCloseService = new KintaiCloseService;
         // 未提出の勤怠情報を取得
         $not_close_kintais = $KintaiCloseService->getNotCloseKintai();
@@ -23,7 +23,7 @@ class KintaiCloseController extends Controller
 
     public function closing(Request $request)
     {
-        // サービスクラスを定義
+        // インスタンス化
         $KintaiCloseService = new KintaiCloseService;
         $CommonService = new CommonService;
         // 指定された年月の勤怠提出情報を取得
@@ -43,10 +43,10 @@ class KintaiCloseController extends Controller
             return back();
         }
         // 勤怠提出テーブルを追加
-        $KintaiCloseService->addKintaiClose($request->close_date);
+        $KintaiCloseService->createKintaiClose($request->close_date);
         // 勤怠のロック処理を実施
         $KintaiCloseService->updateLockedAt($start_end_of_month['start_of_month'], $start_end_of_month['end_of_month']);
-        session()->flash('alert_success', Carbon::parse($request->close_date)->isoFormat('YYYY年MM月') . "の勤怠を提出しました。");
+        session()->flash('alert_success', CarbonImmutable::parse($request->close_date)->isoFormat('YYYY年MM月') . "の勤怠を提出しました。");
         return back();
     }
 }

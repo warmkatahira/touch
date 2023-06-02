@@ -22,4 +22,9 @@ class Customer extends Model
     {
         return $this->belongsTo(Base::class, 'control_base_id', 'base_id');
     }
+    // 指定した荷主を取得
+    public static function getSpecify($customer_id)
+    {
+        return self::where('customer_id', $customer_id);
+    }
 }

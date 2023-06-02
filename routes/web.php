@@ -189,11 +189,11 @@ Route::middleware(['auth','user.status'])->group(function () {
         Route::controller(CustomerGroupController::class)->prefix('customer_group')->name('customer_group.')->group(function(){
             Route::get('/', 'index')->name('index');
             Route::get('detail', 'detail')->name('detail');
-            Route::get('delete_setting', 'delete_setting')->name('delete_setting');
-            Route::post('register_setting', 'register_setting')->name('register_setting');
+            Route::get('delete_customer_group_id', 'delete_customer_group_id')->name('delete_customer_group_id');
+            Route::post('update_customer_group_id', 'update_customer_group_id')->name('update_customer_group_id');
             Route::post('register_group', 'register_group')->name('register_group');
             Route::get('delete_group', 'delete_group')->name('delete_group');
-            Route::post('modify', 'modify')->name('modify');
+            Route::post('modify_group', 'modify_group')->name('modify_group');
         });
         // 勤怠提出
         Route::controller(KintaiCloseController::class)->prefix('kintai_close')->name('kintai_close.')->group(function(){

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('kintai_closes', function (Blueprint $table) {
             $table->string('kintai_close_id')->primary();
             $table->string('close_date');
-            $table->unsignedInteger('base_id');
+            $table->string('base_id');
             $table->timestamps();
         });
     }

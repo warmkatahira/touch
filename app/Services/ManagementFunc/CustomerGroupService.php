@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\ManagementFunc;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -10,22 +10,12 @@ use App\Models\Customer;
 
 class CustomerGroupService
 {
-    public function getCustomerGroups()
-    {
-        // 自拠点の荷主グループを取得
-        $customer_groups = CustomerGroup::where('base_id', Auth::user()->base_id)
-                            ->orderBy('customer_group_order', 'asc')
-                            ->get();
-        return $customer_groups;
-    }
-
     public function getCustomers()
     {
         // 自拠点の荷主を取得（荷主グループが設定されていないもののみ）
-        $customers = Customer::where('control_base_id', Auth::user()->base_id)
+        return Customer::where('control_base_id', Auth::user()->base_id)
                         ->whereNull('customer_group_id')
                         ->get();
-        return $customers;
     }
 
     public function getCustomerGroupDetail($customer_group_id)
@@ -39,10 +29,10 @@ class CustomerGroupService
         return compact('customer_groups','customer_group');
     }
 
-    public function updateCustomerGroupSetting($customer_id, $value)
+    public function updateCustomerGroupId($customer_id, $value)
     {
         // レコードを更新
-        Customer::where('customer_id', $customer_id)->update([
+        Customer::getSpecify($customer_id)->update([
             'customer_group_id' => $value,
         ]);
         return;
@@ -56,15 +46,11 @@ class CustomerGroupService
             'customer_group_name' => $customer_group_name,
             'customer_group_order' => 99,
         ]);
-        return back();
+        return;
     }
 
     public function deleteCustomerGroup($customer_group_id)
     {
-        // 削除前にcustomersテーブルのcustomer_group_idをNullに更新
-        Customer::where('customer_group_id', $customer_group_id)->update([
-            'customer_group_id' => Null,
-        ]);
         // レコードを削除
         CustomerGroup::where('customer_group_id', $customer_group_id)->delete();
         return;

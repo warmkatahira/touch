@@ -25,5 +25,10 @@ class CustomerGroupSeeder extends Seeder
             'customer_group_name' => 'コンタクト',
             'customer_group_order' => 2,
         ]);
+        CustomerGroup::create([
+            'base_id' => 'warm_02',
+            'customer_group_name' => 'DDD',
+            'customer_group_order' => 3,
+        ]);
     }
 }

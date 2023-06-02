@@ -17,7 +17,7 @@ class CustomerGroup extends Model
         'customer_group_name',
         'customer_group_order',
     ];
-
+    // customersテーブルとのリレーション
     Public function customers()
     {
         // Customerモデルのデータを引っ張てくる
@@ -34,5 +34,10 @@ class CustomerGroup extends Model
     public function setting_customer_count()
     {
         return $this->hasMany(Customer::class, 'customer_group_id', 'customer_group_id')->count();
+    }
+    // 指定した拠点の荷主グループを取得
+    public static function getSpecifyBase($base_id)
+    {
+        return self::where('base_id', $base_id)->orderBy('customer_group_order', 'asc');
     }
 }

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedInteger('customer_group_id')->nullable();
             $table->string('control_base_id');
             $table->timestamps();
+            // 外部キー(削除されたらnullになるようにしてある)
+            $table->foreign('customer_group_id')->references('customer_group_id')->on('customer_groups')->onUpdate('SET NULL')->onDelete('SET NULL');
         });
     }
 

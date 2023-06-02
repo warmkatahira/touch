@@ -4,13 +4,13 @@ namespace App\Http\Controllers\AccountingFunc;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\KintaiCloseCheckService;
+use App\Services\ManagementFunc\KintaiCloseCheckService;
 
 class KintaiCloseCheckController extends Controller
 {
     public function index()
     {
-        // サービスクラスを定義
+        // インスタンス化
         $KintaiCloseCheckService = new KintaiCloseCheckService;
         // 初期検索条件をセット
         $KintaiCloseCheckService->setDefaultCondition();
@@ -23,7 +23,7 @@ class KintaiCloseCheckController extends Controller
 
     public function search(Request $request)
     {
-        // サービスクラスを定義
+        // インスタンス化
         $KintaiCloseCheckService = new KintaiCloseCheckService;
         // 初期検索条件をセット
         $KintaiCloseCheckService->getSearchCondition($request->search_month);
