@@ -3,20 +3,22 @@
 namespace App\Http\Controllers\Punch;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Employee;
+use App\Models\Kintai;
 use App\Services\Punch\PunchReturnService;
 
 class PunchReturnController extends Controller
 {
     public function index()
     {
-        // サービスクラスを定義
+        // インスタンス化
         $PunchReturnService = new PunchReturnService;
+        // 現在の日時を取得
+        $nowDate = CarbonImmutable::now();
         // 戻り打刻対象者を取得
-        $employees = $PunchReturnService->getPunchReturnTargetEmployee();
+        $employees = $PunchReturnService->getPunchReturnTargetEmployee($nowDate);
         return view('punch_return.index')->with([
             'employees' => $employees,
         ]);
@@ -24,10 +26,10 @@ class PunchReturnController extends Controller
 
     public function enter(Request $request)
     {
-        // サービスクラスを定義
+        // インスタンス化
         $PunchReturnService = new PunchReturnService;
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 勤怠情報を取得
         $kintai = Kintai::getSpecify($request->punch_key)->first();
         // 勤怠テーブルに戻り情報を更新

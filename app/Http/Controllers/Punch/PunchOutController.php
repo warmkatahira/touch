@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Punch;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Employee;
+use App\Models\Kintai;
 use App\Services\Punch\PunchOutService;
 
 class PunchOutController extends Controller
@@ -15,8 +15,10 @@ class PunchOutController extends Controller
     {
         // サービスクラスを定義
         $PunchOutService = new PunchOutService;
+        // 現在の日時を取得
+        $nowDate = CarbonImmutable::now();
         // 外出打刻対象者を取得
-        $employees = $PunchOutService->getPunchOutTargetEmployee();
+        $employees = $PunchOutService->getPunchOutTargetEmployee($nowDate);
         return view('punch_out.index')->with([
             'employees' => $employees,
         ]);
@@ -27,7 +29,7 @@ class PunchOutController extends Controller
         // サービスクラスを定義
         $PunchOutService = new PunchOutService;
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 勤怠情報を取得
         $kintai = Kintai::getSpecify($request->punch_key)->first();
         // 勤怠テーブルに外出情報を更新

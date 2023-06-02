@@ -11,19 +11,19 @@ use App\Models\Employee;
 class PunchReturnService
 {
     // 戻り打刻対象者を取得
-    public function getPunchReturnTargetEmployee()
+    public function getPunchReturnTargetEmployee($nowDate)
     {
-        // 現在の日時を取得
-        $nowDate = CarbonImmutable::now();
-        // 当日の勤怠を取得
-        $today_kintais = Kintai::where('work_day', $nowDate->format('Y-m-d'));
-        // 自拠点の勤怠があって、外出時間がNot Nullかつ戻り時間がNullの従業員
-        $employees = Employee::joinSub($today_kintais, 'KINTAIS', function ($join) {
+        // 当日の自拠点の外出時間がNot Nullかつ戻り時間がNullの勤怠を取得
+        $kintais = Kintai::where('work_day', $nowDate->format('Y-m-d'))
+                        ->whereNotNull('out_time')
+                        ->whereNull('return_time')
+                        ->whereHas('employee.base', function ($query) {
+                            $query->where('base_id', Auth::user()->base_id);
+                        });
+        // 戻り打刻対象者を取得
+        $employees = Employee::joinSub($kintais, 'KINTAIS', function ($join) {
                 $join->on('employees.employee_no', '=', 'KINTAIS.employee_no');
             })
-            ->where('base_id', Auth::user()->base_id)
-            ->whereNotNull('out_time')
-            ->whereNull('return_time')
             ->select('employees.employee_no', 'employees.employee_name', 'KINTAIS.kintai_id')
             ->orderBy('employee_no')
             ->get();

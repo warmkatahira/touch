@@ -11,21 +11,21 @@ use App\Models\Employee;
 class PunchOutService
 {
     // 外出打刻対象者を取得
-    public function getPunchOutTargetEmployee()
+    public function getPunchOutTargetEmployee($nowDate)
     {
-        // 現在の日時を取得
-        $nowDate = CarbonImmutable::now();
-        // 当日の勤怠を取得
-        $today_kintais = Kintai::where('work_day', $nowDate->format('Y-m-d'));
-        // 自拠点の勤怠があって、退勤時間がNullかつ外出時間がNullの従業員
-        $employees = Employee::joinSub($today_kintais, 'KINTAIS', function ($join) {
+        // 当日の自拠点の退勤していないかつ外出していない勤怠を取得
+        $kintais = Kintai::where('work_day', $nowDate->format('Y-m-d'))
+                    ->whereNull('finish_time')
+                    ->whereNull('out_time')
+                    ->whereHas('employee.base', function ($query) {
+                        $query->where('base_id', Auth::user()->base_id);
+                    });
+        // 外出打刻対象者を取得
+        $employees = Employee::joinSub($kintais, 'KINTAIS', function ($join) {
                 $join->on('employees.employee_no', '=', 'KINTAIS.employee_no');
             })
-            ->where('base_id', Auth::user()->base_id)
-            ->whereNull('finish_time')
-            ->whereNull('out_time')
             ->select('employees.employee_no', 'employees.employee_name', 'KINTAIS.kintai_id')
-            ->orderBy('employee_no')
+            ->orderBy('employee_no', 'asc')
             ->get();
         return $employees;
     }
@@ -35,7 +35,7 @@ class PunchOutService
     {
         // 外出時間調整を取得
         $out_time_adj = $this->getOutTimeAdj($nowDate);
-        // レコードを更新
+        // 勤怠レコードを更新
         Kintai::where('kintai_id', $kintai_id)->update([
             'out_time' => $nowDate->format('H:i:00'),
             'out_time_adj' => $out_time_adj,
