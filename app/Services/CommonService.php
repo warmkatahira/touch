@@ -52,11 +52,10 @@ class CommonService
     public function getStartEndOfMonth($date)
     {
         // パラメータをインスタンス化
-        $start = new Carbon($date);
-        $end = new Carbon($date);
+        $date = new Carbon($date);
         // 月初と月末の日付を取得
-        $start_of_month = $start->startOfMonth()->toDateString();
-        $end_of_month = $end->endOfMonth()->toDateString();
+        $start_of_month = $date->startOfMonth()->toDateString();
+        $end_of_month = $date->endOfMonth()->toDateString();
         return compact('start_of_month', 'end_of_month');
     }
 }

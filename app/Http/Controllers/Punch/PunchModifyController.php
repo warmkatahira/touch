@@ -45,7 +45,7 @@ class PunchModifyController extends Controller
         // 出退勤時間から、取得可能な休憩時間を算出
         $rest_time = $PunchFinishInputService->getRestTimeForBeginFinish($begin_finish_time['begin_time_adj'], $begin_finish_time['finish_time_adj']);
         // 外出戻り時間から、取得可能な休憩時間を算出(外出戻り時間がある場合のみ)
-        if(!is_null($out_return_time['out_return_time'])){
+        if($out_return_time['out_return_time'] != 0){
             $rest_time = $PunchFinishInputService->getRestTimeForOutReturn($rest_time, $out_return_time['out_time_adj'], $out_return_time['return_time_adj']);
         }
         // 休憩未取得回数の情報を取得

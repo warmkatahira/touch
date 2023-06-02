@@ -15,7 +15,7 @@ class PunchFinishEnterService
     // 残業時間を算出・取得
     public function getOverTime($kintai, $working_time)
     {
-        // この労働時間を超えたら残業時間が付き始めるという値を取得
+        // この稼働時間を超えたら残業時間が付き始めるという値を取得
         $over_time_start = $this->getOverTimeStart($kintai->employee->employee_category->employee_category_id, $kintai->employee->over_time_start_setting);
         // 初期値として0を設定
         $over_time = 0;
@@ -26,7 +26,7 @@ class PunchFinishEnterService
         return $over_time;
     }
 
-    // この労働時間を超えたら残業時間が付き始めるという値を取得
+    // この稼働時間を超えたら残業時間が付き始めるという値を取得
     public function getOverTimeStart($employee_category_id, $over_time_start_setting)
     {
         // 残業開始時間設定が0.25以上であれば、設定を優先する
@@ -80,7 +80,7 @@ class PunchFinishEnterService
     public function getWorkableTimes($kintai)
     {
         // 月間稼働可能時間設定を取得
-        $employee = Employee::where('employee_no', $kintai->employee_no)->first();
+        $employee = Employee::getSpecify($kintai->employee_no)->first();
         $monthly_workable_time_setting = $employee->monthly_workable_time_setting;
         // 月初の日付を取得
         $start_day = CarbonImmutable::now()->startOfMonth()->toDateString();

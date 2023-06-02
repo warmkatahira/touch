@@ -6,11 +6,9 @@ use App\Http\Controllers\Controller;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Base;
 use App\Models\Kintai;
 use App\Services\Punch\PunchFinishInputService;
 use App\Services\Punch\PunchFinishEnterService;
-use App\Services\CommonService;
 
 class PunchFinishController extends Controller
 {
@@ -18,8 +16,10 @@ class PunchFinishController extends Controller
     {
         // インスタンス化
         $PunchFinishInputService = new PunchFinishInputService;
+        // 現在の日時を取得
+        $nowDate = CarbonImmutable::now();
         // 退勤打刻対象者を取得
-        $employees = $PunchFinishInputService->getPunchFinishTargetEmployee();
+        $employees = $PunchFinishInputService->getPunchFinishTargetEmployee($nowDate);
         return view('punch_finish.index')->with([
             'employees' => $employees,
         ]);
@@ -40,7 +40,7 @@ class PunchFinishController extends Controller
         // 出退勤時間から、取得可能な休憩時間を算出
         $rest_time = $PunchFinishInputService->getRestTimeForBeginFinish($kintai->begin_time_adj, $finish_time_adj);
         // 外出戻り時間から、取得可能な休憩時間を算出(外出戻り時間がある場合のみ)
-        if(!is_null($kintai->out_return_time)){
+        if($kintai->out_return_time != 0){
             $rest_time = $PunchFinishInputService->getRestTimeForOutReturn($rest_time, $kintai->out_time_adj, $kintai->return_time_adj);
         }
         // 休憩未取得回数の情報を取得

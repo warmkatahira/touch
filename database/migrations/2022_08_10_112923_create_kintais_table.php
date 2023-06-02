@@ -30,7 +30,7 @@ return new class extends Migration
             $table->unsignedInteger('no_rest_time')->nullable();
             $table->unsignedInteger('add_rest_time')->nullable();
             $table->string('comment')->nullable();
-            $table->unsignedInteger('out_return_time')->nullable();
+            $table->unsignedInteger('out_return_time')->default(0);
             $table->unsignedInteger('working_time')->nullable();
             $table->unsignedInteger('over_time')->nullable();
             $table->boolean('is_early_worked');

@@ -69,7 +69,7 @@
             <p class="col-span-1 bg-black text-white text-center py-2 text-sm mt-1">戻り時間</p>
             <p class="col-span-1 border border-black text-sm py-2 text-center mt-1">{{ substr($kintai->return_time_adj, 0, 5) }}</p>
             <p class="col-span-1 bg-black text-white text-center py-2 text-sm mt-1">外出戻り時間</p>
-            <p class="col-span-1 border border-black text-sm py-2 text-center mt-1">{{ $kintai->out_return_time == null ? '' : number_format($kintai->out_return_time / 60, 2) }}</p>
+            <p class="col-span-1 border border-black text-sm py-2 text-center mt-1">{{ $kintai->out_return_time == 0 ? '' : number_format($kintai->out_return_time / 60, 2) }}</p>
             <p class="col-start-1 col-span-1 bg-black text-white text-center py-2 text-sm mt-1">休憩取得時間</p>
             <p class="col-span-1 border border-black text-sm py-2 text-center mt-1">{{ is_null($kintai->rest_time) ? '' : number_format($kintai->rest_time / 60, 2) }}</p>
             <p class="col-span-1 bg-black text-white text-center py-2 text-sm mt-1">休憩未取得時間</p>

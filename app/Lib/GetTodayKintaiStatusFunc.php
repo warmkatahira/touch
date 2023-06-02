@@ -3,14 +3,14 @@
 namespace App\Lib;
 
 use App\Models\Kintai;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 
 class GetTodayKintaiStatusFunc
 {
     public static function Status($employee_no)
     {
         // 現在の日時を取得
-        $nowDate = new Carbon('now');
+        $nowDate = CarbonImmutable::now();
         // 社員番号と今日の日付を条件に勤怠レコードを取得
         $kintai = Kintai::where('employee_no', $employee_no)
                     ->where('work_day', $nowDate->format('Y-m-d'))

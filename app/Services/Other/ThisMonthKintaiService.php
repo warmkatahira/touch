@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Other;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Employee;
-use App\Models\Kintai;
 
 class ThisMonthKintaiService
 {
