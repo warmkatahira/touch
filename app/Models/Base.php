@@ -17,4 +17,9 @@ class Base extends Model
     {
         return self::where('base_id', $base_id);
     }
+    // 全て取得
+    public static function getAll()
+    {
+        return self::orderBy('base_id', 'asc');
+    }
 }

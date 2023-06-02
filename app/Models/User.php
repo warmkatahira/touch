@@ -18,7 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'user_id',
+        'user_name',
         'email',
         'password',
         'user_name',
@@ -45,16 +46,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    // ユーザーから拠点情報を取得
+    // basesテーブルとのリレーション
     public function base()
     {
         return $this->belongsTo(Base::class, 'base_id', 'base_id');
     }
-
-    // ユーザーからロール情報を取得
+    // rolesテーブルとのリレーション
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id', 'role_id');
+    }
+    // 全て取得
+    public static function getAll()
+    {
+        return self::orderBy('id', 'asc');
+    }
+    // 指定したユーザーを取得
+    public static function getSpecify($id)
+    {
+        return self::where('id', $id);
     }
 }

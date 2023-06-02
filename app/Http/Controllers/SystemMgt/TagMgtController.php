@@ -4,7 +4,9 @@ namespace App\Http\Controllers\SystemMgt;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\TagMgtService;
+use App\Services\SystemMgt\TagMgtService;
+use App\Models\Role;
+use App\Models\Tag;
 
 class TagMgtController extends Controller
 {
@@ -13,7 +15,7 @@ class TagMgtController extends Controller
         // サービスクラスを定義
         $TagMgtService = new TagMgtService;
         // タグ情報を取得
-        $tags = $TagMgtService->getTags();
+        $tags = Tag::getAll()->get();
         return view('system_mgt.tag_mgt.index')->with([
             'tags' => $tags,
         ]);
@@ -24,9 +26,9 @@ class TagMgtController extends Controller
         // サービスクラスを定義
         $TagMgtService = new TagMgtService;
         // タグ情報を取得
-        $tag = $TagMgtService->getTag($request->tag_id);
+        $tag = Tag::getSpecify($request->tag_id)->first();
         // ロール情報を取得
-        $roles = $TagMgtService->getRoles();
+        $roles = Role::getAll()->get();
         return view('system_mgt.tag_mgt.detail')->with([
             'tag' => $tag,
             'roles' => $roles,
@@ -38,7 +40,7 @@ class TagMgtController extends Controller
         // サービスクラスを定義
         $TagMgtService = new TagMgtService;
         // ロール情報を取得
-        $roles = $TagMgtService->getRoles();
+        $roles = Role::getAll()->get();
         return view('system_mgt.tag_mgt.register')->with([
             'roles' => $roles,
         ]);
@@ -49,7 +51,7 @@ class TagMgtController extends Controller
         // サービスクラスを定義
         $TagMgtService = new TagMgtService;
         // タグを追加
-        $TagMgtService->addTag($request);
+        $TagMgtService->createTag($request);
         return redirect()->route('tag_mgt.index');
     }
 

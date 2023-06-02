@@ -8,9 +8,9 @@
             <table class="col-span-12 text-sm">
                 <thead>
                     <tr class="text-left text-white bg-gray-600 border-gray-600 sticky top-0">
-                        <th class="font-thin p-2 px-2 w-2/12 text-center">名前</th>
-                        <th class="font-thin p-2 px-2 w-2/12 text-center">メールアドレス</th>
+                        <th class="font-thin p-2 px-2 w-2/12 text-center">ユーザーID</th>
                         <th class="font-thin p-2 px-2 w-2/12 text-center">ユーザー名</th>
+                        <th class="font-thin p-2 px-2 w-2/12 text-center">メールアドレス</th>
                         <th class="font-thin p-2 px-2 w-2/12 text-center">権限</th>
                         <th class="font-thin p-2 px-2 w-2/12 text-center">拠点</th>
                         <th class="font-thin p-2 px-2 w-2/12 text-center">ステータス</th>
@@ -19,9 +19,9 @@
                 <tbody class="bg-white">
                     @foreach($users as $user)
                         <tr class="hover:bg-teal-100" data-href="{{ route('user_mgt.detail', ['id' => $user->id]) }}">
-                            <td class="p-1 px-2 border text-center">{{ $user->name }}</td>
-                            <td class="p-1 px-2 border text-center">{{ $user->email }}</td>
+                            <td class="p-1 px-2 border text-center">{{ $user->user_id }}</td>
                             <td class="p-1 px-2 border text-center">{{ $user->user_name }}</td>
+                            <td class="p-1 px-2 border text-center">{{ $user->email }}</td>
                             <td class="p-1 px-2 border text-center">{{ $user->role->role_name }}</td>
                             <td class="p-1 px-2 border text-center">{{ $user->base->base_name }}</td>
                             <td class="p-1 px-2 border text-center">{{ $user->status == 1 ? '有効' : '無効' }}</td>

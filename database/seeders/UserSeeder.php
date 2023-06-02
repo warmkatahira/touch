@@ -16,8 +16,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => '本社',
-            'user_name' => '01',
+            'user_id' => '01',
+            'user_name' => '本社',
             'email' => 't.katahira@warm.co.jp',
             'password' => bcrypt('warm1111'),
             'role_id' => 31,

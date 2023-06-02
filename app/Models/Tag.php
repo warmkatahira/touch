@@ -28,6 +28,11 @@ class Tag extends Model
     {
         return $this->hasMany(KintaiTag::class, 'tag_id', 'tag_id')->count();
     }
+    // 全て取得
+    public static function getAll()
+    {
+        return self::orderBy('tag_id', 'asc');
+    }
     // 指定されたタグを取得
     public static function getSpecify($tag_id)
     {

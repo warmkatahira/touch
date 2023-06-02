@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\SystemMgt;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use App\Services\HolidayMgtService;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -27,7 +27,7 @@ class HolidayMgtController extends Controller
         $HolidayMgtService = new HolidayMgtService;
         // 休日情報を取得
         $export = $HolidayMgtService->getExportData();
-        return (new FastExcel($export))->download('【Touch】休日マスタ_' . new Carbon('now') . '.csv');
+        return (new FastExcel($export))->download('【Touch】休日マスタ_' . CarbonImmutable::now() . '.csv');
     }
 
     public function import(Request $request)

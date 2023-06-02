@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\SystemMgt;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tag;
@@ -8,28 +8,7 @@ use App\Models\Role;
 
 class TagMgtService
 {
-    public function getTags()
-    {
-        // タグ情報を取得
-        $tags = Tag::all();
-        return $tags;
-    }
-
-    public function getTag($tag_id)
-    {
-        // タグ情報を取得
-        $tag = Tag::where('tag_id', $tag_id)->first();
-        return $tag;
-    }
-
-    public function getRoles()
-    {
-        // ロール情報を取得
-        $roles = Role::all();
-        return $roles;
-    }
-
-    public function addTag($request)
+    public function createTag($request)
     {
         // レコードを追加
         Tag::create([

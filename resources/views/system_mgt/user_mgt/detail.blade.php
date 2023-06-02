@@ -9,22 +9,22 @@
         <div class="grid grid-cols-12 mt-5">
             <form method="POST" action="{{ route('user_mgt.modify') }}" class="m-0 col-span-12 grid grid-cols-12">
                 @csrf
-                <label for="name" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">名前</label>
-                <input type="text" id="name" name="name" class="col-span-2 mt-1" autocomplete="off" value="{{ old('name', $user->name) }}" required>
-                <label for="email" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">メールアドレス</label>
-                <input type="email" id="email" name="email" class="col-span-2 mt-1" autocomplete="off" value="{{ old('email', $user->email) }}" required>
+                <label for="user_id" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">ユーザーID</label>
+                <input type="text" id="user_id" name="user_id" class="col-span-2 mt-1" autocomplete="off" value="{{ old('user_id', $user->user_id) }}" required>
                 <label for="user_name" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">ユーザー名</label>
                 <input type="text" id="user_name" name="user_name" class="col-span-2 mt-1" autocomplete="off" value="{{ old('user_name', $user->user_name) }}" required>
-                <label for="role" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">権限</label>
-                <select id="role" name="role" class="col-span-2 mt-1">
+                <label for="email" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">メールアドレス</label>
+                <input type="email" id="email" name="email" class="col-span-2 mt-1" autocomplete="off" value="{{ old('email', $user->email) }}" required>
+                <label for="role_id" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">権限</label>
+                <select id="role_id" name="role_id" class="col-span-2 mt-1">
                     @foreach($roles as $role)
-                        <option value="{{ $role->role_id }}" {{ $role->role_id == old('role', $user->role_id) ? 'selected' : '' }}>{{ $role->role_name }}</option>
+                        <option value="{{ $role->role_id }}" {{ $role->role_id == old('role_id', $user->role_id) ? 'selected' : '' }}>{{ $role->role_name }}</option>
                     @endforeach
                 </select>
-                <label for="base" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">拠点</label>
-                <select id="base" name="base" class="col-span-2 mt-1">
+                <label for="base_id" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">拠点</label>
+                <select id="base_id" name="base_id" class="col-span-2 mt-1">
                     @foreach($bases as $base)
-                        <option value="{{ $base->base_id }}" {{ $base->base_id == old('base', $user->base_id) ? 'selected' : '' }}>{{ $base->base_name }}</option>
+                        <option value="{{ $base->base_id }}" {{ $base->base_id == old('base_id', $user->base_id) ? 'selected' : '' }}>{{ $base->base_name }}</option>
                     @endforeach
                 </select>
                 <label for="status" class="col-start-1 col-span-2 bg-black text-white py-2 text-center mt-1">ステータス</label>

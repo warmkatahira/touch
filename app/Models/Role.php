@@ -12,4 +12,9 @@ class Role extends Model
     protected $primaryKey = 'role_id';
     // オートインクリメント無効化
     public $incrementing = false;
+    // 全て取得
+    public static function getAll()
+    {
+        return self::orderBy('role_id', 'asc');
+    }
 }

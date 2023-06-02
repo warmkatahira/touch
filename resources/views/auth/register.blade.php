@@ -22,15 +22,15 @@
                 </select>
             </div>
 
-            <!-- Name -->
+            <!-- User ID -->
             <div class="mt-4">
-                <x-label for="name" value="氏名" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autocomplete="off" />
+                <x-label for="user_id" value="ユーザーID" />
+                <x-input id="user_id" class="block mt-1 w-full" type="text" name="user_id" :value="old('user_id')" required autocomplete="off" />
             </div>
 
             <!-- User Name -->
             <div class="mt-4">
-                <x-label for="user_name" value="ユーザー名" />
+                <x-label for="user_name" value="氏名" />
                 <x-input id="user_name" class="block mt-1 w-full" type="text" name="user_name" :value="old('user_name')" required autocomplete="off" />
             </div>
 
